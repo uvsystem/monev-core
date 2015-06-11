@@ -68,4 +68,11 @@ public interface RealisasiService {
 	 * @return total realisasi anggaran.
 	 */
 	long getTotalRealisasiAnggaran(Skpd skpd);
+
+	/**
+	 * Ambil data semua realisasi kegiatan.
+	 * @param idKegiatan
+	 * @return realisasi kegiatan.
+	 */
+	List<Realisasi> getByKegiatan(Integer idKegiatan);
 }

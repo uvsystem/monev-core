@@ -11,6 +11,7 @@ import com.unitedvision.sangihe.monev.entity.Realisasi;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.RealisasiException;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
+import com.unitedvision.sangihe.monev.repository.KegiatanRepository;
 import com.unitedvision.sangihe.monev.repository.RealisasiRepository;
 import com.unitedvision.sangihe.monev.service.RealisasiService;
 
@@ -20,6 +21,8 @@ public class RealisasiServiceImpl implements RealisasiService {
 
 	@Autowired
 	private RealisasiRepository realisasiRepository;
+	@Autowired
+	private KegiatanRepository KegiatanRepository;
 	
 	@Override
 	@Transactional(readOnly = false)
@@ -51,6 +54,13 @@ public class RealisasiServiceImpl implements RealisasiService {
 	@Override
 	public List<Realisasi> get(Kegiatan kegiatan) {
 		return realisasiRepository.findByKegiatan(kegiatan);
+	}
+	
+	@Override
+	public List<Realisasi> getByKegiatan(Integer idKegiatan) {
+		Kegiatan kegiatan = KegiatanRepository.findOne(idKegiatan);
+		
+		return get(kegiatan);
 	}
 
 	@Override

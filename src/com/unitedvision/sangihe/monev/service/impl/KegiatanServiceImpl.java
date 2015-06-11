@@ -10,6 +10,7 @@ import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
 import com.unitedvision.sangihe.monev.repository.KegiatanRepository;
+import com.unitedvision.sangihe.monev.repository.SkpdRepository;
 import com.unitedvision.sangihe.monev.service.KegiatanService;
 
 @Service
@@ -18,6 +19,8 @@ public class KegiatanServiceImpl implements KegiatanService {
 
 	@Autowired
 	private KegiatanRepository kegiatanRepository;
+	@Autowired
+	private SkpdRepository skpdRepository;
 	
 	@Override
 	@Transactional(readOnly = false)
@@ -51,6 +54,13 @@ public class KegiatanServiceImpl implements KegiatanService {
 		return kegiatanRepository.findAll();
 	}
 
+	@Override
+	public List<Kegiatan> getBySkpd(Integer idSkpd) {
+		Skpd skpd = skpdRepository.findOne(idSkpd);
+		
+		return get(skpd);
+	}
+	
 	@Override
 	public long getTotalAnggaran(Skpd skpd, int tahun) {
 		return kegiatanRepository.summarizeAnggaran(skpd);

@@ -62,4 +62,11 @@ public interface KegiatanService {
 	 * @throws ApplicationException
 	 */
 	long getTotalAnggaran(Skpd skpd, int tahun);
+
+	/**
+	 * Ambil data kegiatan berdasarkan SKPD.
+	 * @param idSkpd id SKPD.
+	 * @return data kegiatan.
+	 */
+	List<Kegiatan> getBySkpd(Integer idSkpd);
 }

@@ -27,7 +27,7 @@ public class ListEntityRestMessage<T> extends RestMessage {
 		return new ListEntityRestMessage<T>(cause);
 	}
 	
-	public static ListEntityRestMessage<Skpd> createListPegawai(List<Skpd> skpd) {
+	public static ListEntityRestMessage<Skpd> createListSkpd(List<Skpd> skpd) {
 		return new ListEntityRestMessage<Skpd>(skpd);
 	}
 	
@@ -35,11 +35,11 @@ public class ListEntityRestMessage<T> extends RestMessage {
 		return new ListEntityRestMessage<Operator>(operator);
 	}
 	
-	public static ListEntityRestMessage<Kegiatan> createListOtentikasi(List<Kegiatan> kegiatan) {
+	public static ListEntityRestMessage<Kegiatan> createListKegiatan(List<Kegiatan> kegiatan) {
 		return new ListEntityRestMessage<Kegiatan>(kegiatan);
 	}
 	
-	public static ListEntityRestMessage<Realisasi> createListToken(List<Realisasi> realisasi) {
+	public static ListEntityRestMessage<Realisasi> createListRealisasi(List<Realisasi> realisasi) {
 		return new ListEntityRestMessage<Realisasi>(realisasi);
 	}
 }
