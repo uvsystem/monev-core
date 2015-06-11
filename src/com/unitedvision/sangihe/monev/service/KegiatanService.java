@@ -3,6 +3,7 @@ package com.unitedvision.sangihe.monev.service;
 import java.util.List;
 
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
+import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
@@ -69,4 +70,17 @@ public interface KegiatanService {
 	 * @return data kegiatan.
 	 */
 	List<Kegiatan> getBySkpd(Integer idSkpd);
+	
+	/**
+	 * Rekap realisasi semua kegiatan, tanpa memperhitungkan SKPD.
+	 * @return rekap realisasi kegiatan.
+	 */
+	List<RekapKegiatan> rekap();
+
+	/**
+	 * Rekap realisasi semua kegiatan SKPD.
+	 * @param skpd
+	 * @return rekap realisasi kegiatan.
+	 */
+	List<RekapKegiatan> rekap(Skpd skpd);
 }

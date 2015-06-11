@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.unitedvision.sangihe.monev.configuration.ApplicationConfig;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
+import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
 import com.unitedvision.sangihe.monev.repository.KegiatanRepository;
@@ -138,5 +139,29 @@ public class KegiatanServiceTest {
 		long totalAnggaran = kegiatanService.getTotalAnggaran(skpd, 2015);
 		
 		assertNotEquals(0, totalAnggaran);
+	}
+	
+	@Test
+	public void test_RekapKegiatan() {
+		List<RekapKegiatan> rekap = kegiatanService.rekap();
+		
+		for (RekapKegiatan rk : rekap) {
+			System.out.println("XXX" + rk.getTotalRealisasiAnggaran());
+			System.out.println(rk.getTotalRealisasiFisik());
+		}
+		
+		assertNotEquals(0, rekap.size());
+	}
+	
+	@Test
+	public void test_GetKegiatanBySkpd() {
+		List<RekapKegiatan> rekap = kegiatanService.rekap(skpd);
+		
+		for (RekapKegiatan rk : rekap) {
+			System.out.println("XXX" + rk.getTotalRealisasiAnggaran());
+			System.out.println(rk.getTotalRealisasiFisik());
+		}
+		
+		assertNotEquals(0, rekap.size());
 	}
 }

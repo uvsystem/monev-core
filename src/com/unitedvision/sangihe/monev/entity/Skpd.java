@@ -2,11 +2,8 @@ package com.unitedvision.sangihe.monev.entity;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,66 +17,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name = "skpd")
-public class Skpd {
-
-	private int id;
-	private String kode;
-	private String nama;
+public class Skpd extends AbstractSkpd {
 	
 	private List<Kegiatan> listKegiatan;
 	private List<Operator> listOperator;
-
-	/**
-	 * Return id SKPD.
-	 * @return
-	 */
-	@Id
-	@GeneratedValue
-	public int getId() {
-		return id;
-	}
-
-	/**
-	 * Atur id SKPD.
-	 * @param id
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	/**
-	 * Return kode SKPD.
-	 * @return
-	 */
-	@Column(name = "kode")
-	public String getKode() {
-		return kode;
-	}
-
-	/**
-	 * Atur kode SKPD.
-	 * @param kode
-	 */
-	public void setKode(String kode) {
-		this.kode = kode;
-	}
-
-	/**
-	 * Return nama SKPD.
-	 * @return
-	 */
-	@Column(name = "nama")
-	public String getNama() {
-		return nama;
-	}
-
-	/**
-	 * Atur nama SKPD.
-	 * @param nama
-	 */
-	public void setNama(String nama) {
-		this.nama = nama;
-	}
 
 	/**
 	 * Return daftar kegiatan yang dilaksanakan. Daftar ini tidak akan dipublish menjadi JSON.
@@ -100,6 +41,24 @@ public class Skpd {
 	}
 
 	/**
+	 * Tambah kegiatan SKPD.
+	 * @param kegiatan
+	 */
+	public void addKegiatan(Kegiatan kegiatan) {
+		kegiatan.setSkpd(this);
+		this.listKegiatan.add(kegiatan);
+	}
+
+	/**
+	 * Hapus kegiatan SKPD.
+	 * @param kegiatan
+	 */
+	public void removeKegiatan(Kegiatan kegiatan) {
+		kegiatan.setSkpd(null);
+		this.listKegiatan.remove(kegiatan);
+	}
+	
+	/**
 	 * Return daftar operator.
 	 * @return daftar operator.
 	 */
@@ -115,5 +74,23 @@ public class Skpd {
 	 */
 	public void setListOperator(List<Operator> listOperator) {
 		this.listOperator = listOperator;
+	}
+	
+	/**
+	 * Tambah operator pada SKPD.
+	 * @param operator
+	 */
+	public void addOperator(Operator operator) {
+		operator.setSkpd(this);
+		this.listOperator.add(operator);
+	}
+	
+	/**
+	 * Hapus operator pada SKPD.
+	 * @param operator
+	 */
+	public void removeOperator(Operator operator) {
+		operator.setSkpd(null);
+		this.listOperator.remove(operator);
 	}
 }

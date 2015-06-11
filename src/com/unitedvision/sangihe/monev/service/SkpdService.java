@@ -2,6 +2,7 @@ package com.unitedvision.sangihe.monev.service;
 
 import java.util.List;
 
+import com.unitedvision.sangihe.monev.entity.RekapSkpd;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
 
@@ -43,4 +44,10 @@ public interface SkpdService {
 	 * @throws ApplicationException
 	 */
 	List<Skpd> get();
+	
+	/**
+	 * Rekap realisasi SKPD.
+	 * @return rekap realisasi.
+	 */
+	List<RekapSkpd> rekap();
 }

@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
+import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
 import com.unitedvision.sangihe.monev.repository.KegiatanRepository;
+import com.unitedvision.sangihe.monev.repository.RekapKegiatanRepository;
 import com.unitedvision.sangihe.monev.repository.SkpdRepository;
 import com.unitedvision.sangihe.monev.service.KegiatanService;
 
@@ -21,6 +23,8 @@ public class KegiatanServiceImpl implements KegiatanService {
 	private KegiatanRepository kegiatanRepository;
 	@Autowired
 	private SkpdRepository skpdRepository;
+	@Autowired
+	private RekapKegiatanRepository rekapKegiatanRepository;
 	
 	@Override
 	@Transactional(readOnly = false)
@@ -64,6 +68,16 @@ public class KegiatanServiceImpl implements KegiatanService {
 	@Override
 	public long getTotalAnggaran(Skpd skpd, int tahun) {
 		return kegiatanRepository.summarizeAnggaran(skpd);
+	}
+
+	@Override
+	public List<RekapKegiatan> rekap() {
+		return rekapKegiatanRepository.rekap();
+	}
+
+	@Override
+	public List<RekapKegiatan> rekap(Skpd skpd) {
+		return rekapKegiatanRepository.rekap(skpd.getId());
 	}
 
 }
