@@ -21,6 +21,7 @@ import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Realisasi;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.AnggaranException;
+import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.exception.RealisasiException;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
@@ -51,7 +52,7 @@ public class RealisasiServiceTest {
 	private long count;
 	
 	@Before
-	public void setup() throws WrongYearException, RealisasiException, AnggaranException {
+	public void setup() throws ApplicationException {
 		skpd = new Skpd();
 		skpd.setKode("skpd01");
 		skpd.setNama("Nama SKPD 01");

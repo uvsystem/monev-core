@@ -25,10 +25,10 @@ public class SkpdController extends AbstractController {
 	private SkpdService skpdService;
 	
 	@RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT})
-	public @ResponseBody EntityRestMessage<Skpd> simpan(@RequestBody Skpd skpd) throws ApplicationException {
+	public @ResponseBody RestMessage simpan(@RequestBody Skpd skpd) throws ApplicationException {
 		skpdService.simpan(skpd);
 		
-		return EntityRestMessage.create(skpd);
+		return RestMessage.success();
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)

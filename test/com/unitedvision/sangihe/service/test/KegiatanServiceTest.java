@@ -19,6 +19,7 @@ import com.unitedvision.sangihe.monev.configuration.ApplicationConfig;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
 import com.unitedvision.sangihe.monev.entity.Skpd;
+import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
 import com.unitedvision.sangihe.monev.repository.KegiatanRepository;
@@ -44,7 +45,7 @@ public class KegiatanServiceTest {
 	private long count;
 	
 	@Before
-	public void setup() throws WrongYearException {
+	public void setup() throws ApplicationException {
 		skpd = new Skpd();
 		skpd.setKode("skpd01");
 		skpd.setNama("Nama SKPD 01");

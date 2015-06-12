@@ -21,7 +21,7 @@ public interface SkpdService {
 	 * @return SKPD dengan data baru.
 	 * @throws ApplicationException
 	 */
-	Skpd simpan(Skpd skpd);
+	Skpd simpan(Skpd skpd) throws ApplicationException;
 
 	/**
 	 * Hapus data SKPD.

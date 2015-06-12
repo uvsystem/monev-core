@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.unitedvision.sangihe.monev.configuration.ApplicationConfig;
 import com.unitedvision.sangihe.monev.entity.RekapSkpd;
 import com.unitedvision.sangihe.monev.entity.Skpd;
+import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.repository.SkpdRepository;
 import com.unitedvision.sangihe.monev.service.SkpdService;
@@ -37,7 +38,7 @@ public class SkpdServiceTest {
 	private long count;
 	
 	@Before
-	public void setup() {
+	public void setup() throws ApplicationException {
 		skpd = new Skpd();
 		skpd.setKode("SKPD01");
 		skpd.setNama("Nama SKPD 1");
@@ -48,7 +49,7 @@ public class SkpdServiceTest {
 	}
 	
 	@Test
-	public void test_Insert() {
+	public void test_Insert() throws ApplicationException {
 		Skpd skpd2 = new Skpd();
 		skpd2.setKode("SKPD02");
 		skpd2.setNama("Nama SKPD 2");
@@ -60,7 +61,7 @@ public class SkpdServiceTest {
 	}
 	
 	@Test(expected = PersistenceException.class)
-	public void test_InsertDuplicate() {
+	public void test_InsertDuplicate() throws ApplicationException {
 		Skpd skpd2 = new Skpd();
 		skpd2.setKode("SKPD01");
 		skpd2.setNama("Nama SKPD 1");

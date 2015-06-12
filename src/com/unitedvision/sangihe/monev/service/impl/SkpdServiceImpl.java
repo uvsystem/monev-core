@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.unitedvision.sangihe.monev.entity.RekapSkpd;
 import com.unitedvision.sangihe.monev.entity.Skpd;
+import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.repository.RekapSkpdRepository;
 import com.unitedvision.sangihe.monev.repository.SkpdRepository;
 import com.unitedvision.sangihe.monev.service.SkpdService;
@@ -36,12 +37,12 @@ public class SkpdServiceImpl implements SkpdService {
 	}
 
 	@Override
-	public Skpd get(int id) {
+	public Skpd get(int id) throws EntityNotExistsException {
 		return skpdRepository.findOne(id);
 	}
 
 	@Override
-	public List<Skpd> get() {
+	public List<Skpd> get() throws EntityNotExistsException {
 		return skpdRepository.findAll();
 	}
 

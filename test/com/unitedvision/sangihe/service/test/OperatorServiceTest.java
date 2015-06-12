@@ -19,6 +19,7 @@ import com.unitedvision.sangihe.monev.configuration.ApplicationConfig;
 import com.unitedvision.sangihe.monev.entity.Operator;
 import com.unitedvision.sangihe.monev.entity.Operator.Role;
 import com.unitedvision.sangihe.monev.entity.Skpd;
+import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.exception.CredentialException;
 import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.repository.OperatorRepository;
@@ -44,7 +45,7 @@ public class OperatorServiceTest {
 	private long count;
 	
 	@Before
-	public void setup() throws CredentialException {
+	public void setup() throws ApplicationException {
 		skpd = new Skpd();
 		skpd.setKode("skpd01");
 		skpd.setNama("Nama SKPD 01");

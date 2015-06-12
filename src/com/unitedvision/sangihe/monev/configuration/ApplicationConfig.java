@@ -29,7 +29,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
 @ComponentScan({
-	"com.unitedvision.sangihe.monev.service"
+	"com.unitedvision.sangihe.monev.service",
+	"com.unitedvision.sangihe.monev.interceptor"
 })
 public class ApplicationConfig {
 
