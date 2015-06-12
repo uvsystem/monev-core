@@ -6,6 +6,7 @@ import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
+import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
 
 /**
@@ -38,7 +39,7 @@ public interface KegiatanService {
 	 * @return data Kegiatan
 	 * @throws ApplicationException
 	 */
-	Kegiatan get(int id);
+	Kegiatan get(int id) throws EntityNotExistsException;
 
 	/**
 	 * Ambil data kegiatan berdasarkan Skpd.
@@ -46,14 +47,14 @@ public interface KegiatanService {
 	 * @return data Kegiatan.
 	 * @throws ApplicationException
 	 */
-	List<Kegiatan> get(Skpd skpd);
+	List<Kegiatan> get(Skpd skpd) throws EntityNotExistsException;
 
 	/**
 	 * Ambil semua data kegiatan.
 	 * @return data kegiatan.
 	 * @throws ApplicationException
 	 */
-	List<Kegiatan> get();
+	List<Kegiatan> get() throws EntityNotExistsException;
 
 	/**
 	 * Total semua anggaran SKPD pada tahun tertentu.

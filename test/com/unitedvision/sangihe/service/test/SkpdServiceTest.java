@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.unitedvision.sangihe.monev.configuration.ApplicationConfig;
 import com.unitedvision.sangihe.monev.entity.RekapSkpd;
 import com.unitedvision.sangihe.monev.entity.Skpd;
+import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.repository.SkpdRepository;
 import com.unitedvision.sangihe.monev.service.SkpdService;
 
@@ -68,7 +69,7 @@ public class SkpdServiceTest {
 	}
 	
 	@Test
-	public void test_Delete() {
+	public void test_Delete() throws EntityNotExistsException {
 		Skpd skpd2 = skpdService.get(skpd.getId());
 		
 		skpdService.hapus(skpd2);
@@ -77,14 +78,14 @@ public class SkpdServiceTest {
 	}
 	
 	@Test
-	public void test_GetById() {
+	public void test_GetById() throws EntityNotExistsException {
 		Skpd skpd2 = skpdService.get(skpd.getId());
 		
 		assertEquals(skpd, skpd2);
 	}
 	
 	@Test
-	public void test_GetAll() {
+	public void test_GetAll() throws EntityNotExistsException {
 		List<Skpd> list = skpdService.get();
 		
 		assertNotEquals(0, list.size());

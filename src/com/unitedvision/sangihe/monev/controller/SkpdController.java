@@ -46,7 +46,7 @@ public class SkpdController extends AbstractController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public @ResponseBody ListEntityRestMessage<Skpd> get() {
+	public @ResponseBody ListEntityRestMessage<Skpd> get() throws ApplicationException {
 		List<Skpd> list = skpdService.get();
 		
 		return ListEntityRestMessage.createListSkpd(list);

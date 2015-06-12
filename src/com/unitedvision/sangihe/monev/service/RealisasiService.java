@@ -5,6 +5,7 @@ import java.util.List;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Realisasi;
 import com.unitedvision.sangihe.monev.entity.Skpd;
+import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.exception.RealisasiException;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
 
@@ -38,7 +39,7 @@ public interface RealisasiService {
 	 * @return data Realisasi.
 	 * @throws ApplicationException
 	 */
-	Realisasi get(int id);
+	Realisasi get(int id) throws EntityNotExistsException;
 
 	/**
 	 * Ambil data realisasi kegiatan berdasarkan kegiatan.
@@ -46,14 +47,14 @@ public interface RealisasiService {
 	 * @return data realisasi.
 	 * @throws ApplicationException
 	 */
-	List<Realisasi> get(Kegiatan kegiatan);
+	List<Realisasi> get(Kegiatan kegiatan) throws EntityNotExistsException;
 
 	/**
 	 * Ambil semua data realisasi.
 	 * @return data realisasi.
 	 * @throws ApplicationException
 	 */
-	List<Realisasi> get();
+	List<Realisasi> get() throws EntityNotExistsException;
 	
 	/**
 	 * Total realisasi anggaran kegiatan tertentu.

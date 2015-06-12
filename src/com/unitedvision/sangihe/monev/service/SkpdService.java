@@ -5,6 +5,7 @@ import java.util.List;
 import com.unitedvision.sangihe.monev.entity.RekapSkpd;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
+import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 
 /**
  * Layanan pemrosesan SKPD.
@@ -36,14 +37,14 @@ public interface SkpdService {
 	 * @return Skpd menggunakan id.
 	 * @throws ApplicationException
 	 */
-	Skpd get(int id);
+	Skpd get(int id) throws EntityNotExistsException;
 
 	/**
 	 * Ambil semua data Skpd.
 	 * @return semua data Skpd.
 	 * @throws ApplicationException
 	 */
-	List<Skpd> get();
+	List<Skpd> get() throws EntityNotExistsException;
 	
 	/**
 	 * Rekap realisasi SKPD.

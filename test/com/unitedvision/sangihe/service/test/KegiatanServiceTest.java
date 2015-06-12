@@ -19,6 +19,7 @@ import com.unitedvision.sangihe.monev.configuration.ApplicationConfig;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
 import com.unitedvision.sangihe.monev.entity.Skpd;
+import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
 import com.unitedvision.sangihe.monev.repository.KegiatanRepository;
 import com.unitedvision.sangihe.monev.service.KegiatanService;
@@ -105,7 +106,7 @@ public class KegiatanServiceTest {
 	}
 	
 	@Test
-	public void test_Hapus() {
+	public void test_Hapus() throws EntityNotExistsException {
 		Kegiatan kegiatan2 = kegiatanService.get(kegiatan.getId());
 
 		kegiatanService.hapus(kegiatan2);
@@ -114,21 +115,21 @@ public class KegiatanServiceTest {
 	}
 	
 	@Test
-	public void test_getById() {
+	public void test_getById() throws EntityNotExistsException {
 		Kegiatan kegiatan2 = kegiatanService.get(kegiatan.getId());
 		
 		assertEquals(kegiatan, kegiatan2);
 	}
 	
 	@Test
-	public void test_GetBySkpd() {
+	public void test_GetBySkpd() throws EntityNotExistsException {
 		List<Kegiatan> list = kegiatanService.get(skpd);
 		
 		assertNotEquals(0, list.size());
 	}
 	
 	@Test
-	public void test_GetAll() {
+	public void test_GetAll() throws EntityNotExistsException {
 		List<Kegiatan> list = kegiatanService.get();
 		
 		assertNotEquals(0, list.size());

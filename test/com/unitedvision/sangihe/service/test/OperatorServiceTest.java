@@ -20,6 +20,7 @@ import com.unitedvision.sangihe.monev.entity.Operator;
 import com.unitedvision.sangihe.monev.entity.Operator.Role;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.CredentialException;
+import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.repository.OperatorRepository;
 import com.unitedvision.sangihe.monev.service.OperatorService;
 import com.unitedvision.sangihe.monev.service.SkpdService;
@@ -93,28 +94,28 @@ public class OperatorServiceTest {
 	}
 	
 	@Test
-	public void test_GetById() {
+	public void test_GetById() throws EntityNotExistsException {
 		Operator operator2 = operatorService.get(operator.getId());
 		
 		assertEquals(operator, operator2);
 	}
 	
 	@Test
-	public void test_GetByUsername() {
+	public void test_GetByUsername() throws EntityNotExistsException {
 		Operator operator2 = operatorService.get(operator.getUsername());
 		
 		assertEquals(operator, operator2);
 	}
 	
 	@Test
-	public void test_GetBySkpd() {
+	public void test_GetBySkpd() throws EntityNotExistsException {
 		List<Operator> list = operatorService.get(skpd);
 		
 		assertNotEquals(count - 1, list.size());
 	}
 	
 	@Test
-	public void test_GetAll() {
+	public void test_GetAll() throws EntityNotExistsException {
 		List<Operator> list = operatorService.get();
 		
 		assertNotEquals(count - 1, list.size());

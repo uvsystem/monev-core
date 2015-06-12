@@ -5,6 +5,7 @@ import java.util.List;
 import com.unitedvision.sangihe.monev.entity.Operator;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
+import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 
 /**
  * Layanan pemrosesan Operator.
@@ -35,7 +36,7 @@ public interface OperatorService {
 	 * @param id
 	 * @return data operator.
 	 */
-	Operator get(int id);
+	Operator get(int id) throws EntityNotExistsException;
 	
 	/**
 	 * Ambil data operator berdasarkan username.
@@ -43,7 +44,7 @@ public interface OperatorService {
 	 * @return data Operator.
 	 * @throws ApplicationException
 	 */
-	Operator get(String username);
+	Operator get(String username) throws EntityNotExistsException;
 
 	/**
 	 * Ambil data operator berdasarkan Skpd.
@@ -51,12 +52,12 @@ public interface OperatorService {
 	 * @return data operator.
 	 * @throws ApplicationException
 	 */
-	List<Operator> get(Skpd skpd);
+	List<Operator> get(Skpd skpd) throws EntityNotExistsException;
 
 	/**
 	 * Ambil semua data operator.
 	 * @return data operator.
 	 * @throws ApplicationException
 	 */
-	List<Operator> get();
+	List<Operator> get() throws EntityNotExistsException;
 }

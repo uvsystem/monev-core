@@ -21,6 +21,7 @@ import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Realisasi;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.AnggaranException;
+import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.exception.RealisasiException;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
 import com.unitedvision.sangihe.monev.repository.RealisasiRepository;
@@ -176,21 +177,21 @@ public class RealisasiServiceTest {
 	}
 	
 	@Test
-	public void test_GetById() {
+	public void test_GetById() throws EntityNotExistsException {
 		Realisasi realisasi2 = realisasiService.get(realisasi.getId());
 		
 		assertEquals(realisasi, realisasi2);
 	}
 	
 	@Test
-	public void test_GetByKegiatan() {
+	public void test_GetByKegiatan() throws EntityNotExistsException {
 		List<Realisasi> list = realisasiService.get(kegiatan);
 		
 		assertNotEquals(0, list.size());
 	}
 	
 	@Test
-	public void test_GetAll() {
+	public void test_GetAll() throws EntityNotExistsException {
 		List<Realisasi> list = realisasiService.get();
 		
 		assertNotEquals(0, list.size());
