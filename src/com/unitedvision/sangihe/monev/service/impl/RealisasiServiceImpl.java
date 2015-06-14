@@ -2,6 +2,8 @@ package com.unitedvision.sangihe.monev.service.impl;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Realisasi;
 import com.unitedvision.sangihe.monev.entity.Skpd;
+import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.exception.RealisasiException;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
 import com.unitedvision.sangihe.monev.repository.KegiatanRepository;
@@ -26,7 +29,7 @@ public class RealisasiServiceImpl implements RealisasiService {
 	
 	@Override
 	@Transactional(readOnly = false)
-	public Realisasi simpan(Realisasi realisasi) throws WrongYearException, RealisasiException {
+	public Realisasi simpan(Realisasi realisasi) throws WrongYearException, RealisasiException, PersistenceException {
 		if (realisasi.getTahun() < realisasi.getKegiatan().getAwal()
 			|| realisasi.getTahun() > realisasi.getKegiatan().getAkhir())
 			throw new WrongYearException("Tahun realisasi tidak sesuai dengan tahun kegiatan");
@@ -47,24 +50,24 @@ public class RealisasiServiceImpl implements RealisasiService {
 	}
 
 	@Override
-	public Realisasi get(int id) {
+	public Realisasi get(int id) throws EntityNotExistsException {
 		return realisasiRepository.findOne(id);
 	}
 
 	@Override
-	public List<Realisasi> get(Kegiatan kegiatan) {
+	public List<Realisasi> get(Kegiatan kegiatan) throws EntityNotExistsException {
 		return realisasiRepository.findByKegiatan(kegiatan);
 	}
 	
 	@Override
-	public List<Realisasi> getByKegiatan(Integer idKegiatan) {
+	public List<Realisasi> getByKegiatan(Integer idKegiatan) throws EntityNotExistsException {
 		Kegiatan kegiatan = KegiatanRepository.findOne(idKegiatan);
 		
 		return get(kegiatan);
 	}
 
 	@Override
-	public List<Realisasi> get() {
+	public List<Realisasi> get() throws EntityNotExistsException {
 		return realisasiRepository.findAll();
 	}
 

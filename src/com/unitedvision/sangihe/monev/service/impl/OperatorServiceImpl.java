@@ -2,12 +2,15 @@ package com.unitedvision.sangihe.monev.service.impl;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.unitedvision.sangihe.monev.entity.Operator;
 import com.unitedvision.sangihe.monev.entity.Skpd;
+import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.repository.OperatorRepository;
 import com.unitedvision.sangihe.monev.service.OperatorService;
 
@@ -20,7 +23,7 @@ public class OperatorServiceImpl implements OperatorService {
 	
 	@Override
 	@Transactional(readOnly = false)
-	public Operator simpan(Operator operator) {
+	public Operator simpan(Operator operator) throws PersistenceException {
 		return operatorRepository.save(operator);
 	}
 
@@ -33,22 +36,22 @@ public class OperatorServiceImpl implements OperatorService {
 	}
 	
 	@Override
-	public Operator get(int id) {
+	public Operator get(int id) throws EntityNotExistsException {
 		return operatorRepository.findOne(id);
 	}
 
 	@Override
-	public Operator get(String username) {
+	public Operator get(String username) throws EntityNotExistsException {
 		return operatorRepository.findByUsername(username);
 	}
 
 	@Override
-	public List<Operator> get(Skpd skpd) {
+	public List<Operator> get(Skpd skpd) throws EntityNotExistsException {
 		return operatorRepository.findBySkpd(skpd);
 	}
 
 	@Override
-	public List<Operator> get() {
+	public List<Operator> get() throws EntityNotExistsException {
 		return operatorRepository.findAll();
 	}
 }

@@ -18,12 +18,7 @@ public class RepositoryExceptionInterceptor {
 	public void errorThrown(PersistenceException ex) throws PersistenceException {
 		Throwable cause = ex.getCause();
 
-		if (cause instanceof DataIntegrityViolationException)
-			errorThrown((DataIntegrityViolationException)cause);
-		if (cause instanceof ConstraintViolationException)
-			errorThrown((ConstraintViolationException)cause);
-		
-		throw ex;
+		throw new PersistenceException(cause.getMessage());
 	}
 
 	@AfterThrowing(

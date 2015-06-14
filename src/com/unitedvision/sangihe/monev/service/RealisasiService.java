@@ -74,6 +74,7 @@ public interface RealisasiService {
 	 * Ambil data semua realisasi kegiatan.
 	 * @param idKegiatan
 	 * @return realisasi kegiatan.
+	 * @throws EntityNotExistsException 
 	 */
-	List<Realisasi> getByKegiatan(Integer idKegiatan);
+	List<Realisasi> getByKegiatan(Integer idKegiatan) throws EntityNotExistsException;
 }

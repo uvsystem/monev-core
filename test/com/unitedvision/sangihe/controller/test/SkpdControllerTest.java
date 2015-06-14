@@ -81,14 +81,14 @@ public class SkpdControllerTest {
 	@Test
 	public void test_InsertDuplicateKode() throws Exception {
 		this.mockMvc.perform(post("/skpd").contentType(MediaType.APPLICATION_JSON).content("{\"id\":\"0\", \"kode\":\"SKPD1\", \"nama\":\"Nama SKPD 2\"}"))
-		.andExpect(jsonPath("$.message").value("Kode yang anda masukan sudah digunakan"))
+		.andExpect(jsonPath("$.message").value("Kode yang anda masukkan sudah digunakan"))
 		.andExpect(jsonPath("$.tipe").value("ERROR"));
 	}
 	
 	@Test
 	public void test_InsertDuplicateNama() throws Exception {
 		this.mockMvc.perform(post("/skpd").contentType(MediaType.APPLICATION_JSON).content("{\"id\":\"0\", \"kode\":\"SKPD2\", \"nama\":\"Nama SKPD 1\"}"))
-		.andExpect(jsonPath("$.message").value("Nama yang anda masukan sudah digunakan"))
+		.andExpect(jsonPath("$.message").value("Nama yang anda masukkan sudah digunakan"))
 		.andExpect(jsonPath("$.tipe").value("ERROR"));
 	}
 }

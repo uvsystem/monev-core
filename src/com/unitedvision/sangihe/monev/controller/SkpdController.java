@@ -2,6 +2,8 @@ package com.unitedvision.sangihe.monev.controller;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +27,7 @@ public class SkpdController extends AbstractController {
 	private SkpdService skpdService;
 	
 	@RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT})
-	public @ResponseBody RestMessage simpan(@RequestBody Skpd skpd) throws ApplicationException {
+	public @ResponseBody RestMessage simpan(@RequestBody Skpd skpd) throws ApplicationException, PersistenceException {
 		skpdService.simpan(skpd);
 		
 		return RestMessage.success();

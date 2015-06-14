@@ -2,6 +2,8 @@ package com.unitedvision.sangihe.monev.controller;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,10 +27,10 @@ public class KegiatanController extends AbstractController {
 	private KegiatanService kegiatanService;
 	
 	@RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT})
-	public @ResponseBody EntityRestMessage<Kegiatan> simpan(@RequestBody Kegiatan kegiatan) throws ApplicationException {
+	public @ResponseBody RestMessage simpan(@RequestBody Kegiatan kegiatan) throws ApplicationException, PersistenceException {
 		kegiatanService.simpan(kegiatan);
 		
-		return EntityRestMessage.create(kegiatan);
+		return RestMessage.success();
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)

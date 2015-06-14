@@ -17,6 +17,8 @@ public class NullObjectInterceptor {
 		returning = "returnValue")
 	public void nullObjectReturned(Object returnValue) throws EntityNotExistsException {
 
+		System.out.println("LOG: nullObjectReturned");
+		
 		if (returnValue == null)
 			throw new EntityNotExistsException("Data tidak ditemukan");
 		

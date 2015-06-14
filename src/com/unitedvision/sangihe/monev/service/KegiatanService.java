@@ -69,8 +69,9 @@ public interface KegiatanService {
 	 * Ambil data kegiatan berdasarkan SKPD.
 	 * @param idSkpd id SKPD.
 	 * @return data kegiatan.
+	 * @throws EntityNotExistsException 
 	 */
-	List<Kegiatan> getBySkpd(Integer idSkpd);
+	List<Kegiatan> getBySkpd(Integer idSkpd) throws EntityNotExistsException;
 	
 	/**
 	 * Rekap realisasi semua kegiatan, tanpa memperhitungkan SKPD.

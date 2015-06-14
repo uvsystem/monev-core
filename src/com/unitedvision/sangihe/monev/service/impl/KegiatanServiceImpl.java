@@ -2,6 +2,8 @@ package com.unitedvision.sangihe.monev.service.impl;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
 import com.unitedvision.sangihe.monev.entity.Skpd;
+import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
 import com.unitedvision.sangihe.monev.repository.KegiatanRepository;
 import com.unitedvision.sangihe.monev.repository.RekapKegiatanRepository;
@@ -28,7 +31,7 @@ public class KegiatanServiceImpl implements KegiatanService {
 	
 	@Override
 	@Transactional(readOnly = false)
-	public Kegiatan simpan(Kegiatan kegiatan) throws WrongYearException {
+	public Kegiatan simpan(Kegiatan kegiatan) throws WrongYearException, PersistenceException {
 		if (kegiatan.getAkhir() < kegiatan.getAwal())
 			throw new WrongYearException("Tahun akhir sebelum tahun awal");
 		
@@ -44,22 +47,22 @@ public class KegiatanServiceImpl implements KegiatanService {
 	}
 
 	@Override
-	public Kegiatan get(int id) {
+	public Kegiatan get(int id) throws EntityNotExistsException {
 		return kegiatanRepository.findOne(id);
 	}
 
 	@Override
-	public List<Kegiatan> get(Skpd skpd) {
+	public List<Kegiatan> get(Skpd skpd) throws EntityNotExistsException {
 		return kegiatanRepository.findBySkpd(skpd);
 	}
 
 	@Override
-	public List<Kegiatan> get() {
+	public List<Kegiatan> get() throws EntityNotExistsException {
 		return kegiatanRepository.findAll();
 	}
 
 	@Override
-	public List<Kegiatan> getBySkpd(Integer idSkpd) {
+	public List<Kegiatan> getBySkpd(Integer idSkpd) throws EntityNotExistsException {
 		Skpd skpd = skpdRepository.findOne(idSkpd);
 		
 		return get(skpd);

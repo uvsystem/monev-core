@@ -2,6 +2,8 @@ package com.unitedvision.sangihe.monev.service.impl;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +26,7 @@ public class SkpdServiceImpl implements SkpdService {
 	
 	@Override
 	@Transactional(readOnly = false)
-	public Skpd simpan(Skpd skpd) {
+	public Skpd simpan(Skpd skpd) throws PersistenceException {
 		return skpdRepository.save(skpd);
 	}
 
