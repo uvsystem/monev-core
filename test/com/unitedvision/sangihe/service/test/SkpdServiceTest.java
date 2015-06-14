@@ -16,7 +16,6 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.unitedvision.sangihe.monev.configuration.ApplicationConfig;
-import com.unitedvision.sangihe.monev.entity.RekapSkpd;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
@@ -90,12 +89,5 @@ public class SkpdServiceTest {
 		List<Skpd> list = skpdService.get();
 		
 		assertNotEquals(0, list.size());
-	}
-	
-	@Test
-	public void test_Rekap() {
-		List<RekapSkpd> rekap = skpdService.rekap();
-		
-		assertNotEquals(0, rekap.size());
 	}
 }

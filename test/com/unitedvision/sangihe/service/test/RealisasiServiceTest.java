@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.unitedvision.sangihe.monev.configuration.ApplicationConfig;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Realisasi;
+import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
+import com.unitedvision.sangihe.monev.entity.RekapSkpd;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.AnggaranException;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
@@ -210,5 +212,48 @@ public class RealisasiServiceTest {
 		long total = realisasiService.getTotalRealisasiAnggaran(kegiatan);
 		
 		assertNotEquals(0, total);
+	}
+	
+	@Test
+	public void test_RekapSkpd() {
+		List<RekapSkpd> rekap = skpdService.rekap();
+		
+		assertNotEquals(0, rekap.size());
+		assertNotEquals(new Long(0), rekap.get(0).getJumlahKegiatan());
+		assertNotEquals(new Long(0), rekap.get(0).getTotalAnggaran());
+		assertNotEquals(new Long(0), rekap.get(0).getTotalRealisasiAnggaran());
+		assertNotEquals(new Long(0), rekap.get(0).getTotalRealisasiFisik());
+		
+		System.out.println("LOG");
+		System.out.println(rekap.get(0).getJumlahKegiatan());
+		System.out.println(rekap.get(0).getTotalAnggaran());
+		System.out.println(rekap.get(0).getTotalRealisasiAnggaran());
+		System.out.println(rekap.get(0).getTotalRealisasiFisik());
+	}
+	
+	@Test
+	public void test_RekapKegiatan() {
+		List<RekapKegiatan> rekap = kegiatanService.rekap();
+		
+		assertNotEquals(0, rekap.size());
+		assertNotEquals(new Long(0), rekap.get(0).getTotalRealisasiAnggaran());
+		assertNotEquals(new Long(0), rekap.get(0).getTotalRealisasiFisik());
+		
+		System.out.println("LOG");
+		System.out.println(rekap.get(0).getTotalRealisasiAnggaran());
+		System.out.println(rekap.get(0).getTotalRealisasiFisik());
+	}
+	
+	@Test
+	public void test_RekapKegiatanById() {
+		List<RekapKegiatan> rekap = kegiatanService.rekap(skpd);
+		
+		assertNotEquals(0, rekap.size());
+		assertNotEquals(new Long(0), rekap.get(0).getTotalRealisasiAnggaran());
+		assertNotEquals(new Long(0), rekap.get(0).getTotalRealisasiFisik());
+		
+		System.out.println("LOG");
+		System.out.println(rekap.get(0).getTotalRealisasiAnggaran());
+		System.out.println(rekap.get(0).getTotalRealisasiFisik());
 	}
 }
