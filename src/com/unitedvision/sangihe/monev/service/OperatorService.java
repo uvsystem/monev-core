@@ -60,4 +60,12 @@ public interface OperatorService {
 	 * @throws ApplicationException
 	 */
 	List<Operator> get() throws EntityNotExistsException;
+
+	/**
+	 * Ambil semua operator pada SKPD tertentu.
+	 * @param idSkpd
+	 * @return semua operator pada SKPD tertentu.
+	 * @throws EntityNotExistsException
+	 */
+	List<Operator> getBySkpd(int idSkpd) throws EntityNotExistsException;
 }

@@ -15,9 +15,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 	    String username = authentication.getName();
+	    
         
         CustomUser user = userDetailService.loadUserByUsername(username);
  
+       	System.out.println(String.format("LOG: CustomAuthenticationProvide.java: 35: Generated User: %s:%s", user.getUsername(), user.getPassword())); // LOG
         return new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
 	}
 

@@ -17,14 +17,14 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.unitedvision.sangihe.monev.configuration.WebConfig;
+import com.unitedvision.sangihe.configuration.test.TestConfig;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.service.SkpdService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = {TestConfig.class})
 @Transactional
 @TransactionConfiguration (defaultRollback = true)
 public class SkpdControllerTest {

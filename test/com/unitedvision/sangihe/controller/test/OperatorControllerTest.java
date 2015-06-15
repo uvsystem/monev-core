@@ -1,6 +1,7 @@
 package com.unitedvision.sangihe.controller.test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import org.junit.Before;
@@ -18,10 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.unitedvision.sangihe.configuration.test.TestConfig;
-import com.unitedvision.sangihe.monev.entity.Kegiatan;
+import com.unitedvision.sangihe.monev.entity.Operator;
+import com.unitedvision.sangihe.monev.entity.Operator.Role;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
-import com.unitedvision.sangihe.monev.service.KegiatanService;
+import com.unitedvision.sangihe.monev.service.OperatorService;
 import com.unitedvision.sangihe.monev.service.SkpdService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,18 +31,18 @@ import com.unitedvision.sangihe.monev.service.SkpdService;
 @ContextConfiguration(classes = {TestConfig.class})
 @Transactional
 @TransactionConfiguration (defaultRollback = true)
-public class KegiatanControllerTest {
+public class OperatorControllerTest {
 
 	@Autowired
 	private WebApplicationContext wac;
 	@Autowired
 	private SkpdService skpdService;
 	@Autowired
-	private KegiatanService kegiatanService;
+	private OperatorService operatorService;
 	
 	private MockMvc mockMvc;
 	private Skpd skpd;
-	private Kegiatan kegiatan;
+	private Operator operator;
 	
 	@Before
 	public void setup() throws ApplicationException {
@@ -50,52 +52,37 @@ public class KegiatanControllerTest {
 		skpd.setKode("SKPD1");
 		skpd.setNama("Nama SKPD 1");
 		skpdService.simpan(skpd);
-		
-		kegiatan = new Kegiatan();
-		kegiatan.setSkpd(skpd);
-		kegiatan.setNama("Kegiatan 1");
-		kegiatan.setAnggaran(100000000);
-		kegiatan.setAwal(2015);
-		kegiatan.setAkhir(2016);
-		kegiatanService.simpan(kegiatan);
-		
-	}
 
+		operator = new Operator();
+		operator.setSkpd(skpd);
+		operator.setUsername("username");
+		operator.setPassword("password");
+		operator.setRole(Role.ADMIN);
+		operatorService.simpan(operator);
+	}
+	
 	@Test
-	public void test_GetAll() throws Exception {
-		this.mockMvc.perform(get("/kegiatan").contentType(MediaType.APPLICATION_JSON))
-		.andExpect(jsonPath("$.tipe").value("LIST"))
-		.andExpect(jsonPath("$.message").value("Berhasil"));
+	public void test_Login() throws Exception {
+		this.mockMvc.perform(post("/operator/login/username").contentType(MediaType.APPLICATION_JSON)
+			.param("password", "password"))
+			.andExpect(jsonPath("$.tipe").value("ENTITY"))
+			.andExpect(jsonPath("$.message").value("Berhasil"))
+			.andExpect(jsonPath("$.model.role").value("ADMIN"));
+	}
+	
+	@Test
+	public void test_LoginFailed() throws Exception {
+		this.mockMvc.perform(post("/operator/login/username").contentType(MediaType.APPLICATION_JSON)
+				.param("password", "wrong password"))
+				.andExpect(jsonPath("$.model.role").value("ADMIN"))
+				.andExpect(jsonPath("$.tipe").value("ERROR"))
+				.andExpect(jsonPath("$.message").value("Username atau password salah"));
 	}
 	
 	@Test
 	public void test_GetBySkpd() throws Exception {
-		this.mockMvc.perform(get(String.format("/kegiatan/skpd/%d", skpd.getId())).contentType(MediaType.APPLICATION_JSON))
-		.andExpect(jsonPath("$.tipe").value("LIST"))
-		.andExpect(jsonPath("$.message").value("Berhasil"));
-	}
-	
-	@Test
-	public void test_GetById() throws Exception {
-		this.mockMvc.perform(get(String.format("/kegiatan/%d", kegiatan.getId())).contentType(MediaType.APPLICATION_JSON))
-		.andExpect(jsonPath("$.tipe").value("ENTITY"))
-		.andExpect(jsonPath("$.message").value("Berhasil"));
-	}
-	
-	@Test
-	public void test_GetByIdNotFound() throws Exception {
-		this.mockMvc.perform(get("/kegiatan/10000").contentType(MediaType.APPLICATION_JSON))
-		.andExpect(jsonPath("$.tipe").value("ERROR"))
-		.andExpect(jsonPath("$.message").value("Data tidak ditemukan"));
-	}
-	
-	@Test
-	public void test_Insert() {
-		
-	}
-	
-	@Test
-	public void test_InsertDuplicate() {
-		
+		this.mockMvc.perform(get(String.format("/operator/skpd/%d", skpd.getId())).contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.tipe").value("LIST"))
+				.andExpect(jsonPath("$.message").value("Berhasil"));
 	}
 }

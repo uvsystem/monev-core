@@ -16,8 +16,6 @@ public class NullObjectInterceptor {
 		pointcut = "execution(public * com.unitedvision.sangihe.monev.service.impl.*.get*(..) throws com.unitedvision.sangihe.monev.exception.EntityNotExistsException)",
 		returning = "returnValue")
 	public void nullObjectReturned(Object returnValue) throws EntityNotExistsException {
-
-		System.out.println("LOG: nullObjectReturned");
 		
 		if (returnValue == null)
 			throw new EntityNotExistsException("Data tidak ditemukan");

@@ -12,6 +12,7 @@ import com.unitedvision.sangihe.monev.entity.Operator;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.repository.OperatorRepository;
+import com.unitedvision.sangihe.monev.repository.SkpdRepository;
 import com.unitedvision.sangihe.monev.service.OperatorService;
 
 @Service
@@ -20,6 +21,8 @@ public class OperatorServiceImpl implements OperatorService {
 
 	@Autowired
 	private OperatorRepository operatorRepository;
+	@Autowired
+	private SkpdRepository skpdRepository;
 	
 	@Override
 	@Transactional(readOnly = false)
@@ -53,5 +56,12 @@ public class OperatorServiceImpl implements OperatorService {
 	@Override
 	public List<Operator> get() throws EntityNotExistsException {
 		return operatorRepository.findAll();
+	}
+
+	@Override
+	public List<Operator> getBySkpd(int idSkpd) throws EntityNotExistsException {
+		Skpd skpd = skpdRepository.findOne(idSkpd);
+		
+		return get(skpd);
 	}
 }

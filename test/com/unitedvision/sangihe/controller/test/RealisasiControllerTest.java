@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.unitedvision.sangihe.monev.configuration.WebConfig;
+import com.unitedvision.sangihe.configuration.test.TestConfig;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Realisasi;
 import com.unitedvision.sangihe.monev.entity.Skpd;
@@ -30,7 +30,7 @@ import com.unitedvision.sangihe.monev.service.SkpdService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {WebConfig.class})
+@ContextConfiguration(classes = {TestConfig.class})
 @Transactional
 @TransactionConfiguration (defaultRollback = true)
 public class RealisasiControllerTest {
