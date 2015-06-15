@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.unitedvision.sangihe.monev.exception.AnggaranException;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.unitedvision.sangihe.monev.exception.RealisasiException;
 
 /**
@@ -86,8 +86,8 @@ public class Realisasi {
 	}
 
 	/**
-	 * Return buan realisasi.
-	 * @return buan realisasi.
+	 * Return bulan realisasi.
+	 * @return bulan realisasi.
 	 */
 	@Column(name = "bulan")
 	public Month getBulan() {
@@ -116,11 +116,6 @@ public class Realisasi {
 	 * @param fisik
 	 */
 	public void setFisik(float fisik) throws RealisasiException {
-		if (fisik <= 0)
-			throw new RealisasiException("Realisasi fisik harus lebih dari 0%");
-		if (fisik > 100)
-			throw new RealisasiException("Realisasi fisik tidak boleh lebih dari 100%");
-
 		this.fisik = fisik;
 	}
 
@@ -137,12 +132,7 @@ public class Realisasi {
 	 * Atur realisasi anggaran.
 	 * @param anggaran
 	 */
-	public void setAnggaran(long anggaran) throws AnggaranException {
-		if (anggaran <= 0)
-			throw new AnggaranException("Realisasi anggaran harus lebih dari 0");
-		if (anggaran > kegiatan.getAnggaran())
-			throw new AnggaranException("Realisasi anggaran tidak boleh melebihi anggaran kegiatan");
-		
+	public void setAnggaran(long anggaran) {
 		this.anggaran = anggaran;
 	}
 
@@ -152,6 +142,7 @@ public class Realisasi {
 	 */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "kegiatan")
+	@JsonBackReference
 	public Kegiatan getKegiatan() {
 		return kegiatan;
 	}

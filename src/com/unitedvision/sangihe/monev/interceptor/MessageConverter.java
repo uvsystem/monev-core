@@ -55,12 +55,20 @@ public class MessageConverter {
 	private String createMessage(String key) {
 		System.out.println( String.format( "LOG: %s", key) );
 		
-		if (key.contains("username")) {
+		if (key.equals("Credential Error")) {
+			return "Username atau password salah";
+		} else if (key.contains("Kesalahan")) {
+			return key;
+		} else if (key.contains("username")) {
 			return "Username yang anda masukkan sudah digunakan";
 		} else if (key.contains("kode")) {
 			return "Kode yang anda masukkan sudah digunakan";
 		} else if (key.contains("nama")) {
 			return "Nama yang anda masukkan sudah digunakan";
+		} else if (key.contains("skpd")) {
+			return "Kegiatan yang anda masukan sudah terdata";
+		} else if (key.contains("kegiatan")) {
+			return "Realisasi yang anda masukan sudah terdata";
 		} else {
 			return "Undefined Error";
 		}

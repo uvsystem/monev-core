@@ -64,4 +64,9 @@ public class OperatorServiceImpl implements OperatorService {
 		
 		return get(skpd);
 	}
+	
+	@Override
+	public List<Operator> search(String keyword) {
+		return operatorRepository.findByUsernameContaining(keyword);
+	}
 }

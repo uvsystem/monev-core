@@ -6,8 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Transient;
 
 /**
  * Mapping tabel Kegiatan.
@@ -25,8 +24,7 @@ public class Kegiatan extends AbstractKegiatan {
 	 * Return daftar realisasi kegiatan. Daftar ini tidak akan dipublish menjadi JSON.
 	 * @return daftar realisasi.
 	 */
-	@JsonIgnore
-	@OneToMany(mappedBy = "kegiatan", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "kegiatan", fetch = FetchType.EAGER)
 	public List<Realisasi> getListRealisasi() {
 		return listRealisasi;
 	}
@@ -55,5 +53,35 @@ public class Kegiatan extends AbstractKegiatan {
 	public void removeRealisasi(Realisasi realisasi) {
 		realisasi.setKegiatan(null);
 		this.listRealisasi.remove(realisasi);
+	}
+	
+	@Transient
+	public Long getRealisasiAnggaran() {
+		long realisasiAnggaran = 0L;
+		
+		for (Realisasi realisasi : listRealisasi) {
+			realisasiAnggaran += realisasi.getAnggaran();
+		}
+		
+		return realisasiAnggaran;
+	}
+	
+	public void setRealisasiAnggaran(Long realisasiAnggaran) {
+		// Do Nothing
+	}
+
+	@Transient
+	public Float getRealisasiFisik() {
+		float realisasiFisik = 0L;
+		
+		for (Realisasi realisasi : listRealisasi) {
+			realisasiFisik += realisasi.getFisik();
+		}
+		
+		return realisasiFisik;
+	}
+	
+	public void setRealisasiFisik(Long realisasiFisik) {
+		// Do Nothing
 	}
 }

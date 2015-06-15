@@ -33,7 +33,7 @@ public class KegiatanServiceImpl implements KegiatanService {
 	@Transactional(readOnly = false)
 	public Kegiatan simpan(Kegiatan kegiatan) throws WrongYearException, PersistenceException {
 		if (kegiatan.getAkhir() < kegiatan.getAwal())
-			throw new WrongYearException("Tahun akhir sebelum tahun awal");
+			throw new WrongYearException("Kesalahan, tahun akhir sebelum tahun awal");
 		
 		return kegiatanRepository.save(kegiatan);
 	}
@@ -83,4 +83,8 @@ public class KegiatanServiceImpl implements KegiatanService {
 		return rekapKegiatanRepository.rekap(skpd.getId());
 	}
 
+	@Override
+	public List<Kegiatan> search(String keyword) {
+		return kegiatanRepository.findByNamaContaining(keyword);
+	}
 }

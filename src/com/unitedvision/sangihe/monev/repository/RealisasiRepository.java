@@ -18,4 +18,7 @@ public interface RealisasiRepository extends JpaRepository<Realisasi, Integer> {
 	
 	@Query(value = "SELECT COALESCE(SUM(r.anggaran), 0) FROM Realisasi r WHERE r.kegiatan = ?1")
 	long summarizeAnggaran(Kegiatan kegiatan);
+
+	@Query(value = "SELECT COALESCE(SUM(r.fisik), 0) FROM Realisasi r WHERE r.kegiatan = ?1")
+	long summarizeFisik(Kegiatan kegiatan);
 }

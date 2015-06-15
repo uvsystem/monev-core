@@ -12,5 +12,7 @@ public interface OperatorRepository extends JpaRepository<Operator, Integer> {
 	Operator findByUsername(String username);
 	
 	List<Operator> findBySkpd(Skpd skpd);
+
+	List<Operator> findByUsernameContaining(String keyword);
 	
 }

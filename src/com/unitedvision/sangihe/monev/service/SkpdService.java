@@ -51,4 +51,11 @@ public interface SkpdService {
 	 * @return rekap realisasi.
 	 */
 	List<RekapSkpd> rekap();
+
+	/**
+	 * Cari data SKPD.
+	 * @param keyword
+	 * @return data SKPD.
+	 */
+	List<Skpd> search(String keyword);
 }

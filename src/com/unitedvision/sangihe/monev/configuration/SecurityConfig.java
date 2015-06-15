@@ -42,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
         	.antMatchers(HttpMethod.GET, "/skpd/**").permitAll()
         	.antMatchers(HttpMethod.GET, "/kegiatan/**").permitAll()
+			.antMatchers("/operator/login/**").permitAll()
 			.antMatchers("/operator").hasRole(Role.ADMIN.name())
 			.anyRequest().authenticated()
             .and()

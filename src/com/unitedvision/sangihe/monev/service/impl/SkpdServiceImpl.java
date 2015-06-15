@@ -52,4 +52,9 @@ public class SkpdServiceImpl implements SkpdService {
 	public List<RekapSkpd> rekap() {
 		return rekapSkpdRepository.rekap();
 	}
+	
+	@Override
+	public List<Skpd> search(String keyword) {
+		return skpdRepository.findByKodeContainingOrNamaContaining(keyword);
+	}
 }

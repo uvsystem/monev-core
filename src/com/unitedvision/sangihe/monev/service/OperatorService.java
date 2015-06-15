@@ -68,4 +68,11 @@ public interface OperatorService {
 	 * @throws EntityNotExistsException
 	 */
 	List<Operator> getBySkpd(int idSkpd) throws EntityNotExistsException;
+
+	/**
+	 * Cari data operator.
+	 * @param keyword
+	 * @return data operator.
+	 */
+	List<Operator> search(String keyword);
 }

@@ -2,9 +2,12 @@ package com.unitedvision.sangihe.monev.service;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Realisasi;
 import com.unitedvision.sangihe.monev.entity.Skpd;
+import com.unitedvision.sangihe.monev.exception.AnggaranException;
 import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.exception.RealisasiException;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
@@ -21,9 +24,11 @@ public interface RealisasiService {
 	 * Simpan atau update data realisasi.
 	 * @param realisasi
 	 * @return Realisasi dengan data baru.
+	 * @throws AnggaranException 
+	 * @throws PersistenceException 
 	 * @throws ApplicationException
 	 */
-	Realisasi simpan(Realisasi realisasi) throws WrongYearException, RealisasiException;
+	Realisasi simpan(Realisasi realisasi) throws WrongYearException, RealisasiException, PersistenceException, AnggaranException;
 
 	/**
 	 * Hapus data realisasi.

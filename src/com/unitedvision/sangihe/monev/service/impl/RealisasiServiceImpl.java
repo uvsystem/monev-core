@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Realisasi;
 import com.unitedvision.sangihe.monev.entity.Skpd;
+import com.unitedvision.sangihe.monev.exception.AnggaranException;
 import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
 import com.unitedvision.sangihe.monev.exception.RealisasiException;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
@@ -29,14 +30,28 @@ public class RealisasiServiceImpl implements RealisasiService {
 	
 	@Override
 	@Transactional(readOnly = false)
-	public Realisasi simpan(Realisasi realisasi) throws WrongYearException, RealisasiException, PersistenceException {
+	public Realisasi simpan(Realisasi realisasi) throws WrongYearException, RealisasiException, PersistenceException, AnggaranException {
 		if (realisasi.getTahun() < realisasi.getKegiatan().getAwal()
 			|| realisasi.getTahun() > realisasi.getKegiatan().getAkhir())
-			throw new WrongYearException("Tahun realisasi tidak sesuai dengan tahun kegiatan");
+			throw new WrongYearException("Kesalahan: Tahun realisasi tidak sesuai dengan tahun kegiatan");
 		
-		long currentRealisasi = realisasiRepository.summarizeAnggaran(realisasi.getKegiatan());
-		if (currentRealisasi + realisasi.getAnggaran() > realisasi.getKegiatan().getAnggaran())
-			throw new RealisasiException("Total realisasi anggaran melebihi anggaran kegiatan");
+		if (realisasi.getAnggaran() <= 0)
+			throw new AnggaranException("Kesalahan: Realisasi anggaran harus lebih dari 0");
+		if (realisasi.getAnggaran() > realisasi.getKegiatan().getAnggaran())
+			throw new AnggaranException("Kesalahan: Realisasi anggaran tidak boleh melebihi anggaran kegiatan");
+
+		if (realisasi.getFisik() <= 0)
+			throw new RealisasiException("Kesalahan: Realisasi fisik harus lebih dari 0%");
+		if (realisasi.getFisik() > 100)
+			throw new RealisasiException("Kesalahan: Realisasi fisik tidak boleh lebih dari 100%");
+
+		long currentRealisasiAnggaran = realisasiRepository.summarizeAnggaran(realisasi.getKegiatan());
+		if (currentRealisasiAnggaran + realisasi.getAnggaran() > realisasi.getKegiatan().getAnggaran())
+			throw new RealisasiException("Kesalahan: Total realisasi anggaran melebihi anggaran kegiatan");
+		
+		long currentRealisasiFisik = realisasiRepository.summarizeFisik(realisasi.getKegiatan());
+		if (currentRealisasiFisik + realisasi.getFisik() > 100)
+			throw new RealisasiException("Kesalahan: Total realisasi fisik melebihi 100%");
 
 		return realisasiRepository.save(realisasi);
 	}

@@ -53,4 +53,11 @@ public class SkpdController extends AbstractController {
 		
 		return ListEntityRestMessage.createListSkpd(list);
 	}
+
+	@RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
+	public @ResponseBody ListEntityRestMessage<Skpd> search(@PathVariable String keyword) throws ApplicationException {
+		List<Skpd> list = skpdService.search(keyword);
+		
+		return ListEntityRestMessage.createListSkpd(list);
+	}
 }

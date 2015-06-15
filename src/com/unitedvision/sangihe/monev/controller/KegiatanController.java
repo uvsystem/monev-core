@@ -60,4 +60,11 @@ public class KegiatanController extends AbstractController {
 		
 		return ListEntityRestMessage.createListKegiatan(list);
 	}
+	
+	@RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
+	public @ResponseBody ListEntityRestMessage<Kegiatan> search(@PathVariable String keyword) throws ApplicationException {
+		List<Kegiatan> list = kegiatanService.search(keyword);
+		
+		return ListEntityRestMessage.createListKegiatan(list);
+	}
 }
