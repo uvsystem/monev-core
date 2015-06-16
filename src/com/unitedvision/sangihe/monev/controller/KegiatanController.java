@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
+import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.service.KegiatanService;
 import com.unitedvision.sangihe.monev.util.EntityRestMessage;
@@ -66,5 +67,19 @@ public class KegiatanController extends AbstractController {
 		List<Kegiatan> list = kegiatanService.search(keyword);
 		
 		return ListEntityRestMessage.createListKegiatan(list);
+	}
+	
+	@RequestMapping(value = "/rekap/skpd/{idSkpd}", method = RequestMethod.GET)
+	public @ResponseBody ListEntityRestMessage<RekapKegiatan> rekap(@PathVariable Integer idSkpd) {
+		List<RekapKegiatan> list = kegiatanService.rekap(idSkpd);
+		
+		return ListEntityRestMessage.createListRekapKegiatan(list);
+	}
+	
+	@RequestMapping(value = "/rekap", method = RequestMethod.GET)
+	public @ResponseBody ListEntityRestMessage<RekapKegiatan> rekap() {
+		List<RekapKegiatan> list = kegiatanService.rekap();
+		
+		return ListEntityRestMessage.createListRekapKegiatan(list);
 	}
 }

@@ -84,6 +84,13 @@ public class KegiatanServiceImpl implements KegiatanService {
 	}
 
 	@Override
+	public List<RekapKegiatan> rekap(Integer idSkpd) {
+		Skpd skpd = skpdRepository.findOne(idSkpd);
+		
+		return rekap(skpd);
+	}
+	
+	@Override
 	public List<Kegiatan> search(String keyword) {
 		return kegiatanRepository.findByNamaContaining(keyword);
 	}

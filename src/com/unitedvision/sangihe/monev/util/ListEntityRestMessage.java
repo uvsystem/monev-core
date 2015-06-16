@@ -5,6 +5,8 @@ import java.util.List;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Operator;
 import com.unitedvision.sangihe.monev.entity.Realisasi;
+import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
+import com.unitedvision.sangihe.monev.entity.RekapSkpd;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 
 public class ListEntityRestMessage<T> extends RestMessage {
@@ -41,5 +43,13 @@ public class ListEntityRestMessage<T> extends RestMessage {
 	
 	public static ListEntityRestMessage<Realisasi> createListRealisasi(List<Realisasi> realisasi) {
 		return new ListEntityRestMessage<Realisasi>(realisasi);
+	}
+
+	public static ListEntityRestMessage<RekapSkpd> createListRekapSkpd(List<RekapSkpd> rekapSkpd) {
+		return new ListEntityRestMessage<RekapSkpd>(rekapSkpd);
+	}
+
+	public static ListEntityRestMessage<RekapKegiatan> createListRekapKegiatan(List<RekapKegiatan> rekapKegiatan) {
+		return new ListEntityRestMessage<RekapKegiatan>(rekapKegiatan);
 	}
 }

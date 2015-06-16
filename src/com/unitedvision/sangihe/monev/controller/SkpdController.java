@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.unitedvision.sangihe.monev.entity.RekapSkpd;
 import com.unitedvision.sangihe.monev.entity.Skpd;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.service.SkpdService;
@@ -59,5 +60,12 @@ public class SkpdController extends AbstractController {
 		List<Skpd> list = skpdService.search(keyword);
 		
 		return ListEntityRestMessage.createListSkpd(list);
+	}
+	
+	@RequestMapping(value = "/rekap", method = RequestMethod.GET)
+	public @ResponseBody ListEntityRestMessage<RekapSkpd> rekap() {
+		List<RekapSkpd> list = skpdService.rekap();
+		
+		return ListEntityRestMessage.createListRekapSkpd(list);
 	}
 }

@@ -87,6 +87,13 @@ public interface KegiatanService {
 	List<RekapKegiatan> rekap(Skpd skpd);
 
 	/**
+	 * Rekap realisasi seua kegiatan SKPD.
+	 * @param idSkpd
+	 * @return rekap realisasi kegiatan.
+	 */
+	List<RekapKegiatan> rekap(Integer idSkpd);
+
+	/**
 	 * Cari data kegiatan.
 	 * @param keyword
 	 * @return data kegiatan.
