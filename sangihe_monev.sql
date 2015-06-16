@@ -1,5 +1,3 @@
-drop database if exists sangihe_monev;
-create database sangihe_monev;
 use sangihe_monev;
 
 create table skpd(
