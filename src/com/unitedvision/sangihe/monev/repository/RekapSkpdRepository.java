@@ -13,7 +13,7 @@ public interface RekapSkpdRepository extends JpaRepository<RekapSkpd, Integer> {
 			+ "(SELECT SUM(k.anggaran) FROM kegiatan k WHERE k.skpd = s.id) AS total_anggaran, "
 			+ "(SELECT SUM(r.anggaran) FROM realisasi r WHERE r.kegiatan = k.id) AS total_realisasi_anggaran, "
 			+ "(SELECT SUM(r.fisik) FROM realisasi r WHERE r.kegiatan = k.id) AS total_realisasi_fisik, "
-			+ "(SELECT COUNT(*) FROM kegiatan where k.skpd = s.id) AS jumlah_kegiatan "
+			+ "(SELECT COUNT(*) FROM kegiatan in_k where in_k.skpd = s.id) AS jumlah_kegiatan "
 			+ "FROM skpd s INNER JOIN kegiatan k "
 			+ "ON s.id = k.skpd", nativeQuery = true)
 	List<RekapSkpd> rekap();
