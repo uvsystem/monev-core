@@ -32,6 +32,11 @@ public class Program {
 		super();
 	}
 
+	public Program(UnitKerja unitKerja) {
+		super();
+		setUnitKerja(unitKerja);
+	}
+
 	@Id
 	@GeneratedValue
 	public Long getId() {

@@ -33,29 +33,29 @@ public class KegiatanController {
 		return RestMessage.success();
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE)
-	public @ResponseBody RestMessage hapus(@RequestBody Kegiatan kegiatan) throws ApplicationException {
-		kegiatanService.hapus(kegiatan);
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+	public @ResponseBody RestMessage hapus(@PathVariable Long id) throws ApplicationException {
+		kegiatanService.hapus(id);
 		
 		return RestMessage.success();
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public @ResponseBody EntityRestMessage<Kegiatan> get(@PathVariable Integer id) throws ApplicationException {
+	public @ResponseBody EntityRestMessage<Kegiatan> get(@PathVariable Long id) throws ApplicationException {
 		Kegiatan kegiatan = kegiatanService.get(id);
 		
 		return EntityRestMessage.create(kegiatan);
 	}
 	
 	@RequestMapping(value = "/satker/{id}", method = RequestMethod.GET)
-	public @ResponseBody ListEntityRestMessage<Kegiatan> getBynitKerja(@PathVariable Integer id) throws ApplicationException {
+	public @ResponseBody ListEntityRestMessage<Kegiatan> getBynitKerja(@PathVariable Long id) throws ApplicationException {
 		List<Kegiatan> list = kegiatanService.getByUnitKerja(id);
 		
 		return ListEntityRestMessage.createListKegiatan(list);
 	}
 	
 	@RequestMapping(value = "/program/{id}", method = RequestMethod.GET)
-	public @ResponseBody ListEntityRestMessage<Kegiatan> getByProgram(@PathVariable Integer id) throws ApplicationException {
+	public @ResponseBody ListEntityRestMessage<Kegiatan> getByProgram(@PathVariable Long id) throws ApplicationException {
 		List<Kegiatan> list = kegiatanService.getByProgram(id);
 		
 		return ListEntityRestMessage.createListKegiatan(list);

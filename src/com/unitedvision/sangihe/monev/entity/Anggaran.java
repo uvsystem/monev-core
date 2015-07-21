@@ -27,6 +27,11 @@ public class Anggaran {
 		super();
 	}
 
+	public Anggaran(Kegiatan kegiatan) {
+		super();
+		setKegiatan(kegiatan);
+	}
+
 	@Id
 	@GeneratedValue
 	public Long getId() {

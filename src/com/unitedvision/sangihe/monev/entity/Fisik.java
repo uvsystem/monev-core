@@ -32,6 +32,11 @@ public class Fisik {
 		daftarFoto = new HashSet<>();
 	}
 
+	public Fisik(Kegiatan kegiatan) {
+		this();
+		setKegiatan(kegiatan);
+	}
+
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -87,6 +92,16 @@ public class Fisik {
 
 	public void setDaftarFoto(Set<Foto> daftarFoto) {
 		this.daftarFoto = daftarFoto;
+	}
+	
+	public void addFoto(Foto foto) {
+		foto.setFisik(this);
+		daftarFoto.add(foto);
+	}
+	
+	public void removeFoto(Foto foto) {
+		foto.setFisik(null);
+		daftarFoto.remove(foto);
 	}
 
 	@Override

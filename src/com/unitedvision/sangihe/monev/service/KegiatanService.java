@@ -8,16 +8,16 @@ public interface KegiatanService {
 
 	Kegiatan simpan(Kegiatan kegiatan);
 
-	void hapus(Kegiatan kegiatan);
+	void hapus(Long id);
 
-	Kegiatan get(Integer id);
+	Kegiatan get(Long id);
 
-	List<Kegiatan> getByUnitKerja(Integer id);
+	List<Kegiatan> getByUnitKerja(Long id);
 
 	List<Kegiatan> get();
 
 	List<Kegiatan> cari(String keyword);
 
-	List<Kegiatan> getByProgram(Integer id);
+	List<Kegiatan> getByProgram(Long id);
 
 }

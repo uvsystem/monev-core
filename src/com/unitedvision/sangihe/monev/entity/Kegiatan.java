@@ -54,6 +54,11 @@ public class Kegiatan {
 		daftarFisik = new ArrayList<>();
 	}
 
+	public Kegiatan(Program program) {
+		this();
+		setProgram(program);
+	}
+
 	@Id
 	@GeneratedValue
 	public Long getId() {
