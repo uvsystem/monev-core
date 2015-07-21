@@ -2,8 +2,7 @@ package com.unitedvision.sangihe.monev.security;
 
 import org.springframework.stereotype.Component;
 
-import com.unitedvision.sangihe.monev.entity.Operator;
-import com.unitedvision.sangihe.monev.entity.Operator.Role;
+import com.unitedvision.sangihe.monev.entity.rest.Operator;
 
 /**
  * Class that provides authorization mechanism.
@@ -20,7 +19,7 @@ public class AuthorizationProvider {
 	 * @param operator
 	 * @return User's {@code Role}.
 	 */
-	public Role getUserRole(final Operator operator) {
+	public Operator.Role getUserRole(final Operator operator) {
 		return operator.getRole();
 	}
 
@@ -29,10 +28,10 @@ public class AuthorizationProvider {
 	 * @param role
 	 * @return User's role in string format.
 	 */
-	public String getUserRoleStr(final Role role) {
-		if (role == Role.ADMIN) {
+	public String getUserRoleStr(final Operator.Role role) {
+		if (role == Operator.Role.ADMIN) {
 			return "admin";
-		} else if (role == Role.OPERATOR) {
+		} else if (role == Operator.Role.OPERATOR) {
 			return "operator";
 		} else {
 			return "guest";

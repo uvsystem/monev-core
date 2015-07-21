@@ -10,10 +10,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.unitedvision.sangihe.monev.entity.Operator;
-import com.unitedvision.sangihe.monev.entity.Operator.Role;
-import com.unitedvision.sangihe.monev.exception.EntityNotExistsException;
-import com.unitedvision.sangihe.monev.service.OperatorService;
+import com.unitedvision.sangihe.monev.configuration.ApplicationConfig;
+import com.unitedvision.sangihe.monev.entity.rest.Operator;
+import com.unitedvision.sangihe.monev.entity.rest.Operator.Role;
+import com.unitedvision.sangihe.monev.entity.rest.Pegawai;
+import com.unitedvision.sangihe.monev.entity.rest.Token;
+import com.unitedvision.sangihe.monev.exception.UnauthenticatedAccessException;
+import com.unitedvision.sangihe.monev.service.TokenService;
 
 /**
  * Custom Authentication Provider.
@@ -23,18 +26,22 @@ import com.unitedvision.sangihe.monev.service.OperatorService;
  */
 @Service("authService")
 public class CustomUserDetailsService implements UserDetailsService {
+
 	@Autowired
-	private OperatorService operatorService;
+	private TokenService tokenService;
 
 	@Override
 	public CustomUser loadUserByUsername(String username) throws UsernameNotFoundException {
+		Token token = tokenService.get(username);
+		Operator operator;
+
 		try {
-			Operator operator = operatorService.get(username);
-			
-			return new CustomUser(username, operator.getPassword(), operator, getAuthorities(operator.getRole()));
-		} catch (EntityNotExistsException e) {
-			throw new UsernameNotFoundException(e.getMessage());
+			operator = getOperator(token.getpegawai());
+		} catch (UnauthenticatedAccessException e) {
+			throw new UsernameNotFoundException("");
 		}
+		
+		return new CustomUser(operator.getUsername(), token.getToken(), operator, getAuthorities(operator.getRole()));
 	}
 
 	public static List<GrantedAuthority> getAuthorities(Role role) {
@@ -48,5 +55,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 		}
 
 		return authList;
+	}
+	
+	private Operator getOperator(Pegawai pegawai) throws UnauthenticatedAccessException {
+		List<Operator> daftarOperator = pegawai.getDaftarOperator();
+
+		for (Operator operator : daftarOperator) {
+			if (operator.getAplikasi().getKode().equals(ApplicationConfig.KODE_APLIKASI))
+				return operator;
+		}
+		
+		throw new UnauthenticatedAccessException("Aplikasi Kepegawaian tidak bisa anda akses");
 	}
 }

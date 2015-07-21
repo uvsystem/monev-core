@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomAuthenticationProvider implements AuthenticationProvider {
+	
 	@Autowired
 	private CustomUserDetailsService userDetailService;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 	    String username = authentication.getName();
-	    
         
         CustomUser user = userDetailService.loadUserByUsername(username);
  

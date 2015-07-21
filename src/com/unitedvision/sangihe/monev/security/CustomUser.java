@@ -5,7 +5,8 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import com.unitedvision.sangihe.monev.entity.Operator;
+import com.unitedvision.sangihe.monev.entity.rest.Operator;
+import com.unitedvision.sangihe.monev.entity.rest.Pegawai;
 
 public class CustomUser extends User {
 	private static final long serialVersionUID = 1L;
@@ -15,12 +16,12 @@ public class CustomUser extends User {
 		super(username, password, authorities);
 		this.operator = operator;
 	}
-
-	public void setOperator(Operator operator) {
-		this.operator = operator;
-	}
 	
 	public Operator getOperator() {
 		return operator;
+	}
+	
+	public Pegawai getPegawai() {
+		return operator.getPegawai();
 	}
 }

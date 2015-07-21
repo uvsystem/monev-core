@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
-import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.service.KegiatanService;
 import com.unitedvision.sangihe.monev.util.EntityRestMessage;
@@ -22,7 +21,7 @@ import com.unitedvision.sangihe.monev.util.RestMessage;
 
 @Controller
 @RequestMapping("/kegiatan")
-public class KegiatanController extends AbstractController {
+public class KegiatanController {
 
 	@Autowired
 	private KegiatanService kegiatanService;
@@ -48,9 +47,16 @@ public class KegiatanController extends AbstractController {
 		return EntityRestMessage.create(kegiatan);
 	}
 	
-	@RequestMapping(value = "/skpd/{idSkpd}", method = RequestMethod.GET)
-	public @ResponseBody ListEntityRestMessage<Kegiatan> getBySkpd(@PathVariable Integer idSkpd) throws ApplicationException {
-		List<Kegiatan> list = kegiatanService.getBySkpd(idSkpd);
+	@RequestMapping(value = "/satker/{id}", method = RequestMethod.GET)
+	public @ResponseBody ListEntityRestMessage<Kegiatan> getBynitKerja(@PathVariable Integer id) throws ApplicationException {
+		List<Kegiatan> list = kegiatanService.getByUnitKerja(id);
+		
+		return ListEntityRestMessage.createListKegiatan(list);
+	}
+	
+	@RequestMapping(value = "/program/{id}", method = RequestMethod.GET)
+	public @ResponseBody ListEntityRestMessage<Kegiatan> getByProgram(@PathVariable Integer id) throws ApplicationException {
+		List<Kegiatan> list = kegiatanService.getByProgram(id);
 		
 		return ListEntityRestMessage.createListKegiatan(list);
 	}
@@ -64,22 +70,8 @@ public class KegiatanController extends AbstractController {
 	
 	@RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
 	public @ResponseBody ListEntityRestMessage<Kegiatan> search(@PathVariable String keyword) throws ApplicationException {
-		List<Kegiatan> list = kegiatanService.search(keyword);
+		List<Kegiatan> list = kegiatanService.cari(keyword);
 		
 		return ListEntityRestMessage.createListKegiatan(list);
-	}
-	
-	@RequestMapping(value = "/rekap/skpd/{idSkpd}", method = RequestMethod.GET)
-	public @ResponseBody ListEntityRestMessage<RekapKegiatan> rekap(@PathVariable Integer idSkpd) {
-		List<RekapKegiatan> list = kegiatanService.rekap(idSkpd);
-		
-		return ListEntityRestMessage.createListRekapKegiatan(list);
-	}
-	
-	@RequestMapping(value = "/rekap", method = RequestMethod.GET)
-	public @ResponseBody ListEntityRestMessage<RekapKegiatan> rekap() {
-		List<RekapKegiatan> list = kegiatanService.rekap();
-		
-		return ListEntityRestMessage.createListRekapKegiatan(list);
 	}
 }

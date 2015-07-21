@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import com.unitedvision.sangihe.monev.entity.Operator.Role;
 import com.unitedvision.sangihe.monev.security.CustomAuthenticationProvider;
 
 @Configuration
@@ -40,10 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.csrf().disable()
         .authorizeRequests()
         	.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-        	.antMatchers(HttpMethod.GET, "/skpd/**").permitAll()
-        	.antMatchers(HttpMethod.GET, "/kegiatan/**").permitAll()
-			.antMatchers("/operator/login/**").permitAll()
-			.antMatchers("/operator").hasRole(Role.ADMIN.name())
 			.anyRequest().authenticated()
             .and()
         .httpBasic();

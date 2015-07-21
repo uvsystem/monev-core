@@ -35,7 +35,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class ApplicationConfig {
 
     
-    @Bean
+    public static final String KODE_APLIKASI = "MONEV";
+
+	@Bean
     public HibernateJpaVendorAdapter jpaVendorAdapter() {
         return new HibernateJpaVendorAdapter();
     }
