@@ -12,12 +12,12 @@ public interface KegiatanService {
 
 	Kegiatan get(Long id);
 
-	List<Kegiatan> getByUnitKerja(Long id);
-
 	List<Kegiatan> get();
 
-	List<Kegiatan> cari(String keyword);
+	List<Kegiatan> getByUnitKerja(Long id);
 
 	List<Kegiatan> getByProgram(Long id);
+
+	List<Kegiatan> cari(String keyword);
 
 }

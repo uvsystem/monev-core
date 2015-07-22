@@ -1,5 +1,6 @@
 package com.unitedvision.sangihe.monev.service;
 
+import java.time.Month;
 import java.util.List;
 
 import com.unitedvision.sangihe.monev.entity.Anggaran;
@@ -13,6 +14,8 @@ public interface AnggaranService {
 	void hapus(Long id);
 	
 	Anggaran get(Long id);
+	
+	Anggaran get(Long idKegiatan, Integer tahun, Month bulan);
 	
 	List<Anggaran> getByProgram(Long id);
 	

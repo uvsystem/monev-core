@@ -3,6 +3,7 @@ package com.unitedvision.sangihe.service.test;
 import static org.junit.Assert.*;
 
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.unitedvision.sangihe.monev.configuration.ApplicationConfig;
 import com.unitedvision.sangihe.monev.entity.Fisik;
+import com.unitedvision.sangihe.monev.entity.Foto;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Program;
 import com.unitedvision.sangihe.monev.entity.UnitKerja;
@@ -74,6 +76,7 @@ public class FisikServiceTest {
 		fisik = new Fisik(kegiatan);
 		fisik.setTahun(2015);
 		fisik.setBulan(Month.JANUARY);
+		fisik.setRealisasi(8);
 		fisikService.simpan(fisik);
 		
 		assertEquals(1, fisikRepository.count());
@@ -90,14 +93,27 @@ public class FisikServiceTest {
 	}
 	
 	@Test
-	public void test_realisasi() {
-		Fisik fisik = fisikService.realisasi(id, 7, null);
+	public void test_tambah_foto() {
+		Fisik fisik = fisikService.tambahFoto(id, "http://picasa.com/sangihe/01/001.jpg");
 		
 		assertNotNull(fisik);
-		assertEquals(this.fisik.getId(), fisik.getId());
-		assertEquals(new Long(7), fisik.getRealisasi());
+		assertEquals(id, fisik.getId());
+		assertNotNull(fisik.getDaftarFoto());
+		assertEquals(1, fisik.getDaftarFoto().size());
+	}
+	
+	@Test
+	public void test_tambah_foto_list() {
+		List<Foto> daftarFoto = new ArrayList<Foto>();
+		daftarFoto.add(new Foto("http://picasa.com/sangihe/01/001.jpg"));
+		daftarFoto.add(new Foto("http://picasa.com/sangihe/01/001.jpg"));
 		
-		assertEquals(1, fisikRepository.count());
+		Fisik fisik = fisikService.tambahFoto(id, daftarFoto);
+		
+		assertNotNull(fisik);
+		assertEquals(id, fisik.getId());
+		assertNotNull(fisik.getDaftarFoto());
+		assertEquals(2, fisik.getDaftarFoto().size());
 	}
 	
 	@Test

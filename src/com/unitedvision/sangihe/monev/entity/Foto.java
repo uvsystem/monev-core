@@ -5,6 +5,8 @@ import javax.persistence.Embeddable;
 
 import org.hibernate.annotations.Parent;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Embeddable
 public class Foto {
 
@@ -15,6 +17,12 @@ public class Foto {
 		super();
 	}
 
+	public Foto(String location) {
+		super();
+		setLocation(location);
+	}
+
+	@JsonIgnore
 	@Parent
 	public Fisik getFisik() {
 		return fisik;

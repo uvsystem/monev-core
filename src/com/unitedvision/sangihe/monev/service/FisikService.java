@@ -3,12 +3,15 @@ package com.unitedvision.sangihe.monev.service;
 import java.util.List;
 
 import com.unitedvision.sangihe.monev.entity.Fisik;
+import com.unitedvision.sangihe.monev.entity.Foto;
 
 public interface FisikService {
 	
 	Fisik simpan(Fisik fisik);
 	
-	Fisik realisasi(Long id, Integer persentaseRealisasi, List<String> daftarFoto);
+	Fisik tambahFoto(Long id, String lokasiFoto);
+	
+	Fisik tambahFoto(Long id, List<Foto> daftarFoto);
 	
 	void hapus(Long id);
 	

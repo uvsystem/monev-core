@@ -56,6 +56,8 @@ public class ProgramServiceTest {
 		programService.simpan(program);
 		
 		assertEquals(1, programRepository.count());
+		
+		id = program.getId();
 	}
 
 	@Test(expected = PersistenceException.class)
@@ -65,13 +67,11 @@ public class ProgramServiceTest {
 		program.setTahunAwal(2015);
 		program.setTahunAkhir(2015);
 		programService.simpan(program);
-		
-		id = program.getId();
 	}
 
 	@Test
 	public void test_hapus() {
-		programService.hapus(program.getId());
+		programService.hapus(id);
 		
 		assertEquals(0, programRepository.count());
 	}
