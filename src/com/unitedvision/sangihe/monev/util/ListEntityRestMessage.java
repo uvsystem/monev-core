@@ -3,6 +3,7 @@ package com.unitedvision.sangihe.monev.util;
 import java.util.List;
 
 import com.unitedvision.sangihe.monev.entity.Anggaran;
+import com.unitedvision.sangihe.monev.entity.Fisik;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Program;
 
@@ -36,5 +37,9 @@ public class ListEntityRestMessage<T> extends RestMessage {
 
 	public static ListEntityRestMessage<Anggaran> createListAnggaran(List<Anggaran> daftarAnggaran) {
 		return new ListEntityRestMessage<Anggaran>(daftarAnggaran);
+	}
+
+	public static ListEntityRestMessage<Fisik> createListFisik(List<Fisik> daftarFisik) {
+		return new ListEntityRestMessage<Fisik>(daftarFisik);
 	}
 }

@@ -1,6 +1,7 @@
 package com.unitedvision.sangihe.monev.util;
 
 import com.unitedvision.sangihe.monev.entity.Anggaran;
+import com.unitedvision.sangihe.monev.entity.Fisik;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Program;
 
@@ -34,5 +35,9 @@ public class EntityRestMessage<T> extends RestMessage {
 	
 	public static EntityRestMessage<Anggaran> create(Anggaran anggaran) {
 		return new EntityRestMessage<Anggaran>(anggaran);
+	}
+	
+	public static EntityRestMessage<Fisik> create(Fisik fisik) {
+		return new EntityRestMessage<Fisik>(fisik);
 	}
 }

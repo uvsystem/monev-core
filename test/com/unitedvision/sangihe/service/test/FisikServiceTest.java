@@ -3,8 +3,9 @@ package com.unitedvision.sangihe.service.test;
 import static org.junit.Assert.*;
 
 import java.time.Month;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.PersistenceException;
 
@@ -25,6 +26,8 @@ import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Program;
 import com.unitedvision.sangihe.monev.entity.UnitKerja;
 import com.unitedvision.sangihe.monev.entity.UnitKerja.TipeUnitKerja;
+import com.unitedvision.sangihe.monev.exception.FisikException;
+import com.unitedvision.sangihe.monev.exception.WrongYearException;
 import com.unitedvision.sangihe.monev.repository.FisikRepository;
 import com.unitedvision.sangihe.monev.repository.UnitKerjaRepository;
 import com.unitedvision.sangihe.monev.service.FisikService;
@@ -56,7 +59,7 @@ public class FisikServiceTest {
 	private Long id;
 
 	@Before
-	public void setup() {
+	public void setup() throws FisikException, WrongYearException {
 		unitKerja = new UnitKerja();
 		unitKerja.setNama("Dinas Pariwisata");
 		unitKerja.setSingkatan("DISPAR");
@@ -85,8 +88,36 @@ public class FisikServiceTest {
 		id = fisik.getId();
 	}
 	
+	@Test
+	public void test_simpan() throws FisikException, WrongYearException {
+		fisik = new Fisik();
+		fisik.setTahun(2015);
+		fisik.setBulan(Month.FEBRUARY);
+		fisik.setRealisasi(10);
+		fisikService.simpan(fisik, kegiatan.getId());
+		
+		assertEquals(2, fisikRepository.count());
+	}
+	
+	@Test(expected = WrongYearException.class)
+	public void test_simpan_salah_tahun() throws FisikException, WrongYearException {
+		fisik = new Fisik(kegiatan);
+		fisik.setTahun(2016);
+		fisik.setBulan(Month.JANUARY);
+		fisikService.simpan(fisik);
+	}
+	
+	@Test(expected = FisikException.class)
+	public void test_simpan_salah_realisasi() throws FisikException, WrongYearException {
+		fisik = new Fisik(kegiatan);
+		fisik.setTahun(2015);
+		fisik.setBulan(Month.JANUARY);
+		fisik.setRealisasi(101);
+		fisikService.simpan(fisik);
+	}
+	
 	@Test(expected = PersistenceException.class)
-	public void test_simpan_duplicate() {
+	public void test_simpan_duplicate() throws FisikException, WrongYearException {
 		fisik = new Fisik(kegiatan);
 		fisik.setTahun(2015);
 		fisik.setBulan(Month.JANUARY);
@@ -95,8 +126,8 @@ public class FisikServiceTest {
 
 	@Ignore
 	@Test
-	public void test_tambah_foto() {
-		Fisik fisik = fisikService.tambahFoto(id, "http://picasa.com/sangihe/01/001.jpg");
+	public void test_tambah_foto() throws FisikException, WrongYearException {
+		Fisik fisik = fisikService.tambahFoto(id, new Foto("http://picasa.com/sangihe/01/001.jpg"));
 		
 		assertNotNull(fisik);
 		assertEquals(id, fisik.getId());
@@ -106,8 +137,8 @@ public class FisikServiceTest {
 	
 	@Ignore
 	@Test
-	public void test_tambah_foto_list() {
-		List<Foto> daftarFoto = new ArrayList<Foto>();
+	public void test_tambah_foto_list() throws FisikException, WrongYearException {
+		Set<Foto> daftarFoto = new HashSet<>();
 		daftarFoto.add(new Foto("http://picasa.com/sangihe/01/001.jpg"));
 		daftarFoto.add(new Foto("http://picasa.com/sangihe/01/001.jpg"));
 		
@@ -127,8 +158,16 @@ public class FisikServiceTest {
 	}
 	
 	@Test
-	public void test_get() {
+	public void test_get_by_id() {
 		Fisik fisik = fisikService.get(id);
+		
+		assertNotNull(fisik);
+		assertEquals(this.fisik, fisik);
+	}
+	
+	@Test
+	public void test_get() {
+		Fisik fisik = fisikService.get(kegiatan.getId(), 2015, Month.JANUARY);
 		
 		assertNotNull(fisik);
 		assertEquals(this.fisik, fisik);

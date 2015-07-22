@@ -29,6 +29,8 @@ import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Program;
 import com.unitedvision.sangihe.monev.entity.UnitKerja;
 import com.unitedvision.sangihe.monev.entity.UnitKerja.TipeUnitKerja;
+import com.unitedvision.sangihe.monev.exception.FisikException;
+import com.unitedvision.sangihe.monev.exception.WrongYearException;
 import com.unitedvision.sangihe.monev.repository.FisikRepository;
 import com.unitedvision.sangihe.monev.repository.UnitKerjaRepository;
 import com.unitedvision.sangihe.monev.service.FisikService;
@@ -65,7 +67,7 @@ public class FisikControllerTest {
 	private Long id;
 	
 	@Before
-	public void setup() {
+	public void setup() throws FisikException, WrongYearException {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 		
 		unitKerja = new UnitKerja();
@@ -97,9 +99,24 @@ public class FisikControllerTest {
 	}
 	
 	@Test
+	public void test_simpan() throws Exception {
+		this.mockMvc.perform(
+				post(String.format("/fisik/%d", kegiatan.getId()))
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("{"
+						+ "\"tahun\":\"2015\", "
+						+ "\"bulan\":\"FEBRUARY\", "
+						+ "\"realisasi\":\"10\""
+						+ "}")
+			)
+			.andExpect(jsonPath("$.message").value("Berhasil"))
+			.andExpect(jsonPath("$.tipe").value("SUCCESS"));
+	}
+	
+	@Test
 	public void test_simpan_duplicate() throws Exception {
 		this.mockMvc.perform(
-				post(String.format("/fisik/kegiatan/%d", kegiatan.getId()))
+				post(String.format("/fisik/%d", kegiatan.getId()))
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("{"
 						+ "\"tahun\":\"2015\", "
@@ -107,14 +124,44 @@ public class FisikControllerTest {
 						+ "\"realisasi\":\"10\""
 						+ "}")
 			)
-			.andExpect(jsonPath("$.message").value("Anggaran sudah terdaftar"))
+			.andExpect(jsonPath("$.message").value("Fisik sudah terdaftar"))
 			.andExpect(jsonPath("$.tipe").value("ERROR"));
 	}
 	
 	@Test
-	public void test_realisasi() throws Exception {
+	public void test_simpan_salah_tahun() throws Exception {
 		this.mockMvc.perform(
-				post(String.format("/fisik/kegiatan/%d", kegiatan.getId()))
+				post(String.format("/fisik/%d", kegiatan.getId()))
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("{"
+						+ "\"tahun\":\"2016\", "
+						+ "\"bulan\":\"JANUARY\", "
+						+ "\"realisasi\":\"10\""
+						+ "}")
+			)
+			.andExpect(jsonPath("$.message").value("Tahun realisasi tidak termasuk dalam jangkauan tahun program"))
+			.andExpect(jsonPath("$.tipe").value("ERROR"));
+	}
+	
+	@Test
+	public void test_simpan_salah_realisasi() throws Exception {
+		this.mockMvc.perform(
+				post(String.format("/fisik/%d", kegiatan.getId()))
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("{"
+						+ "\"tahun\":\"2015\", "
+						+ "\"bulan\":\"JANUARY\", "
+						+ "\"realisasi\":\"101\""
+						+ "}")
+			)
+			.andExpect(jsonPath("$.message").value("Realisasi melebihi 100%"))
+			.andExpect(jsonPath("$.tipe").value("ERROR"));
+	}
+	
+	@Test
+	public void test_simpan_with_foto() throws Exception {
+		this.mockMvc.perform(
+				post(String.format("/fisik/%d", kegiatan.getId()))
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("{"
 						+ "\"tahun\":\"2015\", "
@@ -128,13 +175,13 @@ public class FisikControllerTest {
 						+ "}")
 			)
 			.andExpect(jsonPath("$.message").value("Berhasil"))
-			.andExpect(jsonPath("$.tipe").value("LIST"));
+			.andExpect(jsonPath("$.tipe").value("SUCCESS"));
 	}
 	
 	@Test
 	public void test_tambah_foto_list() throws Exception {
 		this.mockMvc.perform(
-				put(String.format("/fisik/%d", id))
+				put(String.format("/fisik/%d/foto", id))
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("["
 						+ "{ \"location\": \"http://picasa.com/sangihe/01/001.jpg\"}, "
@@ -148,7 +195,7 @@ public class FisikControllerTest {
 	@Test
 	public void test_tambah_foto() throws Exception {
 		this.mockMvc.perform(
-				put(String.format("/fisik/%d/location/", id))
+				put(String.format("/fisik/%d/foto/location/", id))
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("{ \"location\": \"http://picasa.com/sangihe/01/001.jpg\"}")
 			)

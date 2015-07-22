@@ -8,8 +8,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 	KegiatanControllerTest.class, 
 	ProgramControllerTest.class,
-	AnggaranControllerTest.class
-	//FisikControllerTest.class
+	AnggaranControllerTest.class,
+	FisikControllerTest.class
 	})
 public class ControllerTests {
 

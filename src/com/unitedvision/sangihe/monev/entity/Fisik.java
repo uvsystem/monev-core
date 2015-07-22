@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.unitedvision.sangihe.monev.exception.FisikException;
+import com.unitedvision.sangihe.monev.exception.WrongYearException;
 
 @Entity
 @Table(name = "fisik")
@@ -32,6 +34,7 @@ public class Fisik {
 	public Fisik() {
 		super();
 		daftarFoto = new HashSet<>();
+		realisasi = 0;
 	}
 
 	public Fisik(Kegiatan kegiatan) {
@@ -103,6 +106,10 @@ public class Fisik {
 		daftarFoto.add(foto);
 	}
 	
+	public void addFoto(Set<Foto> daftarFoto) {
+		this.daftarFoto.addAll(daftarFoto);
+	}
+	
 	public void removeFoto(Foto foto) {
 		foto.setFisik(null);
 		daftarFoto.remove(foto);
@@ -161,5 +168,16 @@ public class Fisik {
 		} else if (!tahun.equals(other.tahun))
 			return false;
 		return true;
+	}
+
+	public void validate() throws FisikException, WrongYearException {
+		if (kegiatan == null)
+			throw new FisikException("Kegiatan belum dipilih");
+		
+		if (tahun < kegiatan.getTahunAwal() || tahun > kegiatan.getTahunAkhir())
+			throw new WrongYearException("Tahun realisasi tidak termasuk dalam jangkauan tahun program");
+		
+		if (realisasi > 100)
+			throw new FisikException("Realisasi melebihi 100%");
 	}
 }

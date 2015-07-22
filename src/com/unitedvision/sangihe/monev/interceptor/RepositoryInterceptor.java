@@ -56,6 +56,8 @@ public class RepositoryInterceptor {
 			return "Username atau password salah";
 		} else if(key.contains("anggaran_kegiatan")) {
 			return "Anggaran sudah terdaftar";
+		} else if(key.contains("fisik_kegiatan")) {
+			return "Fisik sudah terdaftar";
 		} else if(key.contains("program_tahunan")) {
 			return "Program sudah terdaftar";
 		} else if(key.contains("program_kegiatan")) {
