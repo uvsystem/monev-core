@@ -10,9 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "fisik")
@@ -56,7 +56,7 @@ public class Fisik {
 		this.tahun = tahun;
 	}
 
-	@Column(name = "month", nullable = false)
+	@Column(name = "bulan", nullable = false)
 	public Month getBulan() {
 		return bulan;
 	}
@@ -85,7 +85,8 @@ public class Fisik {
 	}
 
 	//@CollectionOfElements
-	@JoinTable(name = "foto", joinColumns = @JoinColumn(name = "fisik"))
+	//@JoinTable(name = "foto", joinColumns = @JoinColumn(name = "fisik"))
+	@Transient
 	public Set<Foto> getDaftarFoto() {
 		return daftarFoto;
 	}

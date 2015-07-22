@@ -127,7 +127,7 @@ public class AnggaranServiceTest {
 	
 	@Test
 	public void test_get_by_kegiatan() {
-		List<Anggaran> list = anggaranService.getByProgram(kegiatan.getId());
+		List<Anggaran> list = anggaranService.getByKegiatan(kegiatan.getId());
 		
 		assertNotNull(list);
 		assertNotEquals(0, list.size());

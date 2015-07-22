@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +92,8 @@ public class FisikServiceTest {
 		fisik.setBulan(Month.JANUARY);
 		fisikService.simpan(fisik);
 	}
-	
+
+	@Ignore
 	@Test
 	public void test_tambah_foto() {
 		Fisik fisik = fisikService.tambahFoto(id, "http://picasa.com/sangihe/01/001.jpg");
@@ -102,6 +104,7 @@ public class FisikServiceTest {
 		assertEquals(1, fisik.getDaftarFoto().size());
 	}
 	
+	@Ignore
 	@Test
 	public void test_tambah_foto_list() {
 		List<Foto> daftarFoto = new ArrayList<Foto>();
@@ -141,7 +144,7 @@ public class FisikServiceTest {
 	
 	@Test
 	public void test_get_by_kegiatan() {
-		List<Fisik> list = fisikService.getByProgram(kegiatan.getId());
+		List<Fisik> list = fisikService.getByKegiatan(kegiatan.getId());
 		
 		assertNotNull(list);
 		assertNotEquals(0, list.size());

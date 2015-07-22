@@ -88,7 +88,7 @@ public class UnitKerja {
 	}
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "unitKerja", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "unitKerja", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	public List<SubUnitKerja> getDaftarSubUnit() {
 		return daftarSubUnit;
 	}
