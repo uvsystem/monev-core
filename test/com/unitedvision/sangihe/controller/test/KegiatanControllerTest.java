@@ -129,6 +129,16 @@ public class KegiatanControllerTest {
 	}
 	
 	@Test
+	public void test_get_not_found() throws Exception {
+		this.mockMvc.perform(
+				get(String.format("/kegiatan/%d", 0))
+				.contentType(MediaType.APPLICATION_JSON)
+			)
+			.andExpect(jsonPath("$.message").value("Data tidak ditemukan"))
+			.andExpect(jsonPath("$.tipe").value("ERROR"));
+	}
+	
+	@Test
 	public void test_get_all() throws Exception {
 		this.mockMvc.perform(
 				get("/kegiatan")

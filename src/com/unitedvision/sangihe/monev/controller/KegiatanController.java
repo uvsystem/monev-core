@@ -26,52 +26,57 @@ public class KegiatanController {
 	@Autowired
 	private KegiatanService kegiatanService;
 	
-	@RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT})
-	public @ResponseBody RestMessage simpan(@RequestBody Kegiatan kegiatan) throws ApplicationException, PersistenceException {
-		kegiatanService.simpan(kegiatan);
+	@RequestMapping(method = RequestMethod.POST, value = "/{idProgram}")
+	@ResponseBody
+	public RestMessage tambah(@PathVariable Long idProgram, @RequestBody Kegiatan kegiatan) throws ApplicationException, PersistenceException {
+		kegiatanService.simpan(kegiatan, idProgram);
 		
 		return RestMessage.success();
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-	public @ResponseBody RestMessage hapus(@PathVariable Long id) throws ApplicationException {
+	@ResponseBody
+	public RestMessage hapus(@PathVariable Long id) throws ApplicationException, PersistenceException {
 		kegiatanService.hapus(id);
 		
 		return RestMessage.success();
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public @ResponseBody EntityRestMessage<Kegiatan> get(@PathVariable Long id) throws ApplicationException {
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
+	@ResponseBody
+	public EntityRestMessage<Kegiatan> get(@PathVariable Long id) throws ApplicationException, PersistenceException {
 		Kegiatan kegiatan = kegiatanService.get(id);
 		
 		return EntityRestMessage.create(kegiatan);
 	}
 	
-	@RequestMapping(value = "/satker/{id}", method = RequestMethod.GET)
-	public @ResponseBody ListEntityRestMessage<Kegiatan> getBynitKerja(@PathVariable Long id) throws ApplicationException {
-		List<Kegiatan> list = kegiatanService.getByUnitKerja(id);
+	public ListEntityRestMessage<Kegiatan> get() throws ApplicationException, PersistenceException {
+		List<Kegiatan> daftarKegiatan = kegiatanService.get();
 		
-		return ListEntityRestMessage.createListKegiatan(list);
+		return ListEntityRestMessage.createListKegiatan(daftarKegiatan);
 	}
 	
-	@RequestMapping(value = "/program/{id}", method = RequestMethod.GET)
-	public @ResponseBody ListEntityRestMessage<Kegiatan> getByProgram(@PathVariable Long id) throws ApplicationException {
-		List<Kegiatan> list = kegiatanService.getByProgram(id);
+	@RequestMapping(method = RequestMethod.GET, value = "/satker/{id}")
+	@ResponseBody
+	public ListEntityRestMessage<Kegiatan> getByUnitKerja(@PathVariable Long id) throws ApplicationException, PersistenceException {
+		List<Kegiatan> daftarKegiatan = kegiatanService.getByUnitKerja(id);
 		
-		return ListEntityRestMessage.createListKegiatan(list);
+		return ListEntityRestMessage.createListKegiatan(daftarKegiatan);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/program/{id}")
+	@ResponseBody
+	public ListEntityRestMessage<Kegiatan> getByProgram(@PathVariable Long id) throws ApplicationException, PersistenceException {
+		List<Kegiatan> daftarKegiatan = kegiatanService.getByProgram(id);
+		
+		return ListEntityRestMessage.createListKegiatan(daftarKegiatan);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public @ResponseBody ListEntityRestMessage<Kegiatan> get() throws ApplicationException {
-		List<Kegiatan> list = kegiatanService.get();
+	@RequestMapping(method = RequestMethod.GET, value = "/cari/{keyword}") 
+	@ResponseBody
+	public ListEntityRestMessage<Kegiatan> cari(@PathVariable String keyword) throws ApplicationException, PersistenceException {
+		List<Kegiatan> daftarKegiatan = kegiatanService.cari(keyword);
 		
-		return ListEntityRestMessage.createListKegiatan(list);
-	}
-	
-	@RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
-	public @ResponseBody ListEntityRestMessage<Kegiatan> search(@PathVariable String keyword) throws ApplicationException {
-		List<Kegiatan> list = kegiatanService.cari(keyword);
-		
-		return ListEntityRestMessage.createListKegiatan(list);
+		return ListEntityRestMessage.createListKegiatan(daftarKegiatan);
 	}
 }

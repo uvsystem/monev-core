@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.unitedvision.sangihe.monev.entity.Program;
+import com.unitedvision.sangihe.monev.entity.UnitKerja;
 import com.unitedvision.sangihe.monev.repository.ProgramRepository;
+import com.unitedvision.sangihe.monev.repository.UnitKerjaRepository;
 
 @Service
 @Transactional(readOnly = true)
@@ -15,11 +17,22 @@ public class ProgramServiceImpl implements ProgramService {
 
 	@Autowired
 	private ProgramRepository programRepository;
+	@Autowired
+	private UnitKerjaRepository unitKerjaRepository;
 	
 	@Override
 	@Transactional(readOnly = false)
 	public Program simpan(Program program) {
 		return programRepository.save(program);
+	}
+	
+	@Override
+	@Transactional(readOnly = false)
+	public Program simpan(Program program, Long idUnitKerja) {
+		UnitKerja unitKerja = unitKerjaRepository.findOne(idUnitKerja);
+		program.setUnitKerja(unitKerja);
+		
+		return simpan(program);
 	}
 
 	@Override

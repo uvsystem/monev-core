@@ -3,6 +3,7 @@ package com.unitedvision.sangihe.monev.util;
 import java.util.List;
 
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
+import com.unitedvision.sangihe.monev.entity.Program;
 
 public class ListEntityRestMessage<T> extends RestMessage {
 	private List<T> list;
@@ -24,7 +25,11 @@ public class ListEntityRestMessage<T> extends RestMessage {
 		return new ListEntityRestMessage<T>(cause);
 	}
 	
-	public static ListEntityRestMessage<Kegiatan> createListKegiatan(List<Kegiatan> kegiatan) {
-		return new ListEntityRestMessage<Kegiatan>(kegiatan);
+	public static ListEntityRestMessage<Kegiatan> createListKegiatan(List<Kegiatan> daftarKegiatan) {
+		return new ListEntityRestMessage<Kegiatan>(daftarKegiatan);
+	}
+
+	public static ListEntityRestMessage<Program> createListProgram(List<Program> daftarProgram) {
+		return new ListEntityRestMessage<Program>(daftarProgram);
 	}
 }

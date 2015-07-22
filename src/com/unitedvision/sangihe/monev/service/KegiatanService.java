@@ -8,6 +8,8 @@ public interface KegiatanService {
 
 	Kegiatan simpan(Kegiatan kegiatan);
 
+	Kegiatan simpan(Kegiatan kegiatan, Long idProgram);
+
 	void hapus(Long id);
 
 	Kegiatan get(Long id);

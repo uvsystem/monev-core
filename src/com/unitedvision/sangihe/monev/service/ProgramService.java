@@ -7,6 +7,8 @@ import com.unitedvision.sangihe.monev.entity.Program;
 public interface ProgramService {
 
 	Program simpan(Program program);
+
+	Program simpan(Program program, Long idUnitKerja);
 	
 	void hapus(Long id);
 	

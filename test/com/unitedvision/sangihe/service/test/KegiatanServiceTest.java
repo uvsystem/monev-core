@@ -69,6 +69,16 @@ public class KegiatanServiceTest {
 		
 		id = kegiatan.getId();
 	}
+	
+	@Test
+	public void test_simpan() {
+		kegiatan = new Kegiatan();
+		kegiatan.setNama("Pengembangan Pantai Pananuareng 2");
+		kegiatan.setPaguAnggaran(100000000L);
+		kegiatanService.simpan(kegiatan, program.getId());
+		
+		assertEquals(2, kegiatanRepository.count());
+	}
 
 	@Test(expected = PersistenceException.class)
 	public void test_simpan_duplicate() {

@@ -1,6 +1,7 @@
 package com.unitedvision.sangihe.monev.util;
 
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
+import com.unitedvision.sangihe.monev.entity.Program;
 
 public class EntityRestMessage<T> extends RestMessage {
 	private T model;
@@ -24,5 +25,9 @@ public class EntityRestMessage<T> extends RestMessage {
 	
 	public static EntityRestMessage<Kegiatan> create(Kegiatan kegiatan) {
 		return new EntityRestMessage<Kegiatan>(kegiatan);
+	}
+	
+	public static EntityRestMessage<Program> create(Program program) {
+		return new EntityRestMessage<Program>(program);
 	}
 }

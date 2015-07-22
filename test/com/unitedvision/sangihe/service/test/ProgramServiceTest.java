@@ -59,10 +59,21 @@ public class ProgramServiceTest {
 		
 		id = program.getId();
 	}
+	
+	@Test
+	public void test_tambah() {
+		Program program = new Program();
+		program.setNama("Pembangunan Object Wisata 2");
+		program.setTahunAwal(2015);
+		program.setTahunAkhir(2015);
+		programService.simpan(program, unitKerja.getId());
+		
+		assertEquals(2, programRepository.count());
+	}
 
 	@Test(expected = PersistenceException.class)
 	public void test_simpan_duplicate() {
-		program = new Program(unitKerja);
+		Program program = new Program(unitKerja);
 		program.setNama("Pembangunan Object Wisata");
 		program.setTahunAwal(2015);
 		program.setTahunAkhir(2015);

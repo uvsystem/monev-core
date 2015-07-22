@@ -121,6 +121,16 @@ public class ProgramControllerTest {
 	}
 	
 	@Test
+	public void test_get_not_found() throws Exception {
+		this.mockMvc.perform(
+				get(String.format("/program/%d", 0))
+				.contentType(MediaType.APPLICATION_JSON)
+			)
+			.andExpect(jsonPath("$.message").value("Data tidak ditemukan"))
+			.andExpect(jsonPath("$.tipe").value("ERROR"));
+	}
+	
+	@Test
 	public void test_get_all() throws Exception {
 		this.mockMvc.perform(
 				get("/program")
@@ -138,6 +148,16 @@ public class ProgramControllerTest {
 			)
 			.andExpect(jsonPath("$.message").value("Berhasil"))
 			.andExpect(jsonPath("$.tipe").value("LIST"));
+	}
+	
+	@Test
+	public void test_get_by_unit_kerja_not_found() throws Exception {
+		this.mockMvc.perform(
+				get(String.format("/program/satker/%d", 0))
+				.contentType(MediaType.APPLICATION_JSON)
+			)
+			.andExpect(jsonPath("$.message").value("Tidak ada data yang ditemukan"))
+			.andExpect(jsonPath("$.tipe").value("ERROR"));
 	}
 	
 	@Test
