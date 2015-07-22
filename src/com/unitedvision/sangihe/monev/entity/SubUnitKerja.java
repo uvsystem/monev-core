@@ -25,7 +25,7 @@ public class SubUnitKerja extends UnitKerja {
 		this.setUnitKerja(unitKerja);
 	}
 
-	@JsonBackReference
+	@JsonBackReference("sub_satker")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "parent", nullable = false)
 	public UnitKerja getUnitKerja() {

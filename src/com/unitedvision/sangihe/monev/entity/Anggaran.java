@@ -11,6 +11,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.unitedvision.sangihe.monev.exception.AnggaranException;
+import com.unitedvision.sangihe.monev.exception.WrongYearException;
+
 @Entity
 @Table(name = "anggaran")
 public class Anggaran {
@@ -25,10 +29,12 @@ public class Anggaran {
 	
 	public Anggaran() {
 		super();
+		setRencana(0L);
+		setRealisasi(0L);
 	}
 
 	public Anggaran(Kegiatan kegiatan) {
-		super();
+		this();
 		setKegiatan(kegiatan);
 	}
 
@@ -78,6 +84,7 @@ public class Anggaran {
 		this.realisasi = realisasi;
 	}
 
+	@JsonBackReference("anggaran_kegiatan")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "kegiatan", nullable = false)
 	public Kegiatan getKegiatan() {
@@ -140,5 +147,19 @@ public class Anggaran {
 		} else if (!tahun.equals(other.tahun))
 			return false;
 		return true;
+	}
+
+	public void validate() throws AnggaranException, WrongYearException {
+		if (kegiatan == null)
+			throw new AnggaranException("Kegiatan belum dipilih");
+
+		if (tahun < kegiatan.getTahunAwal() || tahun > kegiatan.getTahunAkhir())
+			throw new WrongYearException("Tahun Anggaran tidak termasuk dalam jangkauan tahun program");
+
+		if (rencana > kegiatan.getPaguAnggaran())
+			throw new AnggaranException("Rencana anggaran melebihi anggaran kegiatan");
+		
+		if (realisasi > kegiatan.getPaguAnggaran())
+			throw new AnggaranException("Realisasi anggaran melebihi anggaran kegiatan");
 	}
 }

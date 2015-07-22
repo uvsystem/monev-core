@@ -20,7 +20,7 @@ public class SubKegiatan extends Kegiatan {
 		super();
 	}
 
-	@JsonBackReference
+	@JsonBackReference("sub_kegiatan")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "parent", nullable = false)
 	public Kegiatan getKegiatan() {

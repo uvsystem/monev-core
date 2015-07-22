@@ -74,7 +74,7 @@ public class Program {
 		this.tahunAkhir = tahunAkhir;
 	}
 
-	@JsonBackReference
+	@JsonBackReference("program_satker")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "unit_kerja", nullable = false)
 	public UnitKerja getUnitKerja() {

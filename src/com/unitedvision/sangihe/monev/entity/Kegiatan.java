@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -87,7 +88,7 @@ public class Kegiatan {
 		this.paguAnggaran = paguAnggaran;
 	}
 
-	@JsonBackReference
+	@JsonBackReference("kegiatan_program")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "program", nullable = false)
 	public Program getProgram() {
@@ -167,5 +168,15 @@ public class Kegiatan {
 		} else if (!program.equals(other.program))
 			return false;
 		return true;
+	}
+
+	@Transient
+	public Integer getTahunAwal() {
+		return program.getTahunAwal();
+	}
+
+	@Transient
+	public Integer getTahunAkhir() {
+		return program.getTahunAkhir();
 	}
 }

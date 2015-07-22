@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "fisik")
 public class Fisik {
@@ -74,6 +76,7 @@ public class Fisik {
 		this.realisasi = realisasi;
 	}
 
+	@JsonBackReference("fisik_kegiatan")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "kegiatan", nullable = false)
 	public Kegiatan getKegiatan() {

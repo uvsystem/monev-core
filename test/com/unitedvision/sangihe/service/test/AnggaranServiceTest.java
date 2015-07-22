@@ -22,6 +22,8 @@ import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Program;
 import com.unitedvision.sangihe.monev.entity.UnitKerja;
 import com.unitedvision.sangihe.monev.entity.UnitKerja.TipeUnitKerja;
+import com.unitedvision.sangihe.monev.exception.AnggaranException;
+import com.unitedvision.sangihe.monev.exception.WrongYearException;
 import com.unitedvision.sangihe.monev.repository.AnggaranRepository;
 import com.unitedvision.sangihe.monev.repository.UnitKerjaRepository;
 import com.unitedvision.sangihe.monev.service.AnggaranService;
@@ -53,7 +55,7 @@ public class AnggaranServiceTest {
 	private Long id;
 
 	@Before
-	public void setup() {
+	public void setup() throws AnggaranException, WrongYearException {
 		unitKerja = new UnitKerja();
 		unitKerja.setNama("Dinas Pariwisata");
 		unitKerja.setSingkatan("DISPAR");
@@ -82,8 +84,17 @@ public class AnggaranServiceTest {
 		id = anggaran.getId();
 	}
 	
+	@Test
+	public void test_simpan() throws AnggaranException, WrongYearException {
+		anggaran = new Anggaran();
+		anggaran.setTahun(2015);
+		anggaran.setBulan(Month.FEBRUARY);
+		anggaran.setRencana(10000000L);
+		anggaranService.simpan(anggaran, kegiatan.getId());
+	}
+	
 	@Test(expected = PersistenceException.class)
-	public void test_simpan_duplicate() {
+	public void test_simpan_duplicate() throws AnggaranException, WrongYearException {
 		anggaran = new Anggaran(kegiatan);
 		anggaran.setTahun(2015);
 		anggaran.setBulan(Month.JANUARY);
@@ -91,15 +102,93 @@ public class AnggaranServiceTest {
 		anggaranService.simpan(anggaran);
 	}
 	
+	@Test(expected = WrongYearException.class)
+	public void test_simpan_wrong_year() throws AnggaranException, WrongYearException {
+		anggaran = new Anggaran(kegiatan);
+		anggaran.setTahun(2016);
+		anggaran.setBulan(Month.FEBRUARY);
+		anggaran.setRencana(10000000L);
+		anggaranService.simpan(anggaran);
+	}
+	
+	@Test(expected = AnggaranException.class)
+	public void test_simpan_rencana_melebihi_pagu() throws AnggaranException, WrongYearException {
+		anggaran = new Anggaran(kegiatan);
+		anggaran.setTahun(2015);
+		anggaran.setBulan(Month.FEBRUARY);
+		anggaran.setRencana(150000000L);
+		anggaranService.simpan(anggaran);
+	}
+	
+	@Test(expected = AnggaranException.class)
+	public void test_simpan_total_rencana_melebihi_pagu() throws AnggaranException, WrongYearException {
+		anggaran = new Anggaran(kegiatan);
+		anggaran.setTahun(2015);
+		anggaran.setBulan(Month.FEBRUARY);
+		anggaran.setRencana(10000000L);
+		anggaranService.simpan(anggaran);
+
+		anggaran = new Anggaran(kegiatan);
+		anggaran.setTahun(2015);
+		anggaran.setBulan(Month.MARCH);
+		anggaran.setRencana(100000000L);
+		anggaranService.simpan(anggaran);
+	}
+	
+	@Test(expected = AnggaranException.class)
+	public void test_simpan_realisasi_melebihi_pagu() throws AnggaranException, WrongYearException {
+		anggaran = new Anggaran(kegiatan);
+		anggaran.setTahun(2015);
+		anggaran.setBulan(Month.FEBRUARY);
+		anggaran.setRencana(1000000L);
+		anggaran.setRealisasi(150000000L);
+		anggaranService.simpan(anggaran);
+	}
+	
+	@Test(expected = AnggaranException.class)
+	public void test_simpan_total_realisasi_melebihi_pagu() throws AnggaranException, WrongYearException {
+		anggaran = new Anggaran(kegiatan);
+		anggaran.setTahun(2015);
+		anggaran.setBulan(Month.FEBRUARY);
+		anggaran.setRencana(1000000L);
+		anggaran.setRealisasi(100000000L);
+		anggaranService.simpan(anggaran);
+
+		anggaran = new Anggaran(kegiatan);
+		anggaran.setTahun(2015);
+		anggaran.setBulan(Month.MARCH);
+		anggaran.setRencana(1000000L);
+		anggaran.setRealisasi(10000000L);
+		anggaranService.simpan(anggaran);
+	}
+	
 	@Test
-	public void test_realisasi() {
+	public void test_realisasi() throws AnggaranException, WrongYearException {
 		Anggaran anggaran = anggaranService.realisasi(id, 8000000L);
 		
 		assertNotNull(anggaran);
 		assertEquals(this.anggaran.getId(), anggaran.getId());
-		assertNotEquals(new Long(8000000), anggaran.getRealisasi());
+		assertEquals(new Long(8000000), anggaran.getRealisasi());
 		
 		assertEquals(1, anggaranRepository.count());
+	}
+	
+	@Test(expected = AnggaranException.class)
+	public void test_realisasi_melebihi_pagu() throws AnggaranException, WrongYearException {
+		anggaranService.realisasi(id, 150000000L);
+	}
+	
+	@Test(expected = AnggaranException.class)
+	public void test_total_realisasi_melebihi_pagu() throws AnggaranException, WrongYearException {
+		anggaranService.realisasi(id, 10000000L);
+
+		anggaran = new Anggaran(kegiatan);
+		anggaran.setTahun(2015);
+		anggaran.setBulan(Month.FEBRUARY);
+		anggaran.setRencana(1000000L);
+		anggaranService.simpan(anggaran);
+
+		anggaranService.realisasi(anggaran.getId(), 100000000L);
 	}
 	
 	@Test

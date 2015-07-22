@@ -19,13 +19,7 @@ public class MessageConverter {
 		try {
 			return (RestMessage) jointPoint.proceed();
 		} catch (Throwable e) {
-			e.printStackTrace();
-			
-			String message = e.getMessage();
-			if (message == null)
-				message = e.toString();
-			
-			return RestMessage.error(new Exception(createMessage(message)));
+			return RestMessage.error(new Exception(e.getMessage()));
 		}
 	}
 
@@ -34,8 +28,6 @@ public class MessageConverter {
 		try {
 			return (EntityRestMessage<?>) jointPoint.proceed();
 		} catch (Throwable e) {
-			e.printStackTrace();
-			
 			return EntityRestMessage.entityError(new Exception(e.getMessage()));
 		}
 	}
@@ -45,32 +37,7 @@ public class MessageConverter {
 		try {
 			return (ListEntityRestMessage<?>) jointPoint.proceed();
 		} catch (Throwable e) {
-			e.printStackTrace();
-			
 			return ListEntityRestMessage.listEntityError(new Exception(e.getMessage()));
-		}
-	}
-	
-	
-	private String createMessage(String key) {
-		System.out.println( String.format( "LOG: %s", key) );
-		
-		if (key.equals("Credential Error")) {
-			return "Username atau password salah";
-		} else if (key.contains("Kesalahan")) {
-			return key;
-		} else if (key.contains("username")) {
-			return "Username yang anda masukkan sudah digunakan";
-		} else if (key.contains("kode")) {
-			return "Kode yang anda masukkan sudah digunakan";
-		} else if (key.contains("nama")) {
-			return "Nama yang anda masukkan sudah digunakan";
-		} else if (key.contains("skpd")) {
-			return "Kegiatan yang anda masukan sudah terdata";
-		} else if (key.contains("kegiatan")) {
-			return "Realisasi yang anda masukan sudah terdata";
-		} else {
-			return "Undefined Error";
 		}
 	}
 }

@@ -50,6 +50,8 @@ public class KegiatanController {
 		return EntityRestMessage.create(kegiatan);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET)
+	@ResponseBody
 	public ListEntityRestMessage<Kegiatan> get() throws ApplicationException, PersistenceException {
 		List<Kegiatan> daftarKegiatan = kegiatanService.get();
 		

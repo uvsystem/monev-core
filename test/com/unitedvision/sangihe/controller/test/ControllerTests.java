@@ -5,8 +5,12 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ AnggaranControllerTest.class, FisikControllerTest.class,
-		KegiatanControllerTest.class, ProgramControllerTest.class })
+@SuiteClasses({
+	KegiatanControllerTest.class, 
+	ProgramControllerTest.class,
+	AnggaranControllerTest.class
+	//FisikControllerTest.class
+	})
 public class ControllerTests {
 
 }

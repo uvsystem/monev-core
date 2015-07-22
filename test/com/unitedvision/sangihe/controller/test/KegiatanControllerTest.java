@@ -125,7 +125,7 @@ public class KegiatanControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 			)
 			.andExpect(jsonPath("$.message").value("Berhasil"))
-			.andExpect(jsonPath("$.tipe").value("SUCCESS"));
+			.andExpect(jsonPath("$.tipe").value("ENTITY"));
 	}
 	
 	@Test
