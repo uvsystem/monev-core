@@ -19,6 +19,9 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.unitedvision.sangihe.ehrm.connector.TokenService;
+import com.unitedvision.sangihe.ehrm.connector.TokenServiceImpl;
+
 /**
  * Konfigurasi sistem, 'persistence provider', 'interceptor mapping' dan 'component scan'.
  * 
@@ -37,6 +40,11 @@ public class ApplicationConfig {
     
     public static final String KODE_APLIKASI = "MONEV";
 
+    @Bean
+    public TokenService tokenService() {
+    	return new TokenServiceImpl();
+    }
+    
 	@Bean
     public HibernateJpaVendorAdapter jpaVendorAdapter() {
         return new HibernateJpaVendorAdapter();

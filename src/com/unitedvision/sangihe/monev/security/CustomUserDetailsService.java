@@ -10,13 +10,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.unitedvision.sangihe.ehrm.connector.TokenService;
+import com.unitedvision.sangihe.ehrm.connector.entity.Operator;
+import com.unitedvision.sangihe.ehrm.connector.entity.Operator.Role;
+import com.unitedvision.sangihe.ehrm.connector.entity.Pegawai;
+import com.unitedvision.sangihe.ehrm.connector.entity.Token;
 import com.unitedvision.sangihe.monev.configuration.ApplicationConfig;
-import com.unitedvision.sangihe.monev.entity.rest.Operator;
-import com.unitedvision.sangihe.monev.entity.rest.Operator.Role;
-import com.unitedvision.sangihe.monev.entity.rest.Pegawai;
-import com.unitedvision.sangihe.monev.entity.rest.Token;
 import com.unitedvision.sangihe.monev.exception.UnauthenticatedAccessException;
-import com.unitedvision.sangihe.monev.service.TokenService;
 
 /**
  * Custom Authentication Provider.
@@ -32,12 +32,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public CustomUser loadUserByUsername(String username) throws UsernameNotFoundException {
-		Token token = tokenService.get(username);
 		Operator operator;
+		Token token;
 
 		try {
+			token = tokenService.get(username);
 			operator = getOperator(token.getpegawai());
-		} catch (UnauthenticatedAccessException e) {
+		} catch (Exception e) {
 			throw new UsernameNotFoundException("");
 		}
 		
@@ -57,6 +58,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 		return authList;
 	}
 	
+	/**
+	 * Check daftar operator, apakah aplikasi Monitoring dan Evaluasi (MONEV) terdaftar. 
+	 * Jika terdaftar, return object {@link Operator}. Jika tidak terdaftar throw {@link UnauthenticatedAccessException}
+	 * @param pegawai object pegawai yang berhasil login.
+	 * @return Object {@link Operator} untuk aplikasi MONEV.
+	 * @throws UnauthenticatedAccessException tidak ada operator untuk aplikasi MONEV.
+	 */
 	private Operator getOperator(Pegawai pegawai) throws UnauthenticatedAccessException {
 		List<Operator> daftarOperator = pegawai.getDaftarOperator();
 

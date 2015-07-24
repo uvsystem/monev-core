@@ -2,7 +2,7 @@ package com.unitedvision.sangihe.monev.security;
 
 import org.springframework.stereotype.Component;
 
-import com.unitedvision.sangihe.monev.entity.rest.Operator;
+import com.unitedvision.sangihe.ehrm.connector.entity.Operator;
 
 /**
  * Class that provides authorization mechanism.

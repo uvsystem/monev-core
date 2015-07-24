@@ -5,8 +5,8 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import com.unitedvision.sangihe.monev.entity.rest.Operator;
-import com.unitedvision.sangihe.monev.entity.rest.Pegawai;
+import com.unitedvision.sangihe.ehrm.connector.entity.Operator;
+import com.unitedvision.sangihe.ehrm.connector.entity.Pegawai;
 
 public class CustomUser extends User {
 	private static final long serialVersionUID = 1L;

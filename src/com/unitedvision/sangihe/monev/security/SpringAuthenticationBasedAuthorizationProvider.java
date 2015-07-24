@@ -5,8 +5,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import com.unitedvision.sangihe.monev.entity.rest.Operator;
-import com.unitedvision.sangihe.monev.entity.rest.Operator.Role;
+import com.unitedvision.sangihe.ehrm.connector.entity.Operator;
+import com.unitedvision.sangihe.ehrm.connector.entity.Operator.Role;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
 
 /**
