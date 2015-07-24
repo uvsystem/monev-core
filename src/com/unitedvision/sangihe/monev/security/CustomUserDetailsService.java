@@ -8,9 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
-import com.unitedvision.sangihe.ehrm.connector.TokenService;
+import com.unitedvision.sangihe.ehrm.connector.Service;
 import com.unitedvision.sangihe.ehrm.connector.entity.Operator;
 import com.unitedvision.sangihe.ehrm.connector.entity.Operator.Role;
 import com.unitedvision.sangihe.ehrm.connector.entity.Pegawai;
@@ -24,11 +23,11 @@ import com.unitedvision.sangihe.monev.exception.UnauthenticatedAccessException;
  * @author Deddy Christoper Kakunsi
  *
  */
-@Service("authService")
+@org.springframework.stereotype.Service("authService")
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private TokenService tokenService;
+	private Service service;
 
 	@Override
 	public CustomUser loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -36,7 +35,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		Token token;
 
 		try {
-			token = tokenService.get(username);
+			token = service.get(username);
 			operator = getOperator(token.getpegawai());
 		} catch (Exception e) {
 			throw new UsernameNotFoundException("");
