@@ -19,7 +19,7 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import com.unitedvision.sangihe.monev.util.DateUtil;
+import com.unitedvision.sangihe.ehrm.connector.DateUtil;
 
 public abstract class CustomAbstractPdfView extends AbstractPdfView {
 	public static final int fontTitleSize = 14;
@@ -107,7 +107,7 @@ public abstract class CustomAbstractPdfView extends AbstractPdfView {
 	}
 
 	protected String createTanggal(Date tanggal) {
-		return DateUtil.toFormattedStringDate(tanggal, "-");
+		return DateUtil.toStringDate(tanggal, "-");
 	}
 	
 	protected Font getCustomFont(long persentase) {

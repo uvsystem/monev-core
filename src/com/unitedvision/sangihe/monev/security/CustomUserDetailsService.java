@@ -38,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 			token = service.get(username);
 			operator = getOperator(token.getpegawai());
 		} catch (Exception e) {
-			throw new UsernameNotFoundException("");
+			throw new UsernameNotFoundException(e.getMessage());
 		}
 		
 		return new CustomUser(operator.getUsername(), token.getToken(), operator, getAuthorities(operator.getRole()));
@@ -65,7 +65,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	 * @throws UnauthenticatedAccessException tidak ada operator untuk aplikasi MONEV.
 	 */
 	private Operator getOperator(Pegawai pegawai) throws UnauthenticatedAccessException {
-		List<Operator> daftarOperator = pegawai.getDaftarOperator();
+		List<Operator> daftarOperator = pegawai.getListOperator();
 
 		for (Operator operator : daftarOperator) {
 			if (operator.getAplikasi().getKode().equals(ApplicationConfig.KODE_APLIKASI))
