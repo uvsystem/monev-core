@@ -68,7 +68,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		List<Operator> daftarOperator = pegawai.getListOperator();
 
 		for (Operator operator : daftarOperator) {
-			if (operator.getAplikasi().getKode().equals(ApplicationConfig.KODE_APLIKASI))
+			if (operator.getKodeAplikasi().equals(ApplicationConfig.KODE_APLIKASI))
 				return operator;
 		}
 		
