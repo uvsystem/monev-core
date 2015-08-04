@@ -5,16 +5,18 @@ import javax.persistence.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.unitedvision.sangihe.ehrm.connector.EntityRestMessage;
-import com.unitedvision.sangihe.ehrm.connector.RestMessage;
-import com.unitedvision.sangihe.ehrm.connector.Service;
-import com.unitedvision.sangihe.ehrm.connector.ServiceException;
-import com.unitedvision.sangihe.ehrm.connector.entity.Token;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
+import com.unitedvision.sangihe.monev.serviceagent.Service;
+import com.unitedvision.sangihe.monev.serviceagent.ServiceException;
+import com.unitedvision.sangihe.monev.serviceagent.entity.Token;
+import com.unitedvision.sangihe.monev.util.EntityRestMessage;
+import com.unitedvision.sangihe.monev.util.PasswordWrapper;
+import com.unitedvision.sangihe.monev.util.RestMessage;
 
 @Controller
 @RequestMapping("/token")
@@ -25,10 +27,10 @@ public class TokenController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/{nip}")
 	@ResponseBody
-	public EntityRestMessage<Token> create(@PathVariable String nip) throws ApplicationException, PersistenceException {
+	public EntityRestMessage<Token> create(@PathVariable String nip, @RequestBody PasswordWrapper passwordWrapper) throws ApplicationException, PersistenceException {
 		Token token;
 		try {
-			token = tokenService.create(nip);
+			token = tokenService.create(nip, passwordWrapper.getPassword());
 			
 			return EntityRestMessage.create(token);
 		} catch (ServiceException e) {

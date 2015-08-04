@@ -45,7 +45,7 @@ public class ProgramServiceTest {
 	public void setUp() throws Exception {
 		unitKerja = new UnitKerja();
 		unitKerja.setNama("Dinas Pariwisata");
-		unitKerja.setSingkatan("DISPAR");
+		unitKerja.setSingkatan("DISPAR2");
 		unitKerja.setTipe(TipeUnitKerja.DINAS);
 		unitKerjaRepository.save(unitKerja);
 		

@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.unitedvision.sangihe.ehrm.connector.RestMessage;
 import com.unitedvision.sangihe.monev.entity.Program;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.service.ProgramService;
 import com.unitedvision.sangihe.monev.util.EntityRestMessage;
 import com.unitedvision.sangihe.monev.util.ListEntityRestMessage;
+import com.unitedvision.sangihe.monev.util.RestMessage;
 
 @Controller
 @RequestMapping("/program")
@@ -28,7 +28,7 @@ public class ProgramController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/{idUnitKerja}")
 	@ResponseBody
-	public RestMessage tambah(@PathVariable Long idUnitKerja, @RequestBody Program program) throws ApplicationException, PersistenceException {
+	public RestMessage simpan(@PathVariable Long idUnitKerja, @RequestBody Program program) throws ApplicationException, PersistenceException {
 		programService.simpan(program, idUnitKerja);
 		
 		return RestMessage.success();

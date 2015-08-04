@@ -2,7 +2,6 @@ package com.unitedvision.sangihe.monev.util;
 
 import java.util.List;
 
-import com.unitedvision.sangihe.ehrm.connector.RestMessage;
 import com.unitedvision.sangihe.monev.entity.Anggaran;
 import com.unitedvision.sangihe.monev.entity.Fisik;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
@@ -10,6 +9,10 @@ import com.unitedvision.sangihe.monev.entity.Program;
 
 public class ListEntityRestMessage<T> extends RestMessage {
 	private List<T> list;
+	
+	public ListEntityRestMessage() {
+		super();
+	}
 	
 	protected ListEntityRestMessage(Exception ex) {
 		super(ex);

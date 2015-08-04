@@ -4,28 +4,20 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "unit_kerja")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(
-	name = "discriminator",
-	discriminatorType = DiscriminatorType.STRING
-)
-@DiscriminatorValue("SKPD")
 public class UnitKerja {
 
 	public enum TipeUnitKerja {
@@ -42,14 +34,19 @@ public class UnitKerja {
 	private String nama;
 	private TipeUnitKerja tipe;
 	private String singkatan;
+	private UnitKerja parent;
 	
-	private List<SubUnitKerja> daftarSubUnit;
-	private List<Program> daftarProgram;
-	
+	private List<UnitKerja> daftarSubUnit;
+
 	public UnitKerja() {
 		super();
 	}
 	
+	public UnitKerja(UnitKerja unitKerja) {
+		this();
+		setParent(unitKerja);
+	}
+
 	@Id
 	@GeneratedValue
 	public long getId() {
@@ -60,6 +57,29 @@ public class UnitKerja {
 		this.id = id;
 	}
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "parent")
+	public UnitKerja getParent() {
+		return parent;
+	}
+
+	public void setParent(UnitKerja parent) {
+		this.parent = parent;
+	}
+
+	@Transient
+	public Long getIdParent() {
+		if (parent == null)
+			return 0L;
+		return parent.getId();
+	}
+	
+	public void setIdParent(Long idParent) {
+		if (parent == null)
+			parent = new UnitKerja();
+		parent.setId(idParent);
+	}
+	
 	@Column(name = "nama", nullable = false)
 	public String getNama() {
 		return nama;
@@ -88,23 +108,13 @@ public class UnitKerja {
 	}
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "unitKerja", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	public List<SubUnitKerja> getDaftarSubUnit() {
+	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	public List<UnitKerja> getDaftarSubUnit() {
 		return daftarSubUnit;
 	}
 
-	public void setDaftarSubUnit(List<SubUnitKerja> daftarSubUnit) {
+	public void setDaftarSubUnit(List<UnitKerja> daftarSubUnit) {
 		this.daftarSubUnit = daftarSubUnit;
-	}
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "unitKerja", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	public List<Program> getDaftarProgram() {
-		return daftarProgram;
-	}
-
-	public void setDaftarProgram(List<Program> daftarProgram) {
-		this.daftarProgram = daftarProgram;
 	}
 
 	@Override
@@ -128,6 +138,11 @@ public class UnitKerja {
 		if (getClass() != obj.getClass())
 			return false;
 		UnitKerja other = (UnitKerja) obj;
+		if (daftarSubUnit == null) {
+			if (other.daftarSubUnit != null)
+				return false;
+		} else if (!daftarSubUnit.equals(other.daftarSubUnit))
+			return false;
 		if (id != other.id)
 			return false;
 		if (nama == null) {

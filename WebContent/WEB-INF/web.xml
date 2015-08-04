@@ -35,9 +35,8 @@
       <param-name>cors.allowed.origins</param-name>
       <param-value>
 		  https://uvs.web.id,
-		  https://sangihe-unitedvision.whelastic.net,
+		  https://sangihe.whelastic.net,
 		  https://sangihekab.go.id,
-		  https://app.sangihekab.go.id,
 		  http://localhost
 	</param-value>
     </init-param>

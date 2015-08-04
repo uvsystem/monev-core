@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.unitedvision.sangihe.monev.entity.Anggaran;
+import com.unitedvision.sangihe.monev.entity.Kegiatan;
 
 public interface AnggaranRepository extends JpaRepository<Anggaran, Long> {
 
@@ -20,5 +21,7 @@ public interface AnggaranRepository extends JpaRepository<Anggaran, Long> {
 	List<Anggaran> findByKegiatan_Program_Id(Long id);
 
 	List<Anggaran> findByKegiatan_Id(Long id);
+
+	List<Anggaran> findByKegiatan(Kegiatan kegiatan);
 
 }

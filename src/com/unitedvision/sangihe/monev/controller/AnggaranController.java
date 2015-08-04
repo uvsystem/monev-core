@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.unitedvision.sangihe.ehrm.connector.RestMessage;
 import com.unitedvision.sangihe.monev.entity.Anggaran;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.service.AnggaranService;
 import com.unitedvision.sangihe.monev.util.EntityRestMessage;
 import com.unitedvision.sangihe.monev.util.ListEntityRestMessage;
+import com.unitedvision.sangihe.monev.util.RestMessage;
 
 @Service
 @RequestMapping("/anggaran")

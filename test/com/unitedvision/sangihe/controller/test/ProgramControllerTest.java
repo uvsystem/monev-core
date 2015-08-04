@@ -55,7 +55,7 @@ public class ProgramControllerTest {
 		
 		unitKerja = new UnitKerja();
 		unitKerja.setNama("Dinas Pariwisata");
-		unitKerja.setSingkatan("DISPAR");
+		unitKerja.setSingkatan("DISPAR2");
 		unitKerja.setTipe(TipeUnitKerja.DINAS);
 		unitKerjaRepository.save(unitKerja);
 		

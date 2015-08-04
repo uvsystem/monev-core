@@ -12,8 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "program")
@@ -80,11 +82,17 @@ public class Program {
 	public UnitKerja getUnitKerja() {
 		return unitKerja;
 	}
+	
+	@Transient
+	public String getNamaUnitKerja() {
+		return unitKerja.getNama();
+	}
 
 	public void setUnitKerja(UnitKerja unitKerja) {
 		this.unitKerja = unitKerja;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "program", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	public List<Kegiatan> getDaftarKegiatan() {
 		return daftarKegiatan;

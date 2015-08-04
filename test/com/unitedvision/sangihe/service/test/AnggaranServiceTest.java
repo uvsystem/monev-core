@@ -25,6 +25,7 @@ import com.unitedvision.sangihe.monev.entity.UnitKerja.TipeUnitKerja;
 import com.unitedvision.sangihe.monev.exception.AnggaranException;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
 import com.unitedvision.sangihe.monev.repository.AnggaranRepository;
+import com.unitedvision.sangihe.monev.repository.KegiatanRepository;
 import com.unitedvision.sangihe.monev.repository.UnitKerjaRepository;
 import com.unitedvision.sangihe.monev.service.AnggaranService;
 import com.unitedvision.sangihe.monev.service.KegiatanService;
@@ -46,6 +47,8 @@ public class AnggaranServiceTest {
 	private AnggaranRepository anggaranRepository;
 	@Autowired
 	private AnggaranService anggaranService;
+	@Autowired
+	private KegiatanRepository kegiatanRepository;
 	
 	private UnitKerja unitKerja;
 	private Program program;
@@ -58,7 +61,7 @@ public class AnggaranServiceTest {
 	public void setup() throws AnggaranException, WrongYearException {
 		unitKerja = new UnitKerja();
 		unitKerja.setNama("Dinas Pariwisata");
-		unitKerja.setSingkatan("DISPAR");
+		unitKerja.setSingkatan("DISPAR2");
 		unitKerja.setTipe(TipeUnitKerja.DINAS);
 		unitKerjaRepository.save(unitKerja);
 		
@@ -220,5 +223,16 @@ public class AnggaranServiceTest {
 		
 		assertNotNull(list);
 		assertNotEquals(0, list.size());
+	}
+	
+	@Test
+	public void test_get_kegiatan_with_anggaran() {
+		System.out.println("BEGIN");
+		Kegiatan kegiatan = kegiatanService.get(this.kegiatan.getId());
+		System.out.println("DONE");
+		
+		assertNotNull(kegiatan);
+		assertEquals(this.kegiatan, kegiatan);
+//		assertEquals(1, kegiatan.getDaftarAnggaran().size());
 	}
 }

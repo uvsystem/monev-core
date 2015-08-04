@@ -1,13 +1,17 @@
 package com.unitedvision.sangihe.monev.util;
 
-import com.unitedvision.sangihe.ehrm.connector.RestMessage;
 import com.unitedvision.sangihe.monev.entity.Anggaran;
 import com.unitedvision.sangihe.monev.entity.Fisik;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Program;
+import com.unitedvision.sangihe.monev.serviceagent.entity.Token;
 
 public class EntityRestMessage<T> extends RestMessage {
 	private T model;
+	
+	public EntityRestMessage() {
+		super();
+	}
 	
 	protected EntityRestMessage(Exception ex) {
 		super(ex);
@@ -40,5 +44,9 @@ public class EntityRestMessage<T> extends RestMessage {
 	
 	public static EntityRestMessage<Fisik> create(Fisik fisik) {
 		return new EntityRestMessage<Fisik>(fisik);
+	}
+	
+	public static EntityRestMessage<Token> create(Token token) {
+		return new EntityRestMessage<Token>(token);
 	}
 }

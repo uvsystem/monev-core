@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.unitedvision.sangihe.ehrm.connector.RestMessage;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
+import com.unitedvision.sangihe.monev.entity.SubKegiatan;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.service.KegiatanService;
 import com.unitedvision.sangihe.monev.util.EntityRestMessage;
 import com.unitedvision.sangihe.monev.util.ListEntityRestMessage;
+import com.unitedvision.sangihe.monev.util.RestMessage;
 
 @Controller
 @RequestMapping("/kegiatan")
@@ -28,8 +29,16 @@ public class KegiatanController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/{idProgram}")
 	@ResponseBody
-	public RestMessage tambah(@PathVariable Long idProgram, @RequestBody Kegiatan kegiatan) throws ApplicationException, PersistenceException {
+	public RestMessage simpan(@PathVariable Long idProgram, @RequestBody Kegiatan kegiatan) throws ApplicationException, PersistenceException {
 		kegiatanService.simpan(kegiatan, idProgram);
+		
+		return RestMessage.success();
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/{idKegiatan}/sub")
+	@ResponseBody
+	public RestMessage tambahSub(@PathVariable Long idKegiatan, @RequestBody SubKegiatan subKegiatan) throws ApplicationException, PersistenceException {
+		kegiatanService.tambahSubKegiatan(idKegiatan, subKegiatan);
 		
 		return RestMessage.success();
 	}

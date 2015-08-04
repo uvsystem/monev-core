@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.unitedvision.sangihe.ehrm.connector.RestMessage;
 import com.unitedvision.sangihe.monev.entity.Fisik;
 import com.unitedvision.sangihe.monev.entity.Foto;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.service.FisikService;
 import com.unitedvision.sangihe.monev.util.EntityRestMessage;
 import com.unitedvision.sangihe.monev.util.ListEntityRestMessage;
+import com.unitedvision.sangihe.monev.util.RestMessage;
 
 @Controller
 @RequestMapping("/fisik")

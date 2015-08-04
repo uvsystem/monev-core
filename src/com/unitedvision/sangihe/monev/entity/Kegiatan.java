@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Mapping tabel Kegiatan.
@@ -98,7 +99,13 @@ public class Kegiatan {
 	public void setProgram(Program program) {
 		this.program = program;
 	}
+	
+	@Transient
+	public String getNamaProgram() {
+		return program.getNama();
+	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "kegiatan", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	public List<SubKegiatan> getDaftarSubKegiatan() {
 		return daftarSubKegiatan;
@@ -108,6 +115,17 @@ public class Kegiatan {
 		this.daftarSubKegiatan = daftarSubKegiatan;
 	}
 
+	public void addSubKegiatan(SubKegiatan subKegiatan) {
+		daftarSubKegiatan.add(subKegiatan);
+		subKegiatan.setKegiatan(this);
+	}
+
+	public void removeSubKegiatan(SubKegiatan subKegiatan) {
+		daftarSubKegiatan.remove(subKegiatan);
+		subKegiatan.setKegiatan(null);
+	}
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "kegiatan", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	public List<Anggaran> getDaftarAnggaran() {
 		return daftarAnggaran;
@@ -117,6 +135,7 @@ public class Kegiatan {
 		this.daftarAnggaran = daftarAnggaran;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "kegiatan", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	public List<Fisik> getDaftarFisik() {
 		return daftarFisik;

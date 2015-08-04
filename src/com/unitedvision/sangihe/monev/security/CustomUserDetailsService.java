@@ -9,13 +9,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.unitedvision.sangihe.ehrm.connector.Service;
-import com.unitedvision.sangihe.ehrm.connector.entity.Operator;
-import com.unitedvision.sangihe.ehrm.connector.entity.Operator.Role;
-import com.unitedvision.sangihe.ehrm.connector.entity.Pegawai;
-import com.unitedvision.sangihe.ehrm.connector.entity.Token;
 import com.unitedvision.sangihe.monev.configuration.ApplicationConfig;
 import com.unitedvision.sangihe.monev.exception.UnauthenticatedAccessException;
+import com.unitedvision.sangihe.monev.serviceagent.Service;
+import com.unitedvision.sangihe.monev.serviceagent.entity.Operator;
+import com.unitedvision.sangihe.monev.serviceagent.entity.Operator.Role;
+import com.unitedvision.sangihe.monev.serviceagent.entity.Pegawai;
+import com.unitedvision.sangihe.monev.serviceagent.entity.Token;
 
 /**
  * Custom Authentication Provider.
@@ -30,12 +30,27 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private Service service;
 
 	@Override
-	public CustomUser loadUserByUsername(String username) throws UsernameNotFoundException {
+	public CustomUser loadUserByUsername(String tokenString) throws UsernameNotFoundException {
 		Operator operator;
 		Token token;
 
 		try {
-			token = service.get(username);
+			token = service.get(tokenString);
+			operator = getOperator(token.getpegawai());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new UsernameNotFoundException(e.getMessage());
+		}
+		
+		return new CustomUser(operator.getUsername(), token.getToken(), operator, getAuthorities(operator.getRole()));
+	}
+
+	public CustomUser loadUserByUsername(String tokenString, String username) throws UsernameNotFoundException {
+		Operator operator;
+		Token token;
+
+		try {
+			token = service.get(tokenString);
 			operator = getOperator(token.getpegawai());
 		} catch (Exception e) {
 			throw new UsernameNotFoundException(e.getMessage());
@@ -68,7 +83,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		List<Operator> daftarOperator = pegawai.getListOperator();
 
 		for (Operator operator : daftarOperator) {
-			if (operator.getKodeAplikasi().equals(ApplicationConfig.KODE_APLIKASI))
+			if (operator.getKodeAplikasi().equals(ApplicationConfig.KODE_APLIKASI) || operator.getKodeAplikasi().equals("ALL"))
 				return operator;
 		}
 		

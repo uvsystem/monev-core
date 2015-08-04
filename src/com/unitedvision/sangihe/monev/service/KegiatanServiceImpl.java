@@ -8,6 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Program;
+import com.unitedvision.sangihe.monev.entity.SubKegiatan;
+import com.unitedvision.sangihe.monev.repository.AnggaranRepository;
+import com.unitedvision.sangihe.monev.repository.FisikRepository;
 import com.unitedvision.sangihe.monev.repository.KegiatanRepository;
 import com.unitedvision.sangihe.monev.repository.ProgramRepository;
 
@@ -19,6 +22,10 @@ public class KegiatanServiceImpl implements KegiatanService {
 	private KegiatanRepository kegiatanRepository;
 	@Autowired
 	private ProgramRepository programRepository;
+	@Autowired
+	private AnggaranRepository anggaranRepository;
+	@Autowired
+	private FisikRepository fisikRepository;
 	
 	@Override
 	@Transactional(readOnly = false)
@@ -36,13 +43,30 @@ public class KegiatanServiceImpl implements KegiatanService {
 
 	@Override
 	@Transactional(readOnly = false)
+	public void tambahSubKegiatan(Long idKegiatan, SubKegiatan subKegiatan) {
+		Kegiatan parent = get(idKegiatan);
+		parent.addSubKegiatan(subKegiatan);
+
+		kegiatanRepository.save(subKegiatan);
+	}
+	
+	@Override
+	@Transactional(readOnly = false)
 	public void hapus(Long id) {
 		kegiatanRepository.delete(id);
 	}
 
 	@Override
 	public Kegiatan get(Long id) {
-		return kegiatanRepository.findOne(id);
+		Kegiatan kegiatan = kegiatanRepository.findOne(id);
+		
+//		List<Anggaran> listAnggaran = anggaranRepository.findByKegiatan(kegiatan);
+//		kegiatan.setDaftarAnggaran(listAnggaran);
+
+//		List<Fisik> listFisik = fisikRepository.findByKegiatan(kegiatan);
+//		kegiatan.setDaftarFisik(listFisik);
+		
+		return kegiatan;
 	}
 
 	@Override
@@ -52,7 +76,9 @@ public class KegiatanServiceImpl implements KegiatanService {
 
 	@Override
 	public List<Kegiatan> getByUnitKerja(Long id) {
-		return kegiatanRepository.findByProgram_UnitKerja_Id(id);
+		List<Kegiatan> listKegiatan = kegiatanRepository.findByProgram_UnitKerja_Id(id);
+		
+		return listKegiatan;
 	}
 
 	@Override

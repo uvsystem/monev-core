@@ -50,7 +50,7 @@ public class KegiatanServiceTest {
 	public void setup() {
 		unitKerja = new UnitKerja();
 		unitKerja.setNama("Dinas Pariwisata");
-		unitKerja.setSingkatan("DISPAR");
+		unitKerja.setSingkatan("DISPAR2");
 		unitKerja.setTipe(TipeUnitKerja.DINAS);
 		unitKerjaRepository.save(unitKerja);
 		
@@ -97,7 +97,9 @@ public class KegiatanServiceTest {
 	
 	@Test
 	public void test_get() {
+		System.out.println("BEGIN");
 		Kegiatan kegiatan = kegiatanService.get(id);
+		System.out.println("DONE");
 		
 		assertNotNull(kegiatan);
 		assertEquals(this.kegiatan, kegiatan);

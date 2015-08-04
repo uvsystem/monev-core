@@ -19,8 +19,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.unitedvision.sangihe.ehrm.connector.Service;
-import com.unitedvision.sangihe.ehrm.connector.ServiceImpl;
+import com.unitedvision.sangihe.monev.serviceagent.Service;
+import com.unitedvision.sangihe.monev.serviceagent.ServiceImpl;
 
 /**
  * Konfigurasi sistem, 'persistence provider', 'interceptor mapping' dan 'component scan'.

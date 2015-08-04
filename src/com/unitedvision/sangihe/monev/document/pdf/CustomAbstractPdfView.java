@@ -19,7 +19,7 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import com.unitedvision.sangihe.ehrm.connector.DateUtil;
+import com.unitedvision.sangihe.monev.util.DateUtil;
 
 public abstract class CustomAbstractPdfView extends AbstractPdfView {
 	public static final int fontTitleSize = 14;
