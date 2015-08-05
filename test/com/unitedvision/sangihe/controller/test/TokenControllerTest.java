@@ -18,7 +18,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.unitedvision.sangihe.configuration.test.TestConfig;
 import com.unitedvision.sangihe.configuration.test.UtilityService;
-import com.unitedvision.sangihe.ehrm.connector.test.TokenServiceTest;
 import com.unitedvision.sangihe.monev.serviceagent.Service;
 import com.unitedvision.sangihe.monev.serviceagent.ServiceException;
 import com.unitedvision.sangihe.monev.serviceagent.entity.Token;
