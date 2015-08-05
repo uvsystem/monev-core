@@ -29,8 +29,8 @@ public class ServiceImpl implements Service, UtilityService {
 	private RestTemplate restTemplate = new RestTemplate();
 	private ObjectCreator objectCreator;
 	
-	//private final String host = "https://core-unitedvision.whelastic.net";
-	 private final String host = "http://localhost:8080";
+	private final String host = "https://core-unitedvision.whelastic.net";
+	// private final String host = "http://localhost:8080";
 	// private final String host = "https://sistem.sangihe.go.id";
 	// private final String host = "https://sangihe.whelastic.net";
 	
