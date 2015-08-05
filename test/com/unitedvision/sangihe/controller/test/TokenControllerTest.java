@@ -86,7 +86,7 @@ public class TokenControllerTest {
 	
 	@After
 	public void destroy() throws ServiceException {
-		utilityService.hapus(TokenServiceTest.createHeaders());
+//		utilityService.hapus(TokenServiceTest.createHeaders());
 //		utilityService.hapus(pegawai, TokenServiceTest.createHeaders());
 //		utilityService.hapus(unitKerja, TokenServiceTest.createHeaders());
 	}
