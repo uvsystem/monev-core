@@ -10,11 +10,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
 
-import com.unitedvision.sangihe.configuration.test.UtilityService;
 //import com.unitedvision.sangihe.monev.entity.UnitKerja;
 import com.unitedvision.sangihe.monev.serviceagent.Service;
 import com.unitedvision.sangihe.monev.serviceagent.ServiceException;
 import com.unitedvision.sangihe.monev.serviceagent.ServiceImpl;
+import com.unitedvision.sangihe.monev.serviceagent.UtilityService;
 //import com.unitedvision.sangihe.monev.serviceagent.entity.Pegawai;
 import com.unitedvision.sangihe.monev.serviceagent.entity.Token;
 import com.unitedvision.sangihe.monev.serviceagent.entity.Token.StatusToken;
@@ -46,7 +46,6 @@ public class TokenServiceTest {
 	public void setup() throws Exception {
 		ServiceImpl serviceImpl = new ServiceImpl();
 		service = serviceImpl;
-		utilityService = serviceImpl;
 		tokenSetup = service.create("090213016", "password");
 	}
 	

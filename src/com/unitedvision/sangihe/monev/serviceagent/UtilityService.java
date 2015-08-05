@@ -1,9 +1,8 @@
-package com.unitedvision.sangihe.configuration.test;
+package com.unitedvision.sangihe.monev.serviceagent;
 
 import org.springframework.http.HttpHeaders;
 
 import com.unitedvision.sangihe.monev.entity.UnitKerja;
-import com.unitedvision.sangihe.monev.serviceagent.ServiceException;
 import com.unitedvision.sangihe.monev.serviceagent.entity.Pegawai;
 
 public interface UtilityService {

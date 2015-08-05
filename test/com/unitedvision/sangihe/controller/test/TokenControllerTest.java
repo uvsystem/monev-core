@@ -17,9 +17,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.unitedvision.sangihe.configuration.test.TestConfig;
-import com.unitedvision.sangihe.configuration.test.UtilityService;
 import com.unitedvision.sangihe.monev.serviceagent.Service;
 import com.unitedvision.sangihe.monev.serviceagent.ServiceException;
+import com.unitedvision.sangihe.monev.serviceagent.UtilityService;
 import com.unitedvision.sangihe.monev.serviceagent.entity.Token;
 
 @RunWith(SpringJUnit4ClassRunner.class)

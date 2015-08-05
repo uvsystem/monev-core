@@ -9,4 +9,5 @@ public interface Service {
 	void lock(String tokenString) throws ServiceException;
 	
 	Token get(String tokenString) throws ServiceException;
+
 }

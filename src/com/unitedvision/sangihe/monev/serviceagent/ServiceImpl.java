@@ -12,7 +12,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import com.unitedvision.sangihe.configuration.test.UtilityService;
 import com.unitedvision.sangihe.monev.entity.UnitKerja;
 import com.unitedvision.sangihe.monev.entity.UnitKerja.TipeUnitKerja;
 import com.unitedvision.sangihe.monev.serviceagent.entity.Operator;
