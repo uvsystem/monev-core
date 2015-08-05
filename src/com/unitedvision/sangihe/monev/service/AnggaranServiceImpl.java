@@ -34,6 +34,7 @@ public class AnggaranServiceImpl implements AnggaranService {
 	}
 	
 	@Override
+	@Transactional(readOnly = false)
 	public Anggaran simpan(Anggaran anggaran, Long idKegiatan) throws AnggaranException, WrongYearException {
 		Kegiatan kegiatan = kegiatanRepository.findOne(idKegiatan);
 		anggaran.setKegiatan(kegiatan);

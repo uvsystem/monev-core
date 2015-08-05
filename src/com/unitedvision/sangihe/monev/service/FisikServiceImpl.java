@@ -34,6 +34,7 @@ public class FisikServiceImpl implements FisikService {
 	}
 	
 	@Override
+	@Transactional(readOnly = false)
 	public Fisik simpan(Fisik fisik, Long idKegiatan) throws FisikException, WrongYearException {
 		Kegiatan kegiatan = kegiatanRepository.findOne(idKegiatan);
 		fisik.setKegiatan(kegiatan);
