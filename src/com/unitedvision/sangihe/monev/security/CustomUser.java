@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import com.unitedvision.sangihe.monev.serviceagent.entity.Operator;
+import com.unitedvision.sangihe.monev.entity.Operator;
 
 public class CustomUser extends User {
 	private static final long serialVersionUID = 1L;

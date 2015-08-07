@@ -4,7 +4,7 @@ import com.unitedvision.sangihe.monev.entity.Anggaran;
 import com.unitedvision.sangihe.monev.entity.Fisik;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Program;
-import com.unitedvision.sangihe.monev.serviceagent.entity.Token;
+import com.unitedvision.sangihe.monev.entity.Token;
 
 public class EntityRestMessage<T> extends RestMessage {
 	private T model;

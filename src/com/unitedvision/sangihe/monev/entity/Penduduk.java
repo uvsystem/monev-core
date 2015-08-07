@@ -1,11 +1,25 @@
-package com.unitedvision.sangihe.monev.serviceagent.entity;
+package com.unitedvision.sangihe.monev.entity;
 
 import java.sql.Date;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unitedvision.sangihe.monev.util.DateUtil;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
+@Table(name = "penduduk")
 public class Penduduk {
 
 	private long id;
@@ -13,12 +27,15 @@ public class Penduduk {
 	private String nama;
 	private Date tanggalLahir;
 	private Kontak kontak;
+	private Pegawai pegawai;
 	
 	public Penduduk() {
 		super();
 		kontak = new Kontak();
 	}
 
+	@Id
+	@GeneratedValue
 	public long getId() {
 		return id;
 	}
@@ -27,6 +44,7 @@ public class Penduduk {
 		this.id = id;
 	}
 
+	@Column(name = "nik", unique = true, nullable = false)
 	public String getNik() {
 		return nik;
 	}
@@ -35,6 +53,7 @@ public class Penduduk {
 		this.nik = nik;
 	}
 
+	@Column(name = "nama", nullable = false)
 	public String getNama() {
 		return nama;
 	}
@@ -43,6 +62,8 @@ public class Penduduk {
 		this.nama = nama;
 	}
 
+	@JsonIgnore
+	@Column(name = "tanggal_lahir", nullable = false)
 	public Date getTanggalLahir() {
 		return tanggalLahir;
 	}
@@ -50,16 +71,18 @@ public class Penduduk {
 	public void setTanggalLahir(Date tanggalLahir) {
 		this.tanggalLahir = tanggalLahir;
 	}
-
+	
+	@Transient
 	public String getTanggalLahirStr() {
 		return DateUtil.toStringDate(tanggalLahir, "-");
 	}
 	
-	public void setTanggalLahirStr(String string) {
-		setTanggalLahir(DateUtil.getDate(string, "-"));
+	public void setTanggalLahirStr(String tanggalLahirStr) {
+		setTanggalLahir(DateUtil.getDate(tanggalLahirStr, "-"));
 	}
 
-	
+	@Embedded
+	@JsonIgnore
 	public Kontak getKontak() {
 		return kontak;
 	}
@@ -68,22 +91,37 @@ public class Penduduk {
 		this.kontak = kontak;
 	}
 
+	@JsonBackReference
+	@OneToOne(mappedBy = "penduduk", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	public Pegawai getPegawai() {
+		return pegawai;
+	}
+
+	public void setPegawai(Pegawai pegawai) {
+		this.pegawai = pegawai;
+	}
+
+	@Transient
 	public String getEmail() {
 		return kontak.getEmail();
 	}
 
+	@Transient
 	public void setEmail(String email) {
 		kontak.setEmail(email);
 	}
 
+	@Transient
 	public String getTelepon() {
 		return kontak.getTelepon();
 	}
 
+	@Transient
 	public void setTelepon(String telepon) {
 		kontak.setTelepon(telepon);
 	}
 
+	@Embeddable
 	public static class Kontak {
 		
 		private String email;
@@ -93,6 +131,7 @@ public class Penduduk {
 			super();
 		}
 
+		@Column(name = "email", unique = true)
 		public String getEmail() {
 			return email;
 		}
@@ -101,6 +140,7 @@ public class Penduduk {
 			this.email = email;
 		}
 
+		@Column(name = "telepon", unique = true)
 		public String getTelepon() {
 			return telepon;
 		}

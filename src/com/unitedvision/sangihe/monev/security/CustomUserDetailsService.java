@@ -10,12 +10,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.unitedvision.sangihe.monev.configuration.ApplicationConfig;
+import com.unitedvision.sangihe.monev.entity.Operator;
+import com.unitedvision.sangihe.monev.entity.Pegawai;
+import com.unitedvision.sangihe.monev.entity.Token;
+import com.unitedvision.sangihe.monev.entity.Operator.Role;
 import com.unitedvision.sangihe.monev.exception.UnauthenticatedAccessException;
-import com.unitedvision.sangihe.monev.serviceagent.Service;
-import com.unitedvision.sangihe.monev.serviceagent.entity.Operator;
-import com.unitedvision.sangihe.monev.serviceagent.entity.Operator.Role;
-import com.unitedvision.sangihe.monev.serviceagent.entity.Pegawai;
-import com.unitedvision.sangihe.monev.serviceagent.entity.Token;
+import com.unitedvision.sangihe.monev.service.TokenService;
 
 /**
  * Custom Authentication Provider.
@@ -27,7 +27,7 @@ import com.unitedvision.sangihe.monev.serviceagent.entity.Token;
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private Service service;
+	private TokenService service;
 
 	@Override
 	public CustomUser loadUserByUsername(String tokenString) throws UsernameNotFoundException {

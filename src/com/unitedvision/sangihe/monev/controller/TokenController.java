@@ -10,56 +10,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.unitedvision.sangihe.monev.entity.Token;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
-import com.unitedvision.sangihe.monev.serviceagent.Service;
-import com.unitedvision.sangihe.monev.serviceagent.ServiceException;
-import com.unitedvision.sangihe.monev.serviceagent.entity.Token;
+import com.unitedvision.sangihe.monev.service.TokenService;
 import com.unitedvision.sangihe.monev.util.EntityRestMessage;
 import com.unitedvision.sangihe.monev.util.PasswordWrapper;
-import com.unitedvision.sangihe.monev.util.RestMessage;
 
 @Controller
 @RequestMapping("/token")
 public class TokenController {
 
 	@Autowired
-	private Service tokenService;
+	private TokenService tokenService;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/{nip}")
 	@ResponseBody
 	public EntityRestMessage<Token> create(@PathVariable String nip, @RequestBody PasswordWrapper passwordWrapper) throws ApplicationException, PersistenceException {
-		Token token;
-		try {
-			token = tokenService.create(nip, passwordWrapper.getPassword());
-			
-			return EntityRestMessage.create(token);
-		} catch (ServiceException e) {
-			throw new ApplicationException(e);
-		}
+		Token token = tokenService.create(nip, passwordWrapper.getPassword());
+		
+		return EntityRestMessage.create(token);
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT, value = "/{tokenString}")
+	@ResponseBody
+	public EntityRestMessage<Token> lock(@PathVariable String tokenString) throws ApplicationException, PersistenceException {
+		Token token = tokenService.lock(tokenString);
+		
+		return EntityRestMessage.create(token);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{tokenString}")
 	@ResponseBody
 	public EntityRestMessage<Token> get(@PathVariable String tokenString) throws ApplicationException, PersistenceException {
-		Token token;
-		try {
-			token = tokenService.get(tokenString);
-			
-			return EntityRestMessage.create(token);
-		} catch (ServiceException e) {
-			throw new ApplicationException(e);
-		}
-	}
-	
-	@RequestMapping(method = RequestMethod.PUT, value = "/{tokenString}")
-	@ResponseBody
-	public RestMessage lock(@PathVariable String tokenString) throws ApplicationException, PersistenceException {
-		try {
-			tokenService.lock(tokenString);
-			
-			return RestMessage.success();
-		} catch (ServiceException e) {
-			throw new ApplicationException(e);
-		}
+		Token token = tokenService.get(tokenString);
+		
+		return EntityRestMessage.create(token);
 	}
 }

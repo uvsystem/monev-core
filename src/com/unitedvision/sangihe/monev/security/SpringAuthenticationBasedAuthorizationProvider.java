@@ -5,9 +5,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import com.unitedvision.sangihe.monev.entity.Operator;
+import com.unitedvision.sangihe.monev.entity.Operator.Role;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
-import com.unitedvision.sangihe.monev.serviceagent.entity.Operator;
-import com.unitedvision.sangihe.monev.serviceagent.entity.Operator.Role;
 
 /**
  * Class that provides authentication mechanism based on Spring's {@code Authentication} class.
