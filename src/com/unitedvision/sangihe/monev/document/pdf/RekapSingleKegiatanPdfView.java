@@ -64,7 +64,7 @@ public class RekapSingleKegiatanPdfView extends CustomAbstractPdfView {
 		insertCell(table, String.format(": %s", rekapKegiatan.getNamaUnitKerja()), align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
 		insertCell(table, "Program", align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
 		insertCell(table, String.format(": %s", rekapKegiatan.getNamaProgram()), align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
-		insertCell(table, "Program", align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
+		insertCell(table, "Kegiatan", align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
 		insertCell(table, String.format(": %s", rekapKegiatan.getNamaKegiatan()), align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
 		insertCell(table, "Pagu Anggaran", align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
 		insertCell(table, String.format(": Rp %d", rekapKegiatan.getPaguAnggaran()), align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
