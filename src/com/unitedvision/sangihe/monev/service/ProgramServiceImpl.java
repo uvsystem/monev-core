@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.unitedvision.sangihe.monev.entity.Program;
+import com.unitedvision.sangihe.monev.entity.RekapProgram;
 import com.unitedvision.sangihe.monev.entity.UnitKerja;
 import com.unitedvision.sangihe.monev.repository.ProgramRepository;
+import com.unitedvision.sangihe.monev.repository.RekapProgramRepository;
 import com.unitedvision.sangihe.monev.repository.UnitKerjaRepository;
 
 @Service
@@ -19,6 +21,8 @@ public class ProgramServiceImpl implements ProgramService {
 	private ProgramRepository programRepository;
 	@Autowired
 	private UnitKerjaRepository unitKerjaRepository;
+	@Autowired
+	private RekapProgramRepository rekapProgramRepository;
 	
 	@Override
 	@Transactional(readOnly = false)
@@ -59,6 +63,21 @@ public class ProgramServiceImpl implements ProgramService {
 	@Override
 	public List<Program> cari(String keyword) {
 		return programRepository.findByNamaContaining(keyword);
+	}
+
+	@Override
+	public RekapProgram rekapProgram(Long id) {
+		return rekapProgramRepository.rekapSingle(id);
+	}
+
+	@Override
+	public List<RekapProgram> rekap(Long tahun) {
+		return rekapProgramRepository.rekap(tahun);
+	}
+
+	@Override
+	public List<RekapProgram> rekap(Long tahun, String kode) {
+		return rekapProgramRepository.rekap(tahun, kode);
 	}
 
 }

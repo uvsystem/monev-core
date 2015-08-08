@@ -1,6 +1,7 @@
 package com.unitedvision.sangihe.monev.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.unitedvision.sangihe.monev.entity.Program;
+import com.unitedvision.sangihe.monev.entity.RekapProgram;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.service.ProgramService;
 import com.unitedvision.sangihe.monev.util.EntityRestMessage;
@@ -73,4 +76,46 @@ public class ProgramController {
 		
 		return ListEntityRestMessage.createListProgram(daftarProgram);
 	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/rekap/{id}")
+	public ModelAndView rekapProgram(@PathVariable Long id, Map<String, RekapProgram> model) {
+		try {
+			RekapProgram rekap = programService.rekapProgram(id);
+
+			model.put("rekap", rekap);
+			
+			return new ModelAndView("rekapSingleProgram", model);
+		} catch (PersistenceException e) {
+			return new ModelAndView("pdfException", model);
+		}
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/rekap/tahun/{tahun}")
+	public ModelAndView rekap(@PathVariable Long tahun, Map<String, Object> model) {
+		try {
+			List<RekapProgram> rekap = programService.rekap(tahun);
+
+			model.put("tahun", tahun);
+			model.put("rekap", rekap);
+			
+			return new ModelAndView("rekapProgram", model);
+		} catch (PersistenceException e) {
+			return new ModelAndView("pdfException", model);
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/rekap/tahun/{tahun}/satker/{kode}")
+	public ModelAndView rekap(@PathVariable String kode, @PathVariable Long tahun, Map<String, Object> model) {
+		try {
+			List<RekapProgram> rekap = programService.rekap(tahun, kode);
+
+			model.put("tahun", tahun);
+			model.put("rekap", rekap);
+			
+			return new ModelAndView("rekapProgram", model);
+		} catch (PersistenceException e) {
+			return new ModelAndView("pdfException", model);
+		}
+	}
+	
 }
