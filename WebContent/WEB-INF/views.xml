@@ -6,5 +6,7 @@
 	<bean id="pdfException" class="com.unitedvision.sangihe.monev.document.pdf.ExceptionPdfView" />	
 	<bean id="rekapSingleProgram" class="com.unitedvision.sangihe.monev.document.pdf.RekapSingleProgramPdfView" />	
 	<bean id="rekapProgram" class="com.unitedvision.sangihe.monev.document.pdf.RekapProgramPdfView" />	
+	<bean id="rekapSingleKegiatan" class="com.unitedvision.sangihe.monev.document.pdf.RekapSingleKegiatanPdfView" />	
+	<bean id="rekapKegiatan" class="com.unitedvision.sangihe.monev.document.pdf.RekapKegiatanPdfView" />	
 	
 </beans>

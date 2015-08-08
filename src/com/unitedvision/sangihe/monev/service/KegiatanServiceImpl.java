@@ -2,17 +2,23 @@ package com.unitedvision.sangihe.monev.service;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.unitedvision.sangihe.monev.entity.Anggaran;
+import com.unitedvision.sangihe.monev.entity.Fisik;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Program;
+import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
 import com.unitedvision.sangihe.monev.entity.SubKegiatan;
 import com.unitedvision.sangihe.monev.repository.AnggaranRepository;
 import com.unitedvision.sangihe.monev.repository.FisikRepository;
 import com.unitedvision.sangihe.monev.repository.KegiatanRepository;
 import com.unitedvision.sangihe.monev.repository.ProgramRepository;
+import com.unitedvision.sangihe.monev.repository.RekapKegiatanRepository;
 
 @Service
 @Transactional(readOnly = true)
@@ -26,6 +32,8 @@ public class KegiatanServiceImpl implements KegiatanService {
 	private AnggaranRepository anggaranRepository;
 	@Autowired
 	private FisikRepository fisikRepository;
+	@Autowired
+	private RekapKegiatanRepository rekapKegiatanRepository;
 	
 	@Override
 	@Transactional(readOnly = false)
@@ -89,6 +97,38 @@ public class KegiatanServiceImpl implements KegiatanService {
 	@Override
 	public List<Kegiatan> cari(String keyword) {
 		return kegiatanRepository.findByNamaContaining(keyword);
+	}
+
+	@Override
+	public List<RekapKegiatan> rekap(Long tahun) {
+		return rekapKegiatanRepository.rekap(tahun);
+	}
+
+	@Override
+	public List<RekapKegiatan> rekap(Long tahun, String kode) {
+		return rekapKegiatanRepository.rekap(tahun, kode);
+	}
+
+	@Override
+	public List<RekapKegiatan> rekap(Long tahun, Long id) {
+		return rekapKegiatanRepository.rekap(tahun, id);
+	}
+
+	@Override
+	public RekapKegiatan rekapKegiatan(Long id) {
+		RekapKegiatan rekap = rekapKegiatanRepository.rekapKegiatan(id);
+		
+		try {
+			List<Anggaran> daftarAnggaran = anggaranRepository.findByKegiatan_Program_Id(id);
+			rekap.setDaftarAnggaran(daftarAnggaran);
+		} catch (PersistenceException e) { }
+		
+		try {
+			List<Fisik> daftarFisik = fisikRepository.findByKegiatan_Program_Id(id);
+			rekap.setDaftarFisik(daftarFisik);
+		} catch (PersistenceException e) { }
+		
+		return rekap;
 	}
 
 }
