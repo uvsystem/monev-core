@@ -4,6 +4,8 @@ import com.unitedvision.sangihe.monev.entity.Anggaran;
 import com.unitedvision.sangihe.monev.entity.Fisik;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Program;
+import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
+import com.unitedvision.sangihe.monev.entity.RekapProgram;
 import com.unitedvision.sangihe.monev.entity.Token;
 
 public class EntityRestMessage<T> extends RestMessage {
@@ -48,5 +50,13 @@ public class EntityRestMessage<T> extends RestMessage {
 	
 	public static EntityRestMessage<Token> create(Token token) {
 		return new EntityRestMessage<Token>(token);
+	}
+
+	public static EntityRestMessage<RekapKegiatan> create(RekapKegiatan rekap) {
+		return new EntityRestMessage<RekapKegiatan>(rekap);
+	}
+
+	public static EntityRestMessage<RekapProgram> create(RekapProgram rekap) {
+		return new EntityRestMessage<RekapProgram>(rekap);
 	}
 }

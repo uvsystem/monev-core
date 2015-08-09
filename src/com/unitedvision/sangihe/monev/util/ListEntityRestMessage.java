@@ -6,6 +6,8 @@ import com.unitedvision.sangihe.monev.entity.Anggaran;
 import com.unitedvision.sangihe.monev.entity.Fisik;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Program;
+import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
+import com.unitedvision.sangihe.monev.entity.RekapProgram;
 
 public class ListEntityRestMessage<T> extends RestMessage {
 	private List<T> list;
@@ -45,5 +47,13 @@ public class ListEntityRestMessage<T> extends RestMessage {
 
 	public static ListEntityRestMessage<Fisik> createListFisik(List<Fisik> daftarFisik) {
 		return new ListEntityRestMessage<Fisik>(daftarFisik);
+	}
+
+	public static ListEntityRestMessage<RekapProgram> createListRekapProgram(List<RekapProgram> rekap) {
+		return new ListEntityRestMessage<RekapProgram>(rekap);
+	}
+
+	public static ListEntityRestMessage<RekapKegiatan> createListRekapKegiatan(List<RekapKegiatan> rekap) {
+		return new ListEntityRestMessage<RekapKegiatan>(rekap);
 	}
 }

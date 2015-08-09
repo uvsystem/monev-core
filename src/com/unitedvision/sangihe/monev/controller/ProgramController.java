@@ -77,7 +77,7 @@ public class ProgramController {
 		return ListEntityRestMessage.createListProgram(daftarProgram);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/rekap/{id}")
+	@RequestMapping(method = RequestMethod.GET, value = "/rekap/{id}/cetak")
 	public ModelAndView rekapProgram(@PathVariable Long id, Map<String, RekapProgram> model) {
 		try {
 			RekapProgram rekap = programService.rekapProgram(id);
@@ -90,7 +90,15 @@ public class ProgramController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/rekap/tahun/{tahun}")
+	@RequestMapping(method = RequestMethod.GET, value = "/rekap/{id}")
+	@ResponseBody
+	public EntityRestMessage<RekapProgram> rekapProgramView(@PathVariable Long id) {
+		RekapProgram rekap = programService.rekapProgram(id);
+		
+		return EntityRestMessage.create(rekap);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/rekap/tahun/{tahun}/cetak")
 	public ModelAndView rekap(@PathVariable Long tahun, Map<String, Object> model) {
 		try {
 			List<RekapProgram> rekap = programService.rekap(tahun);
@@ -103,8 +111,16 @@ public class ProgramController {
 			return new ModelAndView("pdfException", model);
 		}
 	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/rekap/tahun/{tahun}")
+	@ResponseBody
+	public ListEntityRestMessage<RekapProgram> rekapView(@PathVariable Long tahun) {
+		List<RekapProgram> rekap = programService.rekap(tahun);
+		
+		return ListEntityRestMessage.createListRekapProgram(rekap);
+	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/rekap/tahun/{tahun}/satker/{kode}")
+	@RequestMapping(method = RequestMethod.GET, value = "/rekap/tahun/{tahun}/satker/{kode}/cetak")
 	public ModelAndView rekap(@PathVariable String kode, @PathVariable Long tahun, Map<String, Object> model) {
 		try {
 			List<RekapProgram> rekap = programService.rekap(tahun, kode);
@@ -118,4 +134,11 @@ public class ProgramController {
 		}
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/rekap/tahun/{tahun}/satker/{kode}")
+	@ResponseBody
+	public ListEntityRestMessage<RekapProgram> rekapView(@PathVariable String kode, @PathVariable Long tahun) {
+		List<RekapProgram> rekap = programService.rekap(tahun, kode);
+		
+		return ListEntityRestMessage.createListRekapProgram(rekap);
+	}
 }
