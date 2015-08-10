@@ -21,7 +21,7 @@ public class RekapProgramPdfView extends CustomAbstractPdfView {
 	public Document create(Map<String, Object> model, Document doc) throws DocumentException {
 		@SuppressWarnings("unchecked")
 		List<RekapProgram> list = (List<RekapProgram>) model.get("rekap");
-		Integer tahun = (Integer) model.get("tahun");
+		Long tahun = (Long) model.get("tahun");
 		
 		doc.newPage();
 		
@@ -47,7 +47,7 @@ public class RekapProgramPdfView extends CustomAbstractPdfView {
 		doc.add(title);
 	}
 
-	protected void createSubTitle(Document doc, Integer tahun) throws DocumentException {
+	protected void createSubTitle(Document doc, Long tahun) throws DocumentException {
 		Paragraph subTitle = new Paragraph();
 		subTitle.setAlignment(Element.ALIGN_CENTER);
 		

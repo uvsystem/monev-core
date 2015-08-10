@@ -52,22 +52,22 @@ public class RekapSingleKegiatanPdfView extends CustomAbstractPdfView {
 		Paragraph subTitle = new Paragraph();
 		subTitle.setAlignment(Element.ALIGN_CENTER);
 		
-		float[] columnWidth = {2, 10};
+		float[] columnWidth = {2, 4, 2, 4};
 		
 		PdfPTable table = new PdfPTable(columnWidth);
 		table.setWidthPercentage(tablePercentage);
 		
-		Date tanggalCetak = DateUtil.getDate();
-		insertCell(table, "Tanggal Cetak", align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
-		insertCell(table, String.format(": %s", DateUtil.toFormattedStringDate(tanggalCetak, "-")), align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
 		insertCell(table, "Unit Kerja", align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
-		insertCell(table, String.format(": %s", rekapKegiatan.getNamaUnitKerja()), align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
+		insertCell(table, String.format(": %s", rekapKegiatan.getNamaUnitKerja()), align, 3, fontHeader, Rectangle.BOX, Color.WHITE, null);
 		insertCell(table, "Program", align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
-		insertCell(table, String.format(": %s", rekapKegiatan.getNamaProgram()), align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
+		insertCell(table, String.format(": %s", rekapKegiatan.getNamaProgram()), align, 3, fontHeader, Rectangle.BOX, Color.WHITE, null);
 		insertCell(table, "Kegiatan", align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
-		insertCell(table, String.format(": %s", rekapKegiatan.getNamaKegiatan()), align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
+		insertCell(table, String.format(": %s", rekapKegiatan.getNamaKegiatan()), align, 3, fontHeader, Rectangle.BOX, Color.WHITE, null);
 		insertCell(table, "Pagu Anggaran", align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
 		insertCell(table, String.format(": Rp %d", rekapKegiatan.getPaguAnggaran()), align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
+
+		Date tanggalCetak = DateUtil.getDate();
+		insertCell(table, String.format("Tanggal Cetak: %s", DateUtil.toFormattedStringDate(tanggalCetak, "-")), Element.ALIGN_RIGHT, 2, fontContent, Rectangle.BOX, Color.WHITE, null);
 		
 		subTitle.add(table);
 		

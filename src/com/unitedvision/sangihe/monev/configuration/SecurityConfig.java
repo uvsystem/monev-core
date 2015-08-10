@@ -40,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         	.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
         	.antMatchers("/token/**").permitAll()
+        	.antMatchers("/**/rekap/**").permitAll()
         	.antMatchers("/aplikasi/kode").permitAll()
 			.anyRequest().authenticated()
             .and()

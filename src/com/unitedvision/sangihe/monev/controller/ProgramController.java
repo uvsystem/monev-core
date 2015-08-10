@@ -77,7 +77,7 @@ public class ProgramController {
 		return ListEntityRestMessage.createListProgram(daftarProgram);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/rekap/{id}/cetak")
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}/rekap/cetak")
 	public ModelAndView rekapProgram(@PathVariable Long id, Map<String, RekapProgram> model) {
 		try {
 			RekapProgram rekap = programService.rekapProgram(id);
@@ -90,7 +90,7 @@ public class ProgramController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/rekap/{id}")
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}/rekap")
 	@ResponseBody
 	public EntityRestMessage<RekapProgram> rekapProgramView(@PathVariable Long id) {
 		RekapProgram rekap = programService.rekapProgram(id);

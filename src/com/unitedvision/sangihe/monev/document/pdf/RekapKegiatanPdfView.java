@@ -21,7 +21,7 @@ public class RekapKegiatanPdfView extends CustomAbstractPdfView {
 	public Document create(Map<String, Object> model, Document doc) throws DocumentException {
 		@SuppressWarnings("unchecked")
 		List<RekapKegiatan> list = (List<RekapKegiatan>) model.get("rekap");
-		Integer tahun = (Integer) model.get("tahun");
+		Long tahun = (Long) model.get("tahun");
 		
 		doc.newPage();
 		
@@ -47,18 +47,18 @@ public class RekapKegiatanPdfView extends CustomAbstractPdfView {
 		doc.add(title);
 	}
 
-	protected void createSubTitle(Document doc, Integer tahun) throws DocumentException {
+	protected void createSubTitle(Document doc, Long tahun) throws DocumentException {
 		Paragraph subTitle = new Paragraph();
 		subTitle.setAlignment(Element.ALIGN_CENTER);
 		
-		float[] columnWidth = {12};
+		float[] columnWidth = {5, 5};
 		
 		PdfPTable table = new PdfPTable(columnWidth);
 		table.setWidthPercentage(tablePercentage);
 		
 		insertCell(table, String.format("Tahun: %d", tahun), align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
 		Date tanggalCetak = DateUtil.getDate();
-		insertCell(table, String.format("Tanggal Cetak: %s", DateUtil.toFormattedStringDate(tanggalCetak, "-")), align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
+		insertCell(table, String.format("Tanggal Cetak: %s", DateUtil.toFormattedStringDate(tanggalCetak, "-")), Element.ALIGN_RIGHT, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
 		
 		subTitle.add(table);
 		
