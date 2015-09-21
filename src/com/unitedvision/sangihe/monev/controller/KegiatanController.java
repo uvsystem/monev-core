@@ -110,7 +110,7 @@ public class KegiatanController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/rekap/tahun/{tahun}")
 	@ResponseBody
-	public ListEntityRestMessage<RekapKegiatan> rekapView(@PathVariable Long tahun) {
+	public ListEntityRestMessage<RekapKegiatan> rekapView(@PathVariable Long tahun) throws ApplicationException, PersistenceException {
 		List<RekapKegiatan> rekap = kegiatanService.rekap(tahun);
 		
 		return ListEntityRestMessage.createListRekapKegiatan(rekap);
@@ -132,7 +132,7 @@ public class KegiatanController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/rekap/tahun/{tahun}/satker/{kode}")
 	@ResponseBody
-	public ListEntityRestMessage<RekapKegiatan> rekapView(@PathVariable String kode, @PathVariable Long tahun) {
+	public ListEntityRestMessage<RekapKegiatan> rekapView(@PathVariable String kode, @PathVariable Long tahun) throws ApplicationException, PersistenceException {
 		List<RekapKegiatan> rekap = kegiatanService.rekap(tahun, kode);
 		
 		return ListEntityRestMessage.createListRekapKegiatan(rekap);
@@ -154,7 +154,7 @@ public class KegiatanController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/rekap/tahun/{tahun}/program/{id}")
 	@ResponseBody
-	public ListEntityRestMessage<RekapKegiatan> rekapView(@PathVariable Long tahun, @PathVariable Long id) {
+	public ListEntityRestMessage<RekapKegiatan> rekapView(@PathVariable Long tahun, @PathVariable Long id) throws ApplicationException, PersistenceException {
 		List<RekapKegiatan> rekap = kegiatanService.rekap(tahun, id);
 		
 		return ListEntityRestMessage.createListRekapKegiatan(rekap);
@@ -175,7 +175,7 @@ public class KegiatanController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}/rekap")
 	@ResponseBody
-	public EntityRestMessage<RekapKegiatan> rekapKegiatanView(@PathVariable Long id) {
+	public EntityRestMessage<RekapKegiatan> rekapKegiatanView(@PathVariable Long id) throws ApplicationException, PersistenceException {
 		RekapKegiatan rekap = kegiatanService.rekapKegiatan(id);
 		
 		return EntityRestMessage.create(rekap);

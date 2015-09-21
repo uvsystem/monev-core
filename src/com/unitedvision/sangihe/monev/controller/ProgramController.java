@@ -92,7 +92,7 @@ public class ProgramController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}/rekap")
 	@ResponseBody
-	public EntityRestMessage<RekapProgram> rekapProgramView(@PathVariable Long id) {
+	public EntityRestMessage<RekapProgram> rekapProgramView(@PathVariable Long id) throws ApplicationException, PersistenceException {
 		RekapProgram rekap = programService.rekapProgram(id);
 		
 		return EntityRestMessage.create(rekap);
@@ -114,7 +114,7 @@ public class ProgramController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/rekap/tahun/{tahun}")
 	@ResponseBody
-	public ListEntityRestMessage<RekapProgram> rekapView(@PathVariable Long tahun) {
+	public ListEntityRestMessage<RekapProgram> rekapView(@PathVariable Long tahun) throws ApplicationException, PersistenceException {
 		List<RekapProgram> rekap = programService.rekap(tahun);
 		
 		return ListEntityRestMessage.createListRekapProgram(rekap);
@@ -136,7 +136,7 @@ public class ProgramController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/rekap/tahun/{tahun}/satker/{kode}")
 	@ResponseBody
-	public ListEntityRestMessage<RekapProgram> rekapView(@PathVariable String kode, @PathVariable Long tahun) {
+	public ListEntityRestMessage<RekapProgram> rekapView(@PathVariable String kode, @PathVariable Long tahun) throws ApplicationException, PersistenceException {
 		List<RekapProgram> rekap = programService.rekap(tahun, kode);
 		
 		return ListEntityRestMessage.createListRekapProgram(rekap);
