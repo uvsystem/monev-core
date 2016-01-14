@@ -62,7 +62,8 @@ public class KegiatanServiceImpl implements KegiatanService {
 	@Override
 	@Transactional(readOnly = false)
 	public void hapus(Long id) {
-		kegiatanRepository.delete(id);
+		//kegiatanRepository.delete(id);
+		kegiatanRepository.hapus(id);
 	}
 
 	@Override
