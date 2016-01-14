@@ -42,11 +42,12 @@ public class KegiatanServiceImpl implements KegiatanService {
 	}
 	
 	@Override
+	@Transactional(readOnly = false)
 	public Kegiatan simpan(Kegiatan kegiatan, Long idProgram) {
 		Program program = programRepository.findOne(idProgram);
 		kegiatan.setProgram(program);
 		
-		return simpan(kegiatan);
+		return kegiatanRepository.save(kegiatan);
 	}
 
 	@Override
