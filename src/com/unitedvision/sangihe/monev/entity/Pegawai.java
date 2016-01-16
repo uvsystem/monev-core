@@ -145,6 +145,7 @@ public class Pegawai {
 		this.daftarToken = daftarToken;
 	}
 
+	@JsonIgnore
 	@Transient
 	public String getNik() {
 		return penduduk.getNik();
@@ -154,6 +155,7 @@ public class Pegawai {
 		penduduk.setNik(nik);
 	}
 
+	@JsonIgnore
 	@Transient
 	public String getNama() {
 		return penduduk.getNama();
@@ -173,6 +175,7 @@ public class Pegawai {
 		penduduk.setTanggalLahir(tanggalLahir);
 	}
 
+	@JsonIgnore
 	@Transient
 	public String getTanggalLahirStr() {
 		return DateUtil.toStringDate(getTanggalLahir(), "-");
@@ -184,6 +187,7 @@ public class Pegawai {
 		setTanggalLahir(date);
 	}
 	
+	@JsonIgnore
 	@Transient
 	public String getEmail() {
 		return penduduk.getEmail();
@@ -193,6 +197,7 @@ public class Pegawai {
 		penduduk.setEmail(email);
 	}
 
+	@JsonIgnore
 	@Transient
 	public String getTelepon() {
 		return penduduk.getTelepon();
@@ -202,6 +207,7 @@ public class Pegawai {
 		penduduk.setTelepon(telepon);
 	}
 	
+	@JsonIgnore
 	@Transient
 	public Long getIdPenduduk() {
 		return penduduk.getId();
