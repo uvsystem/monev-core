@@ -20,8 +20,9 @@ public class Program {
 	private String nama;
 	private Integer tahunAwal;
 	private Integer tahunAkhir;
-	
+
 	private UnitKerja unitKerja;
+	private Program parent;
 	
 	public Program() {
 		super();
@@ -80,9 +81,21 @@ public class Program {
 	public String getNamaUnitKerja() {
 		return unitKerja.getNama();
 	}
+	
+	public void setNamaUnitKerja(String namaUnitKerja) {}
 
 	public void setUnitKerja(UnitKerja unitKerja) {
 		this.unitKerja = unitKerja;
+	}
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "parent")
+	public Program getParent() {
+		return parent;
+	}
+
+	public void setParent(Program parent) {
+		this.parent = parent;
 	}
 
 	@Override
