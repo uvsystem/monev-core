@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
-import com.unitedvision.sangihe.monev.entity.SubKegiatan;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.service.KegiatanService;
 import com.unitedvision.sangihe.monev.util.EntityRestMessage;
@@ -34,14 +33,6 @@ public class KegiatanController {
 	@ResponseBody
 	public RestMessage simpan(@PathVariable Long idProgram, @RequestBody Kegiatan kegiatan) throws ApplicationException, PersistenceException {
 		kegiatanService.simpan(kegiatan, idProgram);
-		
-		return RestMessage.success();
-	}
-	
-	@RequestMapping(method = RequestMethod.POST, value = "/{idKegiatan}/sub")
-	@ResponseBody
-	public RestMessage tambahSub(@PathVariable Long idKegiatan, @RequestBody SubKegiatan subKegiatan) throws ApplicationException, PersistenceException {
-		kegiatanService.tambahSubKegiatan(idKegiatan, subKegiatan);
 		
 		return RestMessage.success();
 	}

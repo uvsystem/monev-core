@@ -13,7 +13,6 @@ import com.unitedvision.sangihe.monev.entity.Fisik;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Program;
 import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
-import com.unitedvision.sangihe.monev.entity.SubKegiatan;
 import com.unitedvision.sangihe.monev.repository.AnggaranRepository;
 import com.unitedvision.sangihe.monev.repository.FisikRepository;
 import com.unitedvision.sangihe.monev.repository.KegiatanRepository;
@@ -48,15 +47,6 @@ public class KegiatanServiceImpl implements KegiatanService {
 		kegiatan.setProgram(program);
 		
 		return kegiatanRepository.save(kegiatan);
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public void tambahSubKegiatan(Long idKegiatan, SubKegiatan subKegiatan) {
-		Kegiatan parent = get(idKegiatan);
-		parent.addSubKegiatan(subKegiatan);
-
-		kegiatanRepository.save(subKegiatan);
 	}
 	
 	@Override
