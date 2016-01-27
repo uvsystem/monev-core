@@ -2,7 +2,6 @@ package com.unitedvision.sangihe.monev.controller;
 
 import java.time.Month;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.PersistenceException;
 
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.unitedvision.sangihe.monev.entity.Fisik;
-import com.unitedvision.sangihe.monev.entity.Foto;
 import com.unitedvision.sangihe.monev.exception.ApplicationException;
 import com.unitedvision.sangihe.monev.service.FisikService;
 import com.unitedvision.sangihe.monev.util.EntityRestMessage;
@@ -75,21 +73,5 @@ public class FisikController {
 		List<Fisik> daftarFisik = fisikService.getByKegiatan(id);
 		
 		return ListEntityRestMessage.createListFisik(daftarFisik);
-	}
-	
-	@RequestMapping(method = RequestMethod.PUT, value = "/{id}/foto")
-	@ResponseBody
-	public EntityRestMessage<Fisik> tambahFoto(@PathVariable Long id, @RequestBody Set<Foto> daftarFoto) throws ApplicationException, PersistenceException {
-		Fisik fisik = fisikService.tambahFoto(id, daftarFoto);
-		
-		return EntityRestMessage.create(fisik);
-	}
-	
-	@RequestMapping(method = RequestMethod.PUT, value = "/{id}/foto/location")
-	@ResponseBody
-	public EntityRestMessage<Fisik> tambahFoto(@PathVariable Long id, @RequestBody Foto foto) throws ApplicationException, PersistenceException {
-		Fisik fisik = fisikService.tambahFoto(id, foto);
-		
-		return EntityRestMessage.create(fisik);
 	}
 }

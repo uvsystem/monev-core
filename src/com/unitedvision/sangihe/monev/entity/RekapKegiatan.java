@@ -1,56 +1,60 @@
 package com.unitedvision.sangihe.monev.entity;
 
-import java.time.Month;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 @Entity
 public class RekapKegiatan {
 
-	private String namaUnitKerja;
-	private String namaProgram;
-	private String namaKegiatan;
+	private String unitKerja;
+	private String program;
+	private String subProgram;
+	private String kegiatan;
 	private Long paguAnggaran;
+	private Long rencanaAnggaran;
 	private Long realisasiAnggaran;
 	private Integer realisasiFisik;
-	
-	private List<Anggaran> daftarAnggaran;
-	private List<Fisik> daftarFisik;
 	
 	public RekapKegiatan() {
 		super();
 	}
 
 	@Column(name = "unit_kerja")
-	public String getNamaUnitKerja() {
-		return namaUnitKerja;
+	public String getUnitKerja() {
+		return unitKerja;
 	}
 
-	public void setNamaUnitKerja(String namaUnitKerja) {
-		this.namaUnitKerja = namaUnitKerja;
+	public void setUnitKerja(String unitKerja) {
+		this.unitKerja = unitKerja;
 	}
 
 	@Column(name = "program")
-	public String getNamaProgram() {
-		return namaProgram;
+	public String getProgram() {
+		return program;
 	}
 
-	public void setNamaProgram(String namaProgram) {
-		this.namaProgram = namaProgram;
+	public void setProgram(String program) {
+		this.program = program;
+	}
+
+	@Column(name = "sub_program")
+	public String getSubProgram() {
+		return subProgram;
+	}
+
+	public void setSubProgram(String subProgram) {
+		this.subProgram = subProgram;
 	}
 
 	@Id
 	@Column(name = "kegiatan")
-	public String getNamaKegiatan() {
-		return namaKegiatan;
+	public String getKegiatan() {
+		return kegiatan;
 	}
 
-	public void setNamaKegiatan(String namaKegiatan) {
-		this.namaKegiatan = namaKegiatan;
+	public void setKegiatan(String kegiatan) {
+		this.kegiatan = kegiatan;
 	}
 
 	@Column(name = "pagu_anggaran")
@@ -60,6 +64,15 @@ public class RekapKegiatan {
 
 	public void setPaguAnggaran(Long paguAnggaran) {
 		this.paguAnggaran = paguAnggaran;
+	}
+
+	@Column(name = "rencana_anggaran")
+	public Long getRencanaAnggaran() {
+		return rencanaAnggaran;
+	}
+
+	public void setRencanaAnggaran(Long rencanaAnggaran) {
+		this.rencanaAnggaran = rencanaAnggaran;
 	}
 
 	@Column(name = "realisasi_anggaran")
@@ -80,76 +93,17 @@ public class RekapKegiatan {
 		this.realisasiFisik = realisasiFisik;
 	}
 
-	@Transient
-	public List<Anggaran> getDaftarAnggaran() {
-		return daftarAnggaran;
-	}
-
-	public void setDaftarAnggaran(List<Anggaran> daftarAnggaran) {
-		this.daftarAnggaran = daftarAnggaran;
-	}
-
-	@Transient
-	public List<Fisik> getDaftarFisik() {
-		return daftarFisik;
-	}
-
-	public void setDaftarFisik(List<Fisik> daftarFisik) {
-		this.daftarFisik = daftarFisik;
-	}
-
-	@Transient
-	public Long getRencanaAnggaran(Month month) {
-		for (Anggaran anggaran : daftarAnggaran) {
-			if (month.equals(anggaran.getBulan()))
-				return anggaran.getRencana();
-		}
-		
-		return 0L;
-	}
-	
-	@Transient
-	public Long getRencanaAnggaranKumulatif(Month month) {
-		Long rencanaAnggaranKumulatif = 0L;
-		for (Anggaran anggaran : daftarAnggaran) {
-			if (month.compareTo(anggaran.getBulan()) < 0 || month.compareTo(anggaran.getBulan()) == 0)
-				rencanaAnggaranKumulatif += anggaran.getRencana();
-		}
-		
-		return rencanaAnggaranKumulatif;
-	}
-	
-	@Transient
-	public Long getRealisasiAnggaranKumulatif(Month month) {
-		Long realisasiAnggaranKumulatif = 0L;
-		for (Anggaran anggaran : daftarAnggaran) {
-			if (month.compareTo(anggaran.getBulan()) < 0 || month.compareTo(anggaran.getBulan()) == 0)
-				realisasiAnggaranKumulatif += anggaran.getRealisasi();
-		}
-		
-		return realisasiAnggaranKumulatif;
-	}
-	
-	@Transient
-	public Float getPenyerapan(Month month) {
-		if (getRealisasiAnggaranKumulatif(month) <= 0)
-			return 0f;
-		return ((float)getRealisasiAnggaranKumulatif(month) / (float)getRencanaAnggaranKumulatif(month)) * 100;
-	}
-	
-	@Transient
-	public Float getKonsistensi(Month month) {
-		if (getPenyerapan(month) <= 0)
-			return 0f;
-		return getPenyerapan(month) / month.getValue();
-	}
-
 	@Override
 	public String toString() {
-		return "RekapKegiatan [namaUnitKerja=" + namaUnitKerja
-				+ ", namaProgram=" + namaProgram + ", namaKegiatan="
-				+ namaKegiatan + ", paguAnggaran=" + paguAnggaran
+		return "RekapKegiatan ["
+				+ "unitKerja=" + unitKerja
+				+ ", program=" + program
+				+ ", subProgram=" + subProgram
+				+ ", kegiatan=" + kegiatan
+				+ ", paguAnggaran=" + paguAnggaran
+				+ ", rencanaAnggaran=" + rencanaAnggaran
 				+ ", realisasiAnggaran=" + realisasiAnggaran
-				+ ", realisasiFisik=" + realisasiFisik + "]";
+				+ ", realisasiFisik=" + realisasiFisik
+				+ "]";
 	}
 }

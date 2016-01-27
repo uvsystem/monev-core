@@ -2,10 +2,8 @@ package com.unitedvision.sangihe.monev.service;
 
 import java.time.Month;
 import java.util.List;
-import java.util.Set;
 
 import com.unitedvision.sangihe.monev.entity.Fisik;
-import com.unitedvision.sangihe.monev.entity.Foto;
 import com.unitedvision.sangihe.monev.exception.FisikException;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
 
@@ -14,10 +12,6 @@ public interface FisikService {
 	Fisik simpan(Fisik fisik) throws FisikException, WrongYearException;
 
 	Fisik simpan(Fisik fisik, Long idKegiatan) throws FisikException, WrongYearException;
-	
-	Fisik tambahFoto(Long id, Foto foto) throws FisikException, WrongYearException;
-	
-	Fisik tambahFoto(Long id, Set<Foto> daftarFoto) throws FisikException, WrongYearException;
 	
 	void hapus(Long id);
 	

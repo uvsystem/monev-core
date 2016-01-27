@@ -1,8 +1,6 @@
 package com.unitedvision.sangihe.monev.entity;
 
 import java.time.Month;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.unitedvision.sangihe.monev.exception.FisikException;
@@ -29,11 +26,8 @@ public class Fisik {
 	
 	private Kegiatan kegiatan;
 	
-	private Set<Foto> daftarFoto;
-	
 	public Fisik() {
 		super();
-		daftarFoto = new HashSet<>();
 		realisasi = 0;
 	}
 
@@ -90,38 +84,11 @@ public class Fisik {
 		this.kegiatan = kegiatan;
 	}
 
-	//@CollectionOfElements
-	//@JoinTable(name = "foto", joinColumns = @JoinColumn(name = "fisik"))
-	@Transient
-	public Set<Foto> getDaftarFoto() {
-		return daftarFoto;
-	}
-
-	public void setDaftarFoto(Set<Foto> daftarFoto) {
-		this.daftarFoto = daftarFoto;
-	}
-	
-	public void addFoto(Foto foto) {
-		foto.setFisik(this);
-		daftarFoto.add(foto);
-	}
-	
-	public void addFoto(Set<Foto> daftarFoto) {
-		this.daftarFoto.addAll(daftarFoto);
-	}
-	
-	public void removeFoto(Foto foto) {
-		foto.setFisik(null);
-		daftarFoto.remove(foto);
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((bulan == null) ? 0 : bulan.hashCode());
-		result = prime * result
-				+ ((daftarFoto == null) ? 0 : daftarFoto.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((kegiatan == null) ? 0 : kegiatan.hashCode());
@@ -141,11 +108,6 @@ public class Fisik {
 			return false;
 		Fisik other = (Fisik) obj;
 		if (bulan != other.bulan)
-			return false;
-		if (daftarFoto == null) {
-			if (other.daftarFoto != null)
-				return false;
-		} else if (!daftarFoto.equals(other.daftarFoto))
 			return false;
 		if (id == null) {
 			if (other.id != null)

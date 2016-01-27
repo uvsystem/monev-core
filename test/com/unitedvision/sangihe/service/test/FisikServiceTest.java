@@ -3,14 +3,11 @@ package com.unitedvision.sangihe.service.test;
 import static org.junit.Assert.*;
 
 import java.time.Month;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.PersistenceException;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.unitedvision.sangihe.monev.configuration.ApplicationConfig;
 import com.unitedvision.sangihe.monev.entity.Fisik;
-import com.unitedvision.sangihe.monev.entity.Foto;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Program;
 import com.unitedvision.sangihe.monev.entity.UnitKerja;
@@ -122,32 +118,6 @@ public class FisikServiceTest {
 		fisik.setTahun(2015);
 		fisik.setBulan(Month.JANUARY);
 		fisikService.simpan(fisik);
-	}
-
-	@Ignore
-	@Test
-	public void test_tambah_foto() throws FisikException, WrongYearException {
-		Fisik fisik = fisikService.tambahFoto(id, new Foto("http://picasa.com/sangihe/01/001.jpg"));
-		
-		assertNotNull(fisik);
-		assertEquals(id, fisik.getId());
-		assertNotNull(fisik.getDaftarFoto());
-		assertEquals(1, fisik.getDaftarFoto().size());
-	}
-	
-	@Ignore
-	@Test
-	public void test_tambah_foto_list() throws FisikException, WrongYearException {
-		Set<Foto> daftarFoto = new HashSet<>();
-		daftarFoto.add(new Foto("http://picasa.com/sangihe/01/001.jpg"));
-		daftarFoto.add(new Foto("http://picasa.com/sangihe/01/001.jpg"));
-		
-		Fisik fisik = fisikService.tambahFoto(id, daftarFoto);
-		
-		assertNotNull(fisik);
-		assertEquals(id, fisik.getId());
-		assertNotNull(fisik.getDaftarFoto());
-		assertEquals(2, fisik.getDaftarFoto().size());
 	}
 	
 	@Test

@@ -1,8 +1,5 @@
 package com.unitedvision.sangihe.monev.entity;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,11 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "unit_kerja")
@@ -36,8 +30,6 @@ public class UnitKerja {
 	private TipeUnitKerja tipe;
 	private String singkatan;
 	private UnitKerja parent;
-	
-	private List<UnitKerja> daftarSubUnit;
 
 	public UnitKerja() {
 		super();
@@ -108,16 +100,6 @@ public class UnitKerja {
 		this.singkatan = singkatan;
 	}
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	public List<UnitKerja> getDaftarSubUnit() {
-		return daftarSubUnit;
-	}
-
-	public void setDaftarSubUnit(List<UnitKerja> daftarSubUnit) {
-		this.daftarSubUnit = daftarSubUnit;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -139,11 +121,6 @@ public class UnitKerja {
 		if (getClass() != obj.getClass())
 			return false;
 		UnitKerja other = (UnitKerja) obj;
-		if (daftarSubUnit == null) {
-			if (other.daftarSubUnit != null)
-				return false;
-		} else if (!daftarSubUnit.equals(other.daftarSubUnit))
-			return false;
 		if (id != other.id)
 			return false;
 		if (nama == null) {

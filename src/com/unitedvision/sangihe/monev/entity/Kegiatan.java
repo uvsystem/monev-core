@@ -1,27 +1,16 @@
 package com.unitedvision.sangihe.monev.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Mapping tabel Kegiatan.
@@ -31,12 +20,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name = "kegiatan")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(
-	name = "discriminator",
-	discriminatorType = DiscriminatorType.STRING
-)
-@DiscriminatorValue("KEGIATAN")
 public class Kegiatan {
 
 	private Long id;
@@ -44,16 +27,9 @@ public class Kegiatan {
 	private Long paguAnggaran;
 	
 	private Program program;
-	
-	private List<SubKegiatan> daftarSubKegiatan;
-	private List<Anggaran> daftarAnggaran;
-	private List<Fisik> daftarFisik;
-	
+		
 	public Kegiatan() {
 		super();
-		daftarSubKegiatan = new ArrayList<>();
-		daftarAnggaran = new ArrayList<>();
-		daftarFisik = new ArrayList<>();
 	}
 
 	public Kegiatan(Program program) {
@@ -104,47 +80,7 @@ public class Kegiatan {
 	public String getNamaProgram() {
 		return program.getNama();
 	}
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "kegiatan", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	public List<SubKegiatan> getDaftarSubKegiatan() {
-		return daftarSubKegiatan;
-	}
-
-	public void setDaftarSubKegiatan(List<SubKegiatan> daftarSubKegiatan) {
-		this.daftarSubKegiatan = daftarSubKegiatan;
-	}
-
-	public void addSubKegiatan(SubKegiatan subKegiatan) {
-		daftarSubKegiatan.add(subKegiatan);
-		subKegiatan.setKegiatan(this);
-	}
-
-	public void removeSubKegiatan(SubKegiatan subKegiatan) {
-		daftarSubKegiatan.remove(subKegiatan);
-		subKegiatan.setKegiatan(null);
-	}
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "kegiatan", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	public List<Anggaran> getDaftarAnggaran() {
-		return daftarAnggaran;
-	}
-
-	public void setDaftarAnggaran(List<Anggaran> daftarAnggaran) {
-		this.daftarAnggaran = daftarAnggaran;
-	}
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "kegiatan", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	public List<Fisik> getDaftarFisik() {
-		return daftarFisik;
-	}
-
-	public void setDaftarFisik(List<Fisik> daftarFisik) {
-		this.daftarFisik = daftarFisik;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

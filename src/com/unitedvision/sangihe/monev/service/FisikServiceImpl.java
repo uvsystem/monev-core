@@ -2,14 +2,12 @@ package com.unitedvision.sangihe.monev.service;
 
 import java.time.Month;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.unitedvision.sangihe.monev.entity.Fisik;
-import com.unitedvision.sangihe.monev.entity.Foto;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.exception.FisikException;
 import com.unitedvision.sangihe.monev.exception.WrongYearException;
@@ -39,24 +37,6 @@ public class FisikServiceImpl implements FisikService {
 		Kegiatan kegiatan = kegiatanRepository.findOne(idKegiatan);
 		fisik.setKegiatan(kegiatan);
 
-		return simpan(fisik);
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public Fisik tambahFoto(Long id, Foto foto) throws FisikException, WrongYearException {
-		Fisik fisik = get(id);
-		fisik.addFoto(foto);
-		
-		return simpan(fisik);
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public Fisik tambahFoto(Long id, Set<Foto> daftarFoto) throws FisikException, WrongYearException {
-		Fisik fisik = get(id);
-		fisik.addFoto(daftarFoto);
-		
 		return simpan(fisik);
 	}
 

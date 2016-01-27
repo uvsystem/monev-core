@@ -1,8 +1,5 @@
 package com.unitedvision.sangihe.monev.entity;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,12 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "program")
@@ -25,10 +20,9 @@ public class Program {
 	private String nama;
 	private Integer tahunAwal;
 	private Integer tahunAkhir;
-	
+
 	private UnitKerja unitKerja;
-	
-	private List<Kegiatan> daftarKegiatan;
+	private Program parent;
 	
 	public Program() {
 		super();
@@ -87,19 +81,21 @@ public class Program {
 	public String getNamaUnitKerja() {
 		return unitKerja.getNama();
 	}
+	
+	public void setNamaUnitKerja(String namaUnitKerja) {}
 
 	public void setUnitKerja(UnitKerja unitKerja) {
 		this.unitKerja = unitKerja;
 	}
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "program", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	public List<Kegiatan> getDaftarKegiatan() {
-		return daftarKegiatan;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "parent")
+	public Program getParent() {
+		return parent;
 	}
 
-	public void setDaftarKegiatan(List<Kegiatan> daftarKegiatan) {
-		this.daftarKegiatan = daftarKegiatan;
+	public void setParent(Program parent) {
+		this.parent = parent;
 	}
 
 	@Override

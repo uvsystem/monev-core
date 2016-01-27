@@ -1,19 +1,15 @@
 package com.unitedvision.sangihe.monev.service;
 
+import java.time.Month;
 import java.util.List;
-
-import javax.persistence.PersistenceException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.unitedvision.sangihe.monev.entity.Anggaran;
-import com.unitedvision.sangihe.monev.entity.Fisik;
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.Program;
 import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
-import com.unitedvision.sangihe.monev.entity.SubKegiatan;
 import com.unitedvision.sangihe.monev.repository.AnggaranRepository;
 import com.unitedvision.sangihe.monev.repository.FisikRepository;
 import com.unitedvision.sangihe.monev.repository.KegiatanRepository;
@@ -48,15 +44,6 @@ public class KegiatanServiceImpl implements KegiatanService {
 		kegiatan.setProgram(program);
 		
 		return kegiatanRepository.save(kegiatan);
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public void tambahSubKegiatan(Long idKegiatan, SubKegiatan subKegiatan) {
-		Kegiatan parent = get(idKegiatan);
-		parent.addSubKegiatan(subKegiatan);
-
-		kegiatanRepository.save(subKegiatan);
 	}
 	
 	@Override
@@ -118,19 +105,12 @@ public class KegiatanServiceImpl implements KegiatanService {
 
 	@Override
 	public RekapKegiatan rekapKegiatan(Long id) {
-		RekapKegiatan rekap = rekapKegiatanRepository.rekapKegiatan(id);
-		
-		try {
-			List<Anggaran> daftarAnggaran = anggaranRepository.findByKegiatan_Program_Id(id);
-			rekap.setDaftarAnggaran(daftarAnggaran);
-		} catch (PersistenceException e) { }
-		
-		try {
-			List<Fisik> daftarFisik = fisikRepository.findByKegiatan_Program_Id(id);
-			rekap.setDaftarFisik(daftarFisik);
-		} catch (PersistenceException e) { }
-		
-		return rekap;
+		return rekapKegiatanRepository.rekapKegiatan(id);
+	}
+
+	@Override
+	public List<RekapKegiatan> rekap(Long tahun, Month bulan) {
+		return rekapKegiatanRepository.rekap(tahun, 0, bulan.ordinal());
 	}
 
 }

@@ -1,18 +1,16 @@
 package com.unitedvision.sangihe.monev.service;
 
+import java.time.Month;
 import java.util.List;
 
 import com.unitedvision.sangihe.monev.entity.Kegiatan;
 import com.unitedvision.sangihe.monev.entity.RekapKegiatan;
-import com.unitedvision.sangihe.monev.entity.SubKegiatan;
 
 public interface KegiatanService {
 
 	Kegiatan simpan(Kegiatan kegiatan);
 
 	Kegiatan simpan(Kegiatan kegiatan, Long idProgram);
-
-	void tambahSubKegiatan(Long idKegiatan, SubKegiatan subKegiatan);
 
 	void hapus(Long id);
 
@@ -33,5 +31,7 @@ public interface KegiatanService {
 	List<RekapKegiatan> rekap(Long tahun, Long id);
 
 	RekapKegiatan rekapKegiatan(Long id);
+
+	List<RekapKegiatan> rekap(Long tahun, Month bulan);
 
 }

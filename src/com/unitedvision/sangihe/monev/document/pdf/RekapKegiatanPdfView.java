@@ -2,6 +2,7 @@ package com.unitedvision.sangihe.monev.document.pdf;
 
 import java.awt.Color;
 import java.sql.Date;
+import java.time.Month;
 import java.util.List;
 import java.util.Map;
 
@@ -22,13 +23,14 @@ public class RekapKegiatanPdfView extends CustomAbstractPdfView {
 		@SuppressWarnings("unchecked")
 		List<RekapKegiatan> list = (List<RekapKegiatan>) model.get("rekap");
 		Long tahun = (Long) model.get("tahun");
+		Month bulan = (Month) model.get("bulan");
 		
 		doc.newPage();
 		
 		createTitle(doc);
 		addEmptyLine(doc, 1);
 		
-		createSubTitle(doc, tahun);
+		createSubTitle(doc, tahun, bulan);
 		addEmptyLine(doc, 1);
 		
 		createContent(doc, list);
@@ -47,7 +49,7 @@ public class RekapKegiatanPdfView extends CustomAbstractPdfView {
 		doc.add(title);
 	}
 
-	protected void createSubTitle(Document doc, Long tahun) throws DocumentException {
+	protected void createSubTitle(Document doc, Long tahun, Month bulan) throws DocumentException {
 		Paragraph subTitle = new Paragraph();
 		subTitle.setAlignment(Element.ALIGN_CENTER);
 		
@@ -56,7 +58,7 @@ public class RekapKegiatanPdfView extends CustomAbstractPdfView {
 		PdfPTable table = new PdfPTable(columnWidth);
 		table.setWidthPercentage(tablePercentage);
 		
-		insertCell(table, String.format("Tahun: %d", tahun), align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
+		insertCell(table, String.format("Periode : %s %d", bulan, tahun), align, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
 		Date tanggalCetak = DateUtil.getDate();
 		insertCell(table, String.format("Tanggal Cetak: %s", DateUtil.toFormattedStringDate(tanggalCetak, "-")), Element.ALIGN_RIGHT, 1, fontHeader, Rectangle.BOX, Color.WHITE, null);
 		
@@ -72,37 +74,46 @@ public class RekapKegiatanPdfView extends CustomAbstractPdfView {
 		content.setAlignment(Element.ALIGN_CENTER);
 		
 		// 8 Kolom
-		float[] columnWidth = {7, 5, 5, 3};
+		float[] columnWidth = {7, 5, 5, 5, 3};
 
 		PdfPTable table = new PdfPTable(columnWidth);
 		table.setWidthPercentage(tablePercentage);
 
 		insertCell(table, "Nama Kegiatan", align, 1, fontHeader, Rectangle.BOX, null, null);
 		insertCell(table, "Pagu Anggaran", align, 1, fontHeader, Rectangle.BOX, null, null);
+		insertCell(table, "Rencana Anggaran", align, 1, fontHeader, Rectangle.BOX, null, null);
 		insertCell(table, "Realisasi Anggaran", align, 1, fontHeader, Rectangle.BOX, null, null);
 		insertCell(table, "Realisasi Fisik", align, 1, fontHeader, Rectangle.BOX, null, null);
 		table.setHeaderRows(1);
 		
 		String deterUnitKerja = null;
 		String deterProgram = null;
+		String deterSubProgram = null;
 		for (Object object : list) {
 
 			RekapKegiatan rekap = (RekapKegiatan)object;
-			String namaUnitKerja = rekap.getNamaUnitKerja();
-			String namaProgram = rekap.getNamaProgram();
+			String unitKerja = rekap.getUnitKerja();
+			String program = rekap.getProgram();
+			String subProgram = rekap.getSubProgram();
 			
-			if ( !namaUnitKerja.equals(deterUnitKerja) ) {
-				deterUnitKerja = namaUnitKerja;
-				insertCell(table, deterUnitKerja, align, 4, fontHeader, Rectangle.BOX, null, Color.GRAY);
+			if ( !unitKerja.equals(deterUnitKerja) ) {
+				deterUnitKerja = unitKerja;
+				insertCell(table, deterUnitKerja, align, 5, fontHeader, Rectangle.BOX, null, Color.GRAY);
 			}
 			
-			if ( !namaProgram.equals(deterProgram) ) {
-				deterProgram = namaProgram;
-				insertCell(table, deterProgram, align, 4, fontContent, Rectangle.BOX, null, Color.YELLOW);
+			if ( !program.equals(deterProgram) ) {
+				deterProgram = program;
+				insertCell(table, deterProgram, align, 5, fontContent, Rectangle.BOX, null, Color.YELLOW);
 			}
 
-			insertCell(table, rekap.getNamaKegiatan(), align, 1, fontContent, Rectangle.BOX, null, null);
+			if ( !subProgram.equals(deterSubProgram) ) {
+				deterSubProgram = subProgram;
+				insertCell(table, deterSubProgram, align, 5, fontContent, Rectangle.BOX, null, Color.GREEN);
+			}
+
+			insertCell(table, rekap.getKegiatan(), align, 1, fontContent, Rectangle.BOX, null, null);
 			insertCell(table, String.format("Rp %d", rekap.getPaguAnggaran()), align, 1, fontContent, Rectangle.BOX, null, null);
+			insertCell(table, String.format("Rp %d", rekap.getRencanaAnggaran()), align, 1, fontContent, Rectangle.BOX, null, null);
 			insertCell(table, String.format("Rp %d", rekap.getRealisasiAnggaran()), align, 1, fontContent, Rectangle.BOX, null, null);
 			insertCell(table, String.format("%d %s", rekap.getRealisasiFisik(), "%"), align, 1, fontContent, Rectangle.BOX, null, null);
 		}
