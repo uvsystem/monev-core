@@ -1,5 +1,6 @@
 package com.unitedvision.sangihe.monev.controller;
 
+import java.time.Month;
 import java.util.List;
 import java.util.Map;
 
@@ -149,6 +150,29 @@ public class KegiatanController {
 		List<RekapKegiatan> rekap = kegiatanService.rekap(tahun, id);
 		
 		return ListEntityRestMessage.createListRekapKegiatan(rekap);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/rekap/tahun/{tahun}/bulan/{bulan}")
+	@ResponseBody
+	public ListEntityRestMessage<RekapKegiatan> rekapView(@PathVariable Long tahun, @PathVariable Month bulan) throws ApplicationException, PersistenceException {
+		List<RekapKegiatan> rekap = kegiatanService.rekap(tahun, bulan);
+		
+		return ListEntityRestMessage.createListRekapKegiatan(rekap);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/rekap/tahun/{tahun}/bulan/{bulan}/cetak")
+	public ModelAndView rekap(@PathVariable Long tahun, @PathVariable Month bulan, Map<String, Object> model) {
+		try {
+			List<RekapKegiatan> rekap = kegiatanService.rekap(tahun, bulan);
+			
+			model.put("rekap", rekap);
+			model.put("tahun", tahun);
+			model.put("bulan", bulan);
+			
+			return new ModelAndView("rekapKegiatan", model);
+		} catch (PersistenceException e) {
+			return new ModelAndView("pdfException", model);
+		}
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}/rekap/cetak")

@@ -53,4 +53,20 @@ public interface RekapKegiatanRepository extends JpaRepository<RekapKegiatan, St
 				+ "ORDER BY unit_kerja, program, pagu_anggaran")
 	List<RekapKegiatan> rekap(@Param("tahun") Long tahun);
 
+	@Query(nativeQuery = true,
+			value = "SELECT uk.nama as unit_kerja"
+				+ ", p.nama as sub_program"
+				+ ", k.nama as kegiatan"
+				+ ", k.pagu_anggaran as pagu_anggaran"
+				+ ", (SELECT SUM(a.rencana) FROM anggaran a WHERE a.kegiatan = k.id AND a.tahun = :tahun AND a.bulan BETWEEN :awal AND :akhir) as rencana_anggaran"
+				+ ", (SELECT SUM(a.realisasi) FROM anggaran a WHERE a.kegiatan = k.id AND a.tahun = :tahun AND a.bulan BETWEEN :awal AND :akhir) as realisasi_anggaran"
+				+ ", (SELECT SUM(f.realisasi) FROM fisik f WHERE f.kegiatan = k.id AND f.tahun = :tahun AND f.bulan BETWEEN :awal AND :akhir) as realisasi_fisik "
+				+ ", (SELECT pro.nama FROM program pro Where pro.id = p.parent) as program "
+				+ "FROM kegiatan k "
+				+ "INNER JOIN program p ON k.program = p.id "
+				+ "INNER JOIN unit_kerja uk ON p.unit_kerja = uk.id "
+				+ "WHERE p.tahun_awal >= :tahun AND p.tahun_akhir <= :tahun "
+				+ "ORDER BY unit_kerja, program, pagu_anggaran")
+	List<RekapKegiatan> rekap(@Param("tahun") Long tahun, @Param("awal") int awal, @Param("akhir") int akhir);
+
 }
