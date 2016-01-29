@@ -96,6 +96,11 @@ public class RekapKegiatan {
 	
 	@Transient
 	public Long getDeviasiAnggaran() {
+		if (rencanaAnggaran == null)
+			rencanaAnggaran = 0L;
+		if (realisasiAnggaran == null)
+			realisasiAnggaran = 0L;
+		
 		return rencanaAnggaran - realisasiAnggaran;
 	}
 
