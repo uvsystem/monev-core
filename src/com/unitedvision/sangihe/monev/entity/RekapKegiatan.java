@@ -3,6 +3,7 @@ package com.unitedvision.sangihe.monev.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class RekapKegiatan {
@@ -91,6 +92,11 @@ public class RekapKegiatan {
 
 	public void setRealisasiFisik(Integer realisasiFisik) {
 		this.realisasiFisik = realisasiFisik;
+	}
+	
+	@Transient
+	public Long getDeviasiAnggaran() {
+		return rencanaAnggaran - realisasiAnggaran;
 	}
 
 	@Override
